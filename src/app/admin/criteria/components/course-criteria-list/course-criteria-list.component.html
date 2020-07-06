@@ -1,0 +1,294 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Manage Course Criteria</h5>
+                        </div>
+
+                        <div class="col-auto" *ngIf="permissions.canAdd">
+                          <a class="btn btn-sm btn-secondary"
+                            [routerLink]="['/user/workspace/criteria/course-criteria-manage']" data-toggle="tooltip"
+                            title="" data-original-title="Add new" aria-label="mangecriteria">Add new
+                          </a>
+                        </div>
+                        <div class="col-auto">
+                          <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip"
+                            data-original-title="Download excel" (click)="generateExcelSample()">
+                            Export Sample <i class="fas fa-download"></i>
+                          </button>&nbsp;
+                        </div>
+                        <div class="col-auto" *ngIf="permissions.canExport">
+                          <a class="btn btn-sm btn-secondary" data-toggle="modal" title=""
+                            data-target="#downloadcriteria" aria-label="downloadcriteria"
+                            style="color: white;">GenerateExcel
+                            <i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="col-auto" *ngIf="permissions.canImport">
+                          <input type="file" (change)="onFileChange($event)" />
+                          <p style="color: crimson;">*please choose .xlsx format file</p>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row mt-2">
+                        <div class="col-md-3">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Country</label>
+                            <select class="form-control border-secondary shadow" [(ngModel)]="countryid"
+                              (change)="getAllCriteria()" aria-label="countryid">
+                              <option value="">-- Choose Country --</option>
+                              <option *ngFor="let country of countrylist" [ngValue]="country.id">
+                                {{country.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">University Type</label>
+                            <select aria-label="getUniversityListByType" class="form-control border-secondary shadow"
+                              [(ngModel)]="universitytypeid" (change)="getUniversityListByType()">
+                              <option value="">-- Choose type --</option>
+                              <option *ngFor="let type of universitytype" [ngValue]="type.id">
+                                {{type.univtype}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">University</label>
+                            <select aria-label="getAllCriteria" class="form-control border-secondary shadow"
+                              [(ngModel)]="universityid" (change)="getAllCriteria()">
+                              <option value="">-- Choose University --</option>
+                              <option *ngFor="let univ of universityidlist" [ngValue]="univ.id">
+                                {{univ.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Study Level</label>
+                            <select aria-label="getAllCriteria_1" class="form-control border-secondary shadow"
+                              [(ngModel)]="studylevelid" (change)="getAllCriteria()">
+                              <option value="">-- Choose Level --</option>
+                              <option *ngFor="let level of studylevellist" [ngValue]="level.id">
+                                {{level.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <th>Country</th>
+                            <th>University</th>
+                            <th>Studylevel</th>
+                            <th>Remarks</th>
+                            <th *ngIf="permissions.canEdit || permissions.canDelete">Action</th>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="criterialist.length>0">
+                              <tr *ngFor="let criteria of criterialist  | paginate: {itemsPerPage: pagesize,
+                              currentPage: pageindex,
+                              totalItems: criteriacount};let index = index">
+                                <td>{{criteria.countryname}}</td>
+                                <td>{{criteria.universityname}}</td>
+                                <td>{{criteria.studylevel}}</td>
+                                <td>{{criteria.remarks}}</td>
+                                <td *ngIf="permissions.canEdit || permissions.canDelete">
+                                  <a class=" btn btn-sm btn-outline-primary rounded-circle" *ngIf="permissions.canEdit"
+                                    [routerLink]="['/user/workspace/criteria/course-criteria-manage',criteria.id | encdec :'enc']"
+                                    data-toggle="tooltip" title="" data-original-title="Edit"
+                                    aria-label="editcriteria"><i class="fa fa-lg fa-edit"></i></a>
+                                  <button class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;"
+                                    *ngIf="permissions.canDelete" data-toggle="tooltip" title=""
+                                    data-original-title="Remove" role="button" aria-label="remove"
+                                    (click)="deleteCriteriaMapping(criteria.id)"><i class="fa fa-times-circle"
+                                      aria-hidden="true"></i></button></td>
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="criterialist.length==0">
+                              <tr class="text-center text-color-red">
+                                <td colspan="5">
+                                  No Data Found
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="px-3">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <select style="width: 60px;" class="custom-select custom-select-sm mr-2"
+                              aria-label="inputGroupSelect01" id="inputGroupSelect01" [(ngModel)]="pagesize"
+                              (change)="getAllCriteriaByFilter()">
+                              <option value="10">10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            <p class="d-inline-block" *ngIf="(pageindex*pagesize)>criteriacount">Displaying
+                              {{(criteriacount==0)?0:((pageindex-1)*pagesize) + 1}} - {{criteriacount}} of
+                              {{criteriacount}}
+                              records</p>
+                            <p class="d-inline-block" *ngIf="(pageindex*pagesize)<criteriacount">Displaying
+                              {{((pageindex-1)*pagesize) + 1}} -
+                              {{(((pageindex-1)*pagesize) + pagesize)}} of
+                              {{criteriacount}}
+                              records</p>
+                          </div>
+
+                          <div class="col-auto">
+                            <nav aria-label="Page navigation example">
+                              <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)">
+                              </pagination-controls>
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="downloadcriteria" class="modal fade" role="dialog" *ngIf="permissions.canExport">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <!-- <h4 class="modal-title">Modal Header</h4> -->
+      </div>
+
+      <div class="modal-body">
+        <form #headform="ngForm" novalidate>
+          <div class="row m-2">
+
+            <div col-md-6>
+              <div class="form-group text-left">
+                <label class="font-weight-500">University Type</label>
+                <select class="form-control border-secondary shadow" name="universitytypeid"
+                  data-name="universitytypeid" data-prefix="University type" data-type="select"
+                  [(ngModel)]="criteria.universitytypeid" aria-label="universitytypeid"
+                  (change)="getUniversityListByType()">
+                  <option value="0">-- Choose type --</option>
+                  <option *ngFor="let type of universitytype" [ngValue]="type.id">
+                    {{type.univtype}}</option>
+                </select>
+              </div>
+            </div>
+            <div col-md-6>
+              <div class="form-group text-left">
+                <label class="font-weight-500">University</label>
+                <select class="form-control border-secondary shadow" data-name="universityid" data-type="select"
+                  aria-label="universityid" name="universityid" data-prefix="University"
+                  [(ngModel)]="criteria.universityid" [required]="true">
+                  <option value="">-- Choose University --</option>
+                  <option *ngFor="let univ of universityidlist" [ngValue]="univ.id">
+                    {{univ.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div col-md-6>
+              <div class="form-group text-left">
+                <label class="font-weight-500">Study Level</label>
+                <select class="form-control border-secondary shadow" data-name="studylevelid" data-type="select"
+                  name="studylevelid" data-prefix="Studylevel" [(ngModel)]="criteria.studylevelid" [required]="true"
+                  aria-label="Studylevel">
+                  <option value="">-- Choose Level --</option>
+                  <option *ngFor="let level of studylevellist" [ngValue]="level.id">
+                    {{level.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div col-md-6>
+              <div class="form-group text-left">
+                <label class="font-weight-500">Country</label>
+                <select class="form-control border-secondary shadow" name="country" data-name="country"
+                  data-prefix="Country" data-type="select" [(ngModel)]="criteria.countryid" [required]="true"
+                  aria-label="country">
+                  <option value="">-- Choose Country --</option>
+                  <option *ngFor="let country of countrylist" [ngValue]="country.id">
+                    {{country.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row m-2">
+            <div class="col text-right">
+
+
+              <button (click)="getrelateddata(headform)" appValidation [form]="headform" [validparent]="'form-group'"
+                role="button" aria-label="Search courses">
+                Download Excel<i class="fas fa-download"></i></button>&nbsp;
+
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal" id="progress" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body"
+        style="height: 100%;width: 100%;padding:100px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <h3 *ngIf="prepare">Preparing your document please wait..... <i class="fas fa-sync fa-refresh"></i>
+        </h3>
+        <span *ngIf="download">
+          <h3>Downloading in progress </h3>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{downloadpr}}" attr.aria-valuemin="0"
+              attr.aria-valuemax="100" [ngStyle]="{width: downloadpr+'%'}">
+              <span>{{downloadpr}}% Complete</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>File size:</strong> {{(totalsize/1048576) | number : '1.2-2'}} in MB
+              <!-- <strong>File size:</strong> Unknown -->
+            </div>
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>Total download:</strong> {{(downloadedsize/1048576) | number : '1.2-2'}} in MB
+            </div>
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>Network speed:</strong> {{speed}}
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

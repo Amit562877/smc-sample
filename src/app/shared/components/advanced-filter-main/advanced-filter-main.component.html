@@ -1,0 +1,259 @@
+<div class="setup-process-block nav-wrap1" *ngIf="filterdata">
+    <div class="my-4 px-3">
+        <div class="row">
+            <div class="col-md-12 p-0 text-center">
+                <ul class="progressbar-model row flex-nowrap nav nav-tabs nav-tabs1">
+                    <li class="col nav-item">
+                        <a (click)="saveDetails('n',1)" [ngClass]="(step==1)?'active':''" class="nav-link"
+                            data-toggle="tab" href="#STEP1" role="tab" aria-selected="true">
+                            Nationality
+                        </a>
+                    </li>
+                    <li class="col nav-item">
+                        <a (click)="saveDetails('n',2)" [ngClass]="(step==2)?'active':''" class="nav-link"
+                            data-toggle="tab" href="#STEP2" role="tab" aria-controls="hrShifts">
+                            English Requirement
+                        </a>
+                    </li>
+                    <li class="col nav-item">
+                        <a (click)="saveDetails('n',3)" [ngClass]="(step==3)?'active':''" class="nav-link"
+                            data-toggle="tab" href="#STEP3" role="tab" aria-selected="false">
+                            Academic Score
+                        </a>
+                    </li>
+                    <li class="col nav-item">
+                        <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">
+                            Match
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" [ngClass]="(step==1)?'show active':''" id="STEP1" role="tabpanel">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card border-0 mb-4">
+                                <div class="card-header hover-shadow rounded border-0 py-2 card-ctrl-collapse">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-0 text-uppercase">Education Country / Nationality</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body px-0 pb-0">
+                                    <select class="form-control show-tick" aria-label="countryid" data-width="100%"
+                                        data-style="btn-outline-secondary" title="-- Choose Country --"
+                                        [(ngModel)]="filterdata.scountry" id="exampleFormControlSelect1"
+                                        (change)="getCriteriaBoardType();clearCriteriaBoard();">
+                                        <option value="0">-- Choose Country --</option>
+                                        <option *ngFor="let country of coursedetails.criteriacountry"
+                                            [ngValue]="country.id">{{country.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane fade" [ngClass]="(step==2)?'show active':''" id="STEP2" role="tabpanel">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card border-0 mb-4">
+                                <div class="card-header hover-shadow rounded border-0 py-2 card-ctrl-collapse">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-0 text-uppercase">Test Score</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body px-0 pb-0">
+                                    <div class="card-body px-0 pb-0">
+                                        <select class="form-control show-tick" aria-label="countryid" data-width="100%"
+                                            data-style="btn-outline-secondary" title="-- Choose test type --"
+                                            [(ngModel)]="filterdata.etype" id="exampleFormControlSelect1"
+                                            (change)="getCriteriaBoardType();clearCriteriaBoard();">
+                                            <option value="">-- Choose test type --</option>
+                                            <option *ngFor="let exam of coursedetails.examtype" [ngValue]="exam.type">
+                                                {{exam.type | uppercase}}</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <input placeholder="Reading" id="txtR_0"
+                                                (change)="validateIeltsInput($event,filterdata.R,filterdata.etype);getCourseCount();"
+                                                (keypress)="AcceptNumericOnly($event, true);" [(ngModel)]="filterdata.R"
+                                                class="form-control mr-2" value="" style="padding-left: 25px;">
+
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <input placeholder="Writing" id="txtW_0"
+                                                (change)="validateIeltsInput($event,filterdata.W,filterdata.etype);getCourseCount();"
+                                                (keypress)="AcceptNumericOnly($event, true);" [(ngModel)]="filterdata.W"
+                                                class="form-control" value="" style="padding-left: 25px;">
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <input id="txtL_0"
+                                                (change)="validateIeltsInput($event,filterdata.L,filterdata.etype);getCourseCount();"
+                                                (keypress)="AcceptNumericOnly($event, true);" placeholder="Listening"
+                                                [(ngModel)]="filterdata.L" class="form-control mr-2" value=""
+                                                style="padding-left: 25px;">
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <input placeholder="Speaking" id="txtS_0"
+                                                (change)="validateIeltsInput($event,filterdata.S,filterdata.etype);getCourseCount();"
+                                                (keypress)="AcceptNumericOnly($event, true);" [(ngModel)]="filterdata.S"
+                                                class="form-control" value="" style="padding-left: 25px;">
+                                        </div>
+
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <input placeholder="Overall" id="txtO_0"
+                                                (change)="validateIeltsInput($event,filterdata.O,filterdata.etype);getCourseCount();"
+                                                [(ngModel)]="filterdata.O" class="form-control mr-2" value=""
+                                                style="padding-left: 25px;">
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <a href="javascript:void(0)" (click)="clearIeltsInput()"
+                                                    class="btn btn-primary next-step1">Clear</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" [ngClass]="(step==3)?'show active':''" id="STEP3" role="tabpanel">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card border-0 mb-4">
+                        <div class="card-header hover-shadow rounded border-0 py-2 card-ctrl-collapse">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="m-0 text-uppercase">Academic score</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pb-0" *ngFor="let criteria of filterdata.criteria; index as cindex;">
+
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row mt-2">
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <select class="form-control show-tick" aria-label="countryid"
+                                                data-width="100%" data-style="btn-outline-secondary"
+                                                title="-- Choose Board Type --" [(ngModel)]="criteria.boardtype"
+                                                (change)="getCriteriaBoardList(criteria);" id="boardType_{{cindex}}">
+                                                <option value="">-- Choose Board Type --</option>
+                                                <option *ngFor=" let board of criteriaBoardType" [ngValue]="board.type">
+                                                    {{board.type}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <select class="form-control show-tick" aria-label="countryid"
+                                                data-width="100%" data-style="btn-outline-secondary"
+                                                title="-- Choose Board Name --" (change)="getCourseCount();"
+                                                [(ngModel)]="criteria.boardname" id="boardName_{{cindex}}">
+                                                <option value="">-- Choose Board Name --</option>
+                                                <option
+                                                    *ngFor="let list of criteriaBoardList | filterLocation:  'type' : criteria.boardtype : 'list' : criteriaBoardListMain "
+                                                    [ngValue]=" list.id">
+                                                    {{list.name}}</option>
+                                            </select>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <input placeholder="Marks Obtained" id="txt_marks_{{cindex}}"
+                                                [(ngModel)]="criteria.marksobtained" class="form-control mr-2" value=""
+                                                style="padding-left: 25px;">
+
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12" style="width: 100%;">
+                                            <input placeholder="Attempts made" [(ngModel)]="criteria.attemptsmade"
+                                                (change)="getCourseCount();" id="txt_attempts_{{cindex}}"
+                                                class="form-control" value="" style="padding-left: 25px;">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mt-2">
+                                    <button role="button" aria-label="addDuration_3" (click)="addCriteriaTab()"
+                                        class="btn btn-sm btn-outline-primary rounded-circle" data-toggle="tooltip"
+                                        title="" data-original-title="Add more"><i class="fa fa-plus"
+                                            aria-hidden="true"></i></button>
+                                    <button role="button" aria-label="removeDuration_3"
+                                        (click)="removeCriteriaTab(cindex)" *ngIf="index!=0"
+                                        class="btn btn-sm btn-outline-danger rounded-circle ml-2" data-toggle="tooltip"
+                                        title="" data-original-title="Remove"><i class="fa fa-times-circle"
+                                            aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="form-group mt-3">
+                            <a href="javascript:void(0)" *ngIf="prevFlag == true" (click)="saveDetails('n',(step-1))"
+                                class="btn btn-outline-secondary prev-step1">Previous</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mt-3">
+                            <a href="javascript:void(0)" (click)="saveDetails('n',(step+1))" *ngIf="nextFlag == false"
+                                class="btn btn-primary next-step1">Next
+                                Step</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mt-3">
+                            <a href="javascript:void(0)" (click)="saveDetails('s');getCourseCount();"
+                                *ngIf="saveFlag == true" class="btn btn-primary next-step1">Save</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mt-3">
+                            <a href="javascript:void(0)" class="btn btn-primary next-step1" (click)="showResults()"
+                                *ngIf="showresultFlag == true">Show
+                                Results</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col" *ngIf="filterCount && filterCount.length > 0">
+            <h5>Filter Course Count : {{filterCount}}</h5>
+        </div>
+    </div>
+</div>

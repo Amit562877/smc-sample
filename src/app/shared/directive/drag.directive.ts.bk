@@ -1,0 +1,101 @@
+import { Directive, Injectable, HostListener, Input, Output, EventEmitter } from '@angular/core';
+declare const $: any;
+@Directive({
+    selector: '[appDrag]'
+})
+
+export class DragDirective {
+    constructor() { }
+    @HostListener('dragstart', ['$event'])
+    onDragStart(event: any) {
+        event.dataTransfer.setData('controltype', event.target.dataset.type);
+        event.dataTransfer.setData('isdroped', event.target.id);
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setDragImage(event.target, 0, 0);
+    }
+}
+
+@Directive({
+    selector: '[appElementDrop]'
+})
+export class DropDirective {
+    @Output() public controlAdded = new EventEmitter<any>();
+    constructor() { }
+    @HostListener('dragover', ['$event'])
+    onDragOver(event: any) {
+        event.preventDefault();
+    }
+
+    @HostListener('dragenter', ['$event'])
+    onDragEnter(event: any) {
+        event.preventDefault();
+    }
+
+    @HostListener('drop', ['$event'])
+    onDrop(event: any, prev: any) {
+        event.stopPropagation();
+        const droped = event.dataTransfer.getData('isdroped');
+        if (droped) {
+            const property: any = {};
+            property.id = droped;
+            property.xPos = event.clientX - (event.target.offsetLeft - 16) + 'px';
+            property.yPos = event.clientY - (event.target.offsetTop - 0) + 'px';
+            property.position = 'absolute';
+            this.controlAdded.emit(property);
+        } else {
+            const controltype = event.dataTransfer.getData('controltype');
+            const property: any = {};
+            property.type = controltype;
+            property.xPos = event.clientX - (event.target.offsetLeft - 16) + 'px';
+            property.yPos = event.clientY - (event.target.offsetTop - 0) + 'px';
+            if (controltype === 'textbox') {
+                property.height = 20 + 'px';
+                property.width = 50 + 'px';
+            }
+            if (controltype === 'groupbox') {
+                property.boxes = [];
+                for (let i = 1; i <= 5; i++) {
+                    const box: any = {};
+                    box.margin = '2px';
+                    box.margintop = '2px';
+                    box.marginbottom = '2px';
+                    box.marginright = '2px';
+                    box.marginleft = '2px';
+                    box.height = '30px';
+                    box.width = '30px';
+                    property.boxes.push(box);
+                }
+            }
+            if (controltype === 'datebox') {
+                property.boxes = [];
+                for (let i = 1; i <= 8; i++) {
+                    const box: any = {};
+                    box.margin = '2px';
+                    box.margintop = '2px';
+                    box.marginbottom = '2px';
+                    box.marginright = '2px';
+                    if (i === 3 || i === 5) {
+                        box.marginleft = '6px';
+                    } else {
+                        box.marginleft = '2px';
+                    }
+                    box.height = '30px';
+                    box.width = '30px';
+                    property.boxes.push(box);
+                }
+            }
+            property.position = 'absolute';
+            this.controlAdded.emit(property);
+            setTimeout(() => {
+                $('.droped').droppable();
+                $('.form-group').resizable({
+                    handles: 'ne, se, sw, nw',
+                    create(event, ui) {
+                        $('.ui-resizable-e').css('cursor', 'ew-resize');
+                    }
+                });
+            }, 100);
+        }
+        event.dataTransfer.clearData();
+    }
+}

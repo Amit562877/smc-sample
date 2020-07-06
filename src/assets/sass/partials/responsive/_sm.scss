@@ -1,0 +1,31 @@
+.nav-trigger-black{display: block;}
+.nav-trigger-white{display: none;}
+.logo{padding: 9px 8px;}
+.nav-sidebar-minimize{
+    .brand-col{-ms-flex: 0 0 auto; flex: 0 0 auto; max-width: none;}
+    .nav-sidebar{position: fixed; @include transform(translateX(-100%));}
+}
+.nav-sidebar{max-width: 300px;}
+body:not(.nav-sidebar-minimize){
+    .nav-overlay{visibility: visible; opacity: 1;}
+    .navSidebarTrigger{
+        > span{width: 100%;
+            &:nth-child(1){@include transform(rotate(45deg)); margin-bottom: -3px;}
+            &:nth-child(2){visibility: hidden; opacity: 0; @include transform(translateX(100%));}
+            &:nth-child(3){@include transform(rotate(-45deg)); margin-top: -4px;}
+        }
+    }
+}
+.dropdown-search .dropdown-menu {padding: 5px 15px; margin: 35px 0 0; @include box-shadow(0 0 20px 5px rgba(#000, .3));}
+
+/* full calendar */
+.fc-sm-fh-scroller .fc-scroller{height: auto !important; max-height: 65vh;}
+/* / full calendar */
+
+.btn-icon-sm-sm{
+    &.btn-icon{font-size: 18px; width: 28px; height: 28px;
+        &.rounded-circle{
+            &.btn-icon-sm{font-size: 14px;}
+        }
+    }
+}

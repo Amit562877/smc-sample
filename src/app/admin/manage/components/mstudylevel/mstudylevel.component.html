@@ -1,0 +1,150 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Manage Stydy level</h5>
+                        </div>
+                        <div class="col-auto" *ngIf="permissions.canAdd">
+                          <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                            <button id="btnAddProcess" type="button" class="btn btn-sm btn-secondary"
+                              data-toggle="modal" data-target="#media" role="button" aria-label="add">
+                              <i class="la la-plus"></i> Add new
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th>Sequence</th>
+                              <th>Studylevel</th>
+                              <th *ngIf="permissions.canEdit || permissions.canDelete">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="studylevellist.length>0">
+                              <tr class="tr-action-outer" *ngFor="let studylevel of studylevellist  | paginate: {itemsPerPage: pageSize,
+                                currentPage: pageIndex,
+                                totalItems: studylevelcount};let index = index">
+                                <td>{{studylevel.SRNO}}</td>
+                                <td>{{studylevel.name}}</td>
+                                <td *ngIf="permissions.canEdit || permissions.canDelete">
+                                  <button *ngIf="permissions.canEdit"
+                                    class="btn btn-sm btn-outline-primary rounded-circle" data-toggle="modal"
+                                    data-target="#media" (click)="editStudylevel(studylevel)" role="button"
+                                    aria-label="edit"><i class="fa fa-lg fa-edit" data-toggle="tooltip" title=""
+                                      data-original-title="Edit"></i></button>
+                                  <button *ngIf="permissions.canDelete"
+                                    class="btn btn-sm btn-outline-danger rounded-circle ml-1" data-toggle="tooltip"
+                                    title="" data-original-title="Remove" (click)="deleteStudyLevel(studylevel)"
+                                    role="button" aria-label="remove"><i class="fa fa-times-circle"
+                                      aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="studylevellist.length==0">
+                              <tr class="text-center text-color-red">
+                                <td colspan="6">
+                                  No Data Found
+                                </td>
+                              </tr>
+                            </ng-container>
+
+                          </tbody>
+                        </table>
+
+                      </div>
+                      <div class="px-3">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <select style="width: 60px;" class="custom-select custom-select-sm mr-2"
+                              id="inputGroupSelect01" [(ngModel)]="pageSize" (change)="getAllStudylevelByFilter()"
+                              aria-label="pagesize">
+                              <option value="10">10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            <p class="d-inline-block" *ngIf="(pageIndex*pageSize)>studylevelcount">Displaying
+                              {{(studylevelcount==0)?0:((pageIndex-1)*pageSize) + 1}} - {{studylevelcount}} of
+                              {{studylevelcount}}
+                              records</p>
+                            <p class="d-inline-block" *ngIf="(pageIndex*pageSize)<studylevelcount">Displaying
+                              {{((pageIndex-1)*pageSize) + 1}} -
+                              {{(((pageIndex-1)*pageSize) + pageSize)}} of
+                              {{studylevelcount}}
+                              records</p>
+                          </div>
+
+                          <div class="col-auto">
+                            <nav aria-label="Page navigation example">
+                              <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="media" role="dialog" *ngIf="permissions.canEdit || permissions.canAdd">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">{{(studylevel.id>0)?'Update':'Add'}} Studylevel</h4>&nbsp;&nbsp;&nbsp;
+        <button type="button" class="close" data-dismiss="modal" role="button" aria-label="close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form #headform="ngForm" novalidate autocomplete="off">
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500" for="name" aria-label="name">Name</label>
+                <input type="text" data-name="name" data-type="text" name="name" data-prefix="Studylevel" required
+                  class="form-control" [(ngModel)]="studylevel.name" aria-label="name">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-outline-primary" appValidation [form]="headform"
+              [validparent]="'form-group'" (click)="addNewStudylevel(headform)" role="button" aria-label="save">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              Save</button>&nbsp;
+            <button type="button" appClearValidation [form]="headform" class="btn btn-outline-danger"
+              data-dismiss="modal" (click)="cancelProcess()" role="button" aria-label="cancel">
+              <i class="fa fa-ban" aria-hidden="true"></i>
+              Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,360 @@
+<div class="row mt-1 mb-5 mr-1" *ngIf="property" style="width:200px;">
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="question" aria-label="question">Question</label>
+      <select [(ngModel)]="property.questionid" (change)="getOptions()" class="form-control" aria-label="question">
+        <optgroup *ngFor="let obj of questionslist | groupBy : 'sectionname'" label="{{obj.key}}">
+          <option *ngFor="let objV of obj.value" [ngValue]="objV.id">{{objV.question}}
+          </option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="property.type=='label' || property.type=='textbox'">
+    <div class="form-group text-left">
+      <input type="checkbox" [(ngModel)]="property.mergeans" [ngModelOptions]="{standalone: true}" id="mans"
+        aria-label="mans">
+      <label class="font-weight-500" for="mans" aria-label="mans">Merge Answer</label>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="property.type=='label' || property.type=='textbox'">
+    <label class="font-weight-500" for="whattotake" aria-label="whattotake">Condition</label>
+    <select [(ngModel)]="property.condition" class="form-control" aria-label="whattotake">
+      <option>Contains</option>
+      <option>Not Contains</option>
+    </select>
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="cinput" aria-label="cinput">Condition input</label>
+      <input type="text" class="form-control" placeholder="add comma separated values"
+        [(ngModel)]="property.conditionvalue" id="cinput" aria-label="cinput">
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="property.mergeans">
+    <div class="form-group text-left">
+      <input type="checkbox" [(ngModel)]="property.skipfirstans" [ngModelOptions]="{standalone: true}" id="smans"
+        aria-label="smans">
+      <label class="font-weight-500" for="smans" aria-label="smans">Skip first ans</label>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="property.mergeans">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="question" aria-label="question">Merge Question?</label>
+      <select [(ngModel)]="property.mergequestionid" (change)="getOptions()" class="form-control" aria-label="question">
+        <optgroup *ngFor="let obj of questionslist | groupBy : 'sectionname'" label="{{obj.key}}">
+          <option *ngFor="let objV of obj.value" [ngValue]="objV.id">{{objV.question}}
+          </option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="ismultiple">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="dquestion" aria-label="dquestion">Dependent question</label>
+      <select [(ngModel)]="property.optiondependselectid" class="form-control" (change)="getOptionsDepend()"
+        aria-label="dquestion">
+        <option *ngFor="let d of dependquelist" [value]="d.id">{{d.question}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="ismultiple && optionlistselect.length>0">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="danswer" aria-label="danswer">Dependent answer</label>
+      <select [(ngModel)]="property.optionselectid" class="form-control" aria-label="danswer">
+        <option *ngFor="let d of optionlistselect" [value]="d.name">{{d.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="ismultiple">
+    <div class="form-group text-left">
+      <input type="checkbox" [(ngModel)]="property.sequenceinstead" [ngModelOptions]="{standalone: true}"
+        id="sequenceinstead" aria-label="sequenceinstead">
+      <label class="font-weight-500" for="sequenceinstead" aria-label="sequenceinstead">Sequence
+        instead?</label>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="ismultiple && property.sequenceinstead">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="whattotake" aria-label="whattotake">Sequence Number</label>
+      <select [(ngModel)]="property.sequencenumber" class="form-control" aria-label="whattotake">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="questiontype=='phonenumber'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="choose" aria-label="choose">What to take?</label>
+      <select [(ngModel)]="property.mobile" class="form-control" aria-label="choose">
+        <option value="countrycode">Country Code</option>
+        <option value="areacode">Area Code</option>
+        <option value="mobile">Mobile Number</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="questiontype=='mobilenumber'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="chooses" aria-label="chooses">What to take?</label>
+      <select [(ngModel)]="property.mobile" class="form-control" aria-label="chooses">
+        <option value="countrycode">Country Code</option>
+        <option value="mobile">Mobile Number</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="questiontype=='coursepreference'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="options" aria-label="options">What to take?</label>
+      <select [(ngModel)]="property.optiondependselectid" class="form-control" aria-label="options">
+        <option>Program code</option>
+        <option>Program title</option>
+        <option>Cricos code</option>
+        <option>Duration</option>
+        <option>Intake</option>
+        <option>Major</option>
+        <option>Minor</option>
+        <option>Discipline</option>
+        <option>Campus</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="questiontype=='coursepreference' && property.optiondependselectid">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="whattotake" aria-label="whattotake">Preference?</label>
+      <select [(ngModel)]="property.prefer" class="form-control" aria-label="whattotake">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="name" aria-label="name">Name</label>
+      <input type="text" [(ngModel)]="property.name" class="form-control" aria-label="name">
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="id" aria-label="id">Id</label>
+      <input type="text" [(ngModel)]="property.id" class="form-control" aria-label="id">
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="property.type=='radiobutton'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" aria-label="direction" for="direction">Fill Type</label>
+      <select [(ngModel)]="property.filltype" class="form-control" aria-label="direction">
+        <option value="fill">Fill</option>
+        <option value="unfill">Unfill</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" aria-label="direction" for="direction">Direction</label>
+      <select [(ngModel)]="property.direction" class="form-control" aria-label="direction">
+        <option value="h">Horizontal</option>
+        <option value="v">Verticle</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="textalign" aria-label="textalign">Text align</label>
+      <select [(ngModel)]="property.textalign" class="form-control" aria-label="textalign">
+        <option value="left">left</option>
+        <option value="right">right</option>
+        <option value="center">center</option>
+        <option value="justify">justify</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="tcapital" aria-label="tcapital">Text capital</label>
+      <select [(ngModel)]="property.iscapital" class="form-control" aria-label="tcapital">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="fsize" aria-label="fsize">Font size</label>
+      <select [(ngModel)]="property.fontsize" class="form-control" aria-label="fsize">
+        <option value="medium">medium</option>
+        <option value="xx-small">xx-small</option>
+        <option value="x-small">x-small</option>
+        <option value="small">small</option>
+        <option value="large">large</option>
+        <option value="x-large">x-large</option>
+        <option value="xx-large">xx-large</option>
+        <option value="smaller">smaller</option>
+        <option value="larger">larger</option>
+        <option value="inherit">inherit</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="property.type=='date'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="dformat" aria-label="dformat">Date format</label>
+      <select [(ngModel)]="property.format" class="form-control" aria-label="dformat">
+        <option value="dd/mm/yyyy">dd/mm/yyyy</option>
+        <option value="mm/dd/yyyy">mm/dd/yyyy</option>
+        <option value="yyyy/dd/mm">yyyy/dd/mm</option>
+        <option value="yyyy/mm/dd">yyyy/mm/dd</option>
+        <option value="dd/mm/yy">dd/mm/yy</option>
+        <option value="mm/dd/yy">mm/dd/yy</option>
+        <option value="yy/dd/mm">yy/dd/mm</option>
+        <option value="yy/mm/dd">yy/mm/dd</option>
+        <option value="dd/mm">dd/mm</option>
+        <option value="mm/yy">mm/yy</option>
+        <option value="mm/yyyy">mm/yyyy</option>
+        <option value="yyyy">yyyy</option>
+        <option value="mm">mm</option>
+        <option value="dd">dd</option>
+        <option value="yy">yy</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- <div class="col-md-12" *ngIf="property.type=='table'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="Row" aria-label="skip">Row</label>
+      <input type="text" [(ngModel)]="property.Row" class="form-control" aria-label="Row">
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="property.type=='table'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="Column" aria-label="allow">Column</label>
+      <input type="text" [(ngModel)]="property.Column" class="form-control" aria-label="Column">
+    </div>
+  </div> -->
+
+  <div class="col-md-12" *ngIf="property.type=='label' || property.type=='textbox' || property.type=='date'">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="Appendvalue" aria-label="Appendvalue">Append value</label>
+      <input type="text" [(ngModel)]="property.Appendvalue" class="form-control" aria-label="Appendvalue">
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="skip" aria-label="skip">Skip character</label>
+      <input type="text" [(ngModel)]="property.skip" class="form-control" aria-label="skip">
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group text-left">
+      <label class="font-weight-500" for="allow" aria-label="allow">Allow character</label>
+      <input type="text" [(ngModel)]="property.allow" class="form-control" aria-label="allow">
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="property.boxes">
+    <div class="row" *ngFor="let box of property.boxes;trackBy: trackByIndex; index as bindex;">
+      <div class="col-md-12">
+        <strong>{{box.id}}</strong>&nbsp;
+        <button class="btn btn-outline-primary rounded-circle btn-sm" data-toggle="tooltip" title=""
+          data-original-title="Add more" (click)="addBox(bindex)" role="button" aria-label="addmore"><i
+            class="fa fa-plus" aria-hidden="true"></i></button>&nbsp;
+        <button *ngIf="bindex!=0" class="btn btn-outline-danger rounded-circle btn-sm" data-toggle="tooltip" title=""
+          data-original-title="Remove" (click)="removeBox(bindex)" role="button" aria-label="remove"><i
+            class="fa fa-times-circle" aria-hidden="true"></i></button>
+        <hr>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group text-left">
+          <label class="font-weight-500" for="id" aria-label="id">Id</label>
+          <input type="text" [(ngModel)]="box.id" class="form-control" aria-label="id">
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group text-left">
+          <label class="font-weight-500" for="top" aria-label="top">Top</label>
+          <input type="text" [(ngModel)]="box.style.marginTop" class="form-control" aria-label="top">
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group text-left">
+          <label class="font-weight-500" for="bottom" aria-label="bottom">Bottom</label>
+          <input type="text" [(ngModel)]="box.style.marginBottom" class="form-control" aria-label="bottom">
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group text-left">
+          <label class="font-weight-500" for="left" aria-label="left">Left</label>
+          <input type="text" [(ngModel)]="box.style.marginLeft" class="form-control" aria-label="left">
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group text-left">
+          <label class="font-weight-500" for="right" aria-label="right">Right</label>
+          <input type="text" [(ngModel)]="box.style.marginRight" class="form-control" aria-label="right">
+        </div>
+      </div>
+
+      <div class="col-md-12" *ngIf="property.type=='radiobutton' || property.type=='checkbox'">
+        <div class="form-group text-left">
+          <label class="font-weight-500" for="selectif" aria-label="selectif">Select if</label>
+          <select [(ngModel)]="box.conditionvalue" class="form-control" aria-label="selectif">
+            <option *ngFor="let d of optionlist" [value]="d.optiontext">{{d.optiontext}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="property.type=='radiobutton' || property.type=='checkbox'">
+        <div class="form-group text-left">
+          <label class="font-weight-500" for="selectif" aria-label="selectif">Select if</label>
+          <input type="text" [(ngModel)]="box.conditionvalue" class="form-control" aria-label="selectif">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 mb-5">
+    <button type="button" (click)="deleteProperty()" aria-controls="collapseFilter" data-toggle="tooltip" title=""
+      data-original-title="Remove control" class="btn btn-outline-danger btn-sm" role="button" aria-label="remove">
+      <i class="fa fa-trash" aria-hidden="true"></i>
+      Delete control</button>
+  </div>
+
+</div>

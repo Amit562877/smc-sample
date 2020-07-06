@@ -1,0 +1,303 @@
+<div class="row flex-nowrap">
+    <div class="col-12">
+        <div class="py-4 px-2">
+            <div class="row gutter-x-10">
+                <div class="col-lg-3">
+                    <div class="card hover-ctrl p-1 mb-4">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <div class="dropdown edit-field">
+                                    <div class="edit-field-label link-revert d-block font-size-12 font-weight-medium"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a href="profile-detail.html">
+                                            <img *ngIf="userdetails && userdetails.imgpath"
+                                                class="avatar-xl rounded-circle" src="{{userdetails.imgpath}}"
+                                                alt="Image Description">
+                                            <img *ngIf="userdetails && !userdetails.imgpath"
+                                                class="avatar-xl rounded-circle" src="assets/images/dummyuser.png"
+                                                alt="Image Description">
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu p-3">
+                                        <input type="file" class="form-control" data-dismiss="dropdown"
+                                            (change)="setProfilePhoto($event)">
+                                        <div class="form-row mt-3">
+                                            <div class="col-auto">
+                                                <button type="button" class="btn btn-success-air-border"
+                                                    (click)="chooseAvtar()">
+                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                    Choose avtar
+                                                </button>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="button" class="btn btn-danger-air-border"
+                                                    (click)="removeProfilePhoto()">
+                                                    <i class="fas fa-trash-alt mr-2"></i>Remove</button>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="mt-2 mb-2 form-row">
+                                            <div class="col-auto">
+                                                <button class="btn btn-outline-primary" data-dismiss="dropdown"
+                                                    (click)="chooseAvtar()">
+                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                    Choose avtar
+                                                </button>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button class="btn btn-outline-danger" data-dismiss="dropdown"
+                                                    (click)="removeProfilePhoto()">
+                                                    <i class="fas fa-trash-alt mr-2"></i>
+                                                    Remove
+                                                </button>
+                                            </div>
+
+                                        </div> -->
+
+
+                                        <!-- <div class="mt-2 text-right">
+                                            <button class="btn btn-sm btn-success" data-dismiss="dropdown">
+                                                <i class="material-icons"> done </i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" data-dismiss="dropdown">
+                                                <i class="material-icons"> close </i>
+                                            </button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="dropdown edit-field" *ngIf="userdetails">
+                                    <div class="edit-field-label link-revert d-block font-size-12 font-weight-medium"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        {{userdetails.firstname}}</div>
+
+                                </div>
+                                <div class="dropdown edit-field" *ngIf="userdetails">
+                                    <small class="edit-field-label d-block text-muted" aria-haspopup="true"
+                                        aria-expanded="false">{{userdetails.typeofaccount}}</small>
+
+                                </div>
+                                <div class="mt-1">
+                                    Last login date :
+                                    <span class="font-weight-bold text-primary">
+                                        2020-01-28</span>
+                                </div>
+                            </div>
+                            <div class="mb-2 align-items-center" *ngIf="userdetails">
+                                <div class="dropdown edit-field">
+                                    <div class="edit-field-label d-block text-muted" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <span class="fa fa-envelope text-center text-secondary mr-2"></span>
+                                        <span class="font-weight-bold text-primary">{{userdetails.email}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="mb-2 align-items-center" *ngIf="userdetails">
+                                <button class="btn btn-outline-primary" (click)="chooseAvtar()">
+                                    <i class="fa fa-user" aria-hidden="true"></i> Choose avtar
+                                </button>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="card p-1 mb-4 d-none" >
+                        <div class="card-body">
+                            <h4 class="h6 mb-0">Social Profiles</h4>
+                            <hr>
+                            <a class="d-flex mb-4" href="#">
+                                <img class="avatar-sm mr-3" src="assets/icons/twitter.svg" alt="Image Description">
+                                <div>
+                                    <span class="d-block text-dark">Twitter</span>
+                                    <small class="d-block text-secondary">2.7k followers</small>
+                                </div>
+                            </a>
+                            <a class="d-flex" href="#">
+                                <img class="avatar-sm mr-3" src="assets/icons/facebook.svg" alt="Facebook">
+                                <div>
+                                    <span class="d-block text-dark">Facebook</span>
+                                    <small class="d-block text-secondary">3k followers</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 pb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h2 *ngIf="userdetails">Hi {{userdetails.firstname}},
+                                </h2>
+                                <h4 class="h6 text-secondary mb-0">Gujarat, India
+                                    <small>- Joined in July 2018</small>
+                                </h4>
+                            </div>
+                            <form novalidate #editform="ngForm" *ngIf="!isAvtarDiv">
+                                <div class="row" *ngIf="userdetails">
+                                    <div class="col-md-12">
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="mb-4">
+                                                <div class="media">
+                                                    <div class="media-body text-lh-sm">
+                                                        <span class="d-block font-size-12">First Name:</span>
+                                                        <div class="row">
+                                                            <div class="form-group col">
+                                                                <input type="text" class="form-control" name="fname"
+                                                                    [(ngModel)]="userdetails.firstname"
+                                                                    data-name="firstname" [required]="true"
+                                                                    data-prefix="First name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="mb-4">
+                                                <div class="media">
+                                                    <div class="media-body text-lh-sm">
+                                                        <span class="d-block font-size-12">Middle Name:</span>
+                                                        <div class="row">
+                                                            <div class="form-group col">
+                                                                <input type="text" class="form-control" name="mname"
+                                                                    [(ngModel)]="userdetails.middlename"
+                                                                    data-name="middlename" [required]="true"
+                                                                    data-prefix="Middle name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="mb-4">
+                                                <div class="media">
+                                                    <div class="media-body text-lh-sm">
+                                                        <span class="d-block font-size-12">Last Name:</span>
+                                                        <div class="row">
+                                                            <div class="form-group col">
+                                                                <input type="text" class="form-control" name="lname"
+                                                                    [(ngModel)]="userdetails.lastname"
+                                                                    data-name="lastname" [required]="true"
+                                                                    data-prefix="Last name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="mb-4">
+                                                <div class="media">
+                                                    <div class="media-body text-lh-sm">
+                                                        <span class="d-block font-size-12">New password</span>
+                                                        <div class="row">
+                                                            <div class="form-group col">
+                                                                <input type="text" class="form-control" name="password1"
+                                                                    [(ngModel)]="password" data-name="password"
+                                                                    (keyup)="checkPassword()" [required]="false"
+                                                                    data-prefix="Password">
+                                                                <span class="text-danger" *ngIf="passflag">Please enter
+                                                                    correct password</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-3 media-body text-lh-sm">
+                                                        <span class="d-block font-size-12">Confirm Password</span>
+                                                        <div class="row">
+                                                            <div class="form-group col">
+                                                                <input type="text" class="form-control"
+                                                                    name="cpassword1" [(ngModel)]="cpassword"
+                                                                    (keyup)="checkCpassword()"
+                                                                    data-name="confirmpassword" [required]="false"
+                                                                    data-prefix="Confirm Password">
+                                                                <span class="text-danger" *ngIf="cpassflag">Password
+                                                                    does not
+                                                                    match</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="mb-4">
+                                                <div class="media">
+                                                    <div class="media-body text-lh-sm">
+                                                        <span class="d-block font-size-12">Country:</span>
+                                                        <div class="row">
+                                                            <div class="form-group col">
+                                                                <!-- <input type="text" class="form-control" name="ProcessName1"> -->
+                                                                <select aria-label="choosecountry" name="countryname"
+                                                                    [(ngModel)]="userdetails.countryid"
+                                                                    class="form-control" data-name="country"
+                                                                    [required]="true" data-prefix="Country"
+                                                                    data-type="select">
+                                                                    <option value="">Choose</option>
+                                                                    <option *ngFor="let country of countrylist"
+                                                                        [value]="country.id">{{country.name}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="mb-4">
+                                                <div class="media">
+                                                    <div class="media-body text-lh-sm">
+                                                        <span class="d-block font-size-12">Phone Number:</span>
+                                                        <div class="row">
+                                                            <div class="form-group col">
+                                                                <input type="text" class="form-control" name="phno"
+                                                                    [(ngModel)]="userdetails.phoneno"
+                                                                    data-name="phonenumber" [required]="true"
+                                                                    data-prefix="Phone Number">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-row" style="float: right;">
+                                    <div class="col-auto">
+                                        <button appValidation [form]="editform" [validparent]="'form-group'"
+                                            type="button" class="btn btn-success-air-border"
+                                            (click)="saveDetails(editform)">
+                                            <i class="fas fa-check-circle mr-2"></i>Save</button>
+                                    </div>
+                                    <!-- <div class="col-auto">
+                                        <button type="button" class="btn btn-danger-air-border">
+                                            <i class="fas fa-times-circle mr-2"></i>Cancel</button>
+                                    </div> -->
+                                </div>
+                            </form>
+                            <div *ngIf="isAvtarDiv">
+                                <h4 style="color: #007bff;font: size 20px;">Recommendations</h4>
+                                <div class="avtardiv">
+
+                                    <ul *ngIf="avtarList" style="list-style-type: none;">
+                                        <li *ngFor="let avtar of avtarList">
+                                            <img src="{{avtar.imgpath}}" alt="Avtar image" (click)="selectAvtar(avtar)"
+                                                [ngClass]="{border_li: isActiveAvtar(avtar)}">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-row mt-3" style="float: right;">
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-success-air-border"
+                                            (click)="updateProfilePhoto()">
+                                            <i class="fas fa-check-circle mr-2"></i>Save</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-danger-air-border" (click)="closeAvtar()">
+                                            <i class="fas fa-times-circle mr-2"></i>Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,466 @@
+<body class="bg-white">
+  <!-- <app-navigation-menu></app-navigation-menu> -->
+  <div class="container-fluid p-lg-0"
+    style="background-image: url(./assets/images/new-search-bg.png); background-repeat: no-repeat;background-size: cover; background-position: top center;">
+    <div class="row no-gutters">
+      <div class="col-lg-5 col-md-8 my-3 mx-auto text-center">
+        <div>
+          <img class="img-fluid" src="./assets/images/search-my-courses-logo.png" alt="search-my-courses-logo">
+        </div>
+        <p class="font-size-13 pt-2"> Search for a course from Universities around the world</p>
+        <div class="row gutter-x-5">
+          <div class="col-md mb-3">
+            <div class="input-group-inside input-group-lg">
+              <input type="text" placeholder="Type at least three character for search.." class="form-control pr-5"
+                [(ngModel)]="courseFilterModel.searchstring" (keyup)="globalhints($event)"
+                (focus)="inputFocusFlag=false;" autocomplete="off" (focusout)="inputFocusFlag=true;">
+              <div class="input-group-inside-append">
+                <button class="btn btn-lg btn-trans" type="button" (click)="getCourseByFilter();">
+                  <i class="la la-search la-1x text-primary"></i>
+                </button>
+              </div>
+            </div>
+            <div id="hint"
+              *ngIf="!isbuttonclicke && (searchhints.coursehint.length>0 || searchhints.universityhint.length>0)"
+              [ngClass]="courseFilterModel.searchstring.lenght>=2 ? '' : 'hidden'" class="card mt-1 hint-wrap">
+              <ul id="list" class="m-2 ml-3" (focus)="divFocusFlag=false;" (focusout)="divFocusFlag=true;"
+                class="search-results search-resultsoption" infinite-scroll [infiniteScrollDistance]="2"
+                [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="getNextHint()"
+                [scrollWindow]="false">
+                <!-- <div class="input-group bg-white mt-1" *ngFor="let data of universityhint">
+                    <a  aria-label="getNextHint"class="nav-link" style="color: black" [routerLink]="['/universitydetail/',data.id]">
+                      <div class="input-group-append">
+                        <img src="./assets/images/{{data.logourl}}" class="img-rounded" height="30" width="30">&nbsp;
+                        <span style="text-align: justify"> {{data.name}} <b>(University)</b></span>
+                      </div>
+                    </a>
+                  </div> -->
+
+                <li class="input-group bg-white mt-1"
+                  *ngFor="let data of searchhints.coursehint;trackBy: trackByIndex; index as tindex; last as last"
+                  [ngClass]="(tindex==0)?'active':''">
+                  <a aria-label="getCourseByHint_link" class="nav-link" style="color: black"
+                    (click)="getCourseByHint(data.name)" value="data.name">
+                    <!-- [routerLink]="['course-detail',data.id]"> -->
+                    <div class="input-group-append">
+                      <div class="hintoption" [style.background]="data.name | firstcharactercolor">
+                        {{data.name | firstcharacter}}
+                      </div> &nbsp;
+                      <!-- <img src="./assets/images/{{data.logourl}}" class="img-rounded" style="height: 30px;width:30px;border: #000000 1px outset;border-radius: 30px;" > &nbsp; -->
+                      <span style="text-align: left">{{data.name}}</span>
+                    </div>
+                  </a>
+                </li>
+                <!-- <button role="button" aria-label="getNextHint1" *ngIf="searchhints.ismorepage" class="btn btn-outline-primary btn-rounded btn-sm mt-2"
+                (click)="getNextHint()">show more</button> -->
+              </ul>
+            </div>
+          </div>
+          <div class="col-auto mb-3">
+            <button type="button" data-toggle="collapse" href="#collapseFilter" aria-expanded="true"
+              aria-controls="collapseFilter" class="btn btn-outline-primary btn-lg">
+              <i class="align-bottom la la-1x la-filter pr-1"></i>Filter</button>
+          </div>
+          <div class="col-auto mb-3" *ngIf="permissions.canView && switchFlag == 'O'">
+            <button type="button" (click)="switchView('C')" role="button" class="btn btn-outline-primary btn-lg">
+              <i class="align-bottom la la-1x la-filter pr-1"></i>My Courses</button>
+          </div>
+          <div class="col-auto mb-3" *ngIf="permissions.canView && switchFlag == 'C'">
+            <button type="button" (click)="switchView('O')" role="button" class="btn btn-outline-primary btn-lg">
+              <i class="align-bottom la la-1x la-filter pr-1"></i>All Courses</button>
+          </div>
+          <!-- <div class="col-auto mb-3">
+            <button type="button" data-target="#multiModalInner" data-toggle="modal" role="button"
+              class="btn btn-outline-primary btn-lg">
+              <i class="align-bottom la la-1x la-filter pr-1"></i>Advanced Filter</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="py-3 container-fluid bg-breadcrumb">
+    <div class="collapse" id="collapseFilter">
+      <div class="card shadow mb-3">
+        <div class="card-body p-2">
+          <div class="row gutter-x-5">
+            <div class="form-group col-md my-1">
+              <select aria-label="countryid" class="form-control" [(ngModel)]="courseFilterModel.countryid"
+                id="exampleFormControlSelect1" (change)="filterstate()">
+                <option value="0">-- Choose Country --</option>
+                <option *ngFor="let country of coursedetails.countrylist" [ngValue]="country.id">
+                  {{country.name}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="stateid" class="form-control" [(ngModel)]="courseFilterModel.stateid"
+                id="exampleFormControlSelect2" (change)="filtercity()">
+                <option value="0">-- Choose State --</option>
+                <option *ngFor="let state of coursedetails.statelist" [ngValue]="state.id">
+                  {{state.name}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="cityid" class="form-control" id="exampleFormControlSelect3"
+                [(ngModel)]="courseFilterModel.cityid">
+                <option value="0">-- Choose City --</option>
+                <option *ngFor="let city of coursedetails.citylist" [ngValue]="city.id">
+                  {{city.name}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="getUniversityListByType" class="form-control" [(ngModel)]="universitytypeid"
+                (change)="getUniversityListByType()">
+                <option value="">-- Choose type --</option>
+                <option *ngFor="let type of coursedetails.institutetypelist" [ngValue]="type.id">
+                  {{type.univtype}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="universitylist" class="form-control" [(ngModel)]="courseFilterModel.universityid"
+                id="exampleFormControlSelect4">
+                <option value="0">-- Choose University --</option>
+                <option *ngFor="let university of coursedetails.universitylist" [ngValue]="university.id">
+                  {{university.name}}</option>
+              </select>
+            </div>
+            <div class="w-100"></div>
+            <div class="form-group col-md my-1">
+              <select aria-label="disciplineid" class="form-control" id="exampleFormControlSelect5"
+                [(ngModel)]="courseFilterModel.disciplineid">
+                <option value="0">-- Choose Discipline --</option>
+                <option *ngFor="let discipline of coursedetails.disciplinelist" [ngValue]="discipline.id">
+                  {{discipline.name}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="educationleveldata" class="form-control" [(ngModel)]="courseFilterModel.studylevelid"
+                id="exampleFormControlSelect6">
+                <option value="0">-- Choose Education Level --</option>
+                <option *ngFor="let studylevel of coursedetails.educationleveldata" [ngValue]="studylevel.id">
+                  {{studylevel.name}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="coursetype" class="form-control" [(ngModel)]="courseFilterModel.coursetype"
+                id="exampleFormControlSelect7">
+                <option value="">-- Choose Course Type --</option>
+                <option value="parttime">Part-Time</option>
+                <option value="fulltime">Full-Time</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="durationcourse" class="form-control" [(ngModel)]="courseFilterModel.duration"
+                id="exampleFormControlSelect8">
+                <option value="0">-- Choose Duration --</option>
+                <option value="1">less than 1 Year</option>
+                <option value="2">less than 2 Year</option>
+                <option value="3">less than 3 Year</option>
+                <option value="4">more than 3 Year</option>
+              </select>
+            </div>
+            <div class="form-group col-md my-1">
+              <select aria-label="maxfees" class="form-control" id="exampleFormControlSelect9"
+                [(ngModel)]="courseFilterModel.maxfees" (change)="getCourseByFilterFees()">
+                <option value="0">-- Choose Limit --</option>
+                <option value="20000">less than 20000</option>
+                <option value="50000">20000 to 50000</option>
+                <option value="100000">50000 to 100000 </option>
+                <option value="100001">more than 100000</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="row gutter-x-5 justify-content-end">
+            <div class="form-group col-auto col-md-auto my-1">
+              <button type="button" class="btn btn-primary" (click)="getCourseByFilter()">
+                <i class="align-bottom la la-1x la-filter pr-1"></i>Apply Filter</button>
+            </div>
+            <div class="form-group col-auto col-md-auto my-1">
+              <button type="button" role="button" class="btn btn-outline-danger" (click)="clearFilter()"
+                data-toggle="collapse" href="#collapseFilter">
+                <i class="align-bottom la la-1x la-close pr-1"></i>Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+      [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()"
+      (scrolledUp)="onUp()" *ngIf="coursedetails.coursedata">
+      <div class="row gutter-x-5">
+        <div class="col-lg-3 col-md-4 mb-3 count-item"
+          *ngFor="let course of coursedetails.coursedata;let courseIndex = index">
+          <app-course-search-cards [switchFlag]="switchFlag" [coursedetail]=course [courseIndex]=courseIndex
+            (passUnivId)="getUniversityIds($event)" [selectedIds]="selectedCourses">
+          </app-course-search-cards>
+        </div>
+      </div>
+    </div>
+    <div class="text-danger text-center" *ngIf="!coursedetails.coursedata">
+      <strong>No data found</strong>
+    </div>
+  </div>
+
+  <div onclick="topFunction()" *ngIf="!ispopup && topbtnFlag" id="back-to-top" style="right: 100px;"
+    class="btn btn-outline-primary">
+    <i class="la la-arrow-up"></i>
+  </div>
+  <!-- 
+  <div (click)="topFunction()" *ngIf="ispopup" id="back-to-top" class="btn btn-outline-primary"><i
+      class="la la-arrow-up"></i>
+  </div> -->
+
+  <div *ngIf="(fillFormBtnStatus && !ispopup && !showform)" (click)="passUniversityIds()" id="FillFormBtn"
+    class="btn btn-primary btn-w120">Fill
+    Form
+  </div>
+
+</body>
+
+<div class="sticky-bottom w-auto" style="left: auto;">
+  <div class="p-3">
+    <div data-toggle="tooltip" data-placement="left" title="View Courses" class="dropdown dropdown-cust flex-1">
+      <a class="badge badge-primary count-shopping-cart font-size-11 font-weight-bold hover-3d px-0 rounded-circle shadow text-white"
+        style="width: 60px; height:60px;" href="JavaScript:Void(0);" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="true">
+        <i class="la la-2x la-graduation-cap"></i>
+        <span class="d-block font-size-11 font-weight-500"
+          *ngIf="selectedCourses && selectedCourses.length > 0 ">{{selectedCourses.length}}</span>
+        <span class="d-block font-size-11 font-weight-500"
+          *ngIf="selectedCourses && selectedCourses.length == 0 ">0</span>
+        <span class="d-block font-size-11 font-weight-500" *ngIf="!selectedCourses">0</span>
+      </a>
+      <div
+        class="dropdown-menu dropdown-form dropdown-menu-lg pt-0 border-bottom-left-radius-8 border-bottom-right-radius-8 border-top-right-radius-8 border-top-left-radius-8"
+        style="width: 380px;">
+        <div class="dropdown-title-bar border-top-right-radius-8 border-top-left-radius-8 ">
+          <div class="font-size-12 font-weight-400 d-inline-block ">Course List</div>&nbsp;
+          <span class="notification-badge badge badge-light align-content-around"
+            *ngIf="selectedCourses && selectedCourses.length > 0 ">{{selectedCourses.length}}</span>
+          <span class="notification-badge badge badge-light align-content-around"
+            *ngIf="selectedCourses && selectedCourses.length == 0 ">0</span>
+          <span class="notification-badge badge badge-light align-content-around" *ngIf="!selectedCourses">0</span>
+        </div>
+        <div>
+          <!-- <h5 class="h5 mb-4">No Courses Selected</h5> -->
+          <ul class="list-unstyled list-notification list-notification-mh-1 py-3"
+            *ngIf="comparedata && selectedCourses.length>0">
+            <li *ngFor="let course of selectedCourses  | groupBy : 'universityname'">
+              <a class="list-link" href="javascript:void(0);">
+                <div class="row">
+                  <div class="col-auto">
+                    <div class="list-notification-ico">
+                      <span>{{course.key | firstcharacter}}</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <span class="user-name text-body d-block">{{course.key}} </span>
+                    <div class="row" *ngFor="let d of course.value">
+                      <div class="col">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="compare_{{d.courseid}}_{{d.campusid}}"
+                            name="compare_{{d.courseid}}_{{d.campusid}}" [checked]="d.ischecked"
+                            [(ngModel)]="d.ischecked" (change)="clickCompare(d)">
+                          <label class="custom-control-label" for="compare_{{d.courseid}}_{{d.campusid}}"> <span
+                              class="d-block notify">{{d.coursename}}</span></label>
+                        </div>
+                      </div>
+                      <!-- <div class="col">
+                        <p class="notify">
+                          <span class="d-block">{{d.coursename}}</span>
+                        </p>
+                      </div> -->
+                      <div class="col-auto">
+                        <i class="la la-1x la-trash text-danger" (click)="removeCourse(d)"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <ul class="list-unstyled list-notification list-notification-mh-1 my-2"
+            *ngIf="!selectedCourses || selectedCourses.length==0">
+            <li>
+              <a class="list-link" href="javascript:void(0);">
+                <div class="row">
+                  <div class="col">
+                    <span class="user-name text-body d-block">No Course found </span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <div class="form-group mb-2 px-3">
+            <div class="row gutter-x-5">
+              <div class="col">
+                <button *ngIf="comparedata && comparedata.length>0" class="btn btn-sm btn-danger btn-block"
+                  (click)="clearCourseCompare()">Clear</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-sm btn-primary btn-block" *ngIf="comparedata && comparedata.length>0"
+                  (click)="openCompareModal()">Compare</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Course Compare Model Start -->
+<div class="modal fade modal-right modal-full" data-modal-width="100vw" data-modal-offset-upto="992" id="Fullmodal"
+  tabindex="-1" role="dialog" aria-labelledby="exFourLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title  w-100 text-center" id="exFourLabel">Compare Course</h4>
+        <button role="button" aria-label="closeCompareModal" type="button" class="close" data-dismiss="modal"
+          (click)="closeCompareModal()" aria-label="Close">
+          <i class="la la-close"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="displayUniversityRecordsbody">
+        <div class="table-responsive" id="displayUniversityRecords">
+          <table class="table table-striped">
+            <tbody>
+              <ng-container *ngIf="courseCompareData">
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">University Name</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <strong>{{courseCompare.univ_name | uppercase}}</strong></td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Course Name</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <strong class="card-title"> {{courseCompare.course_title}}</strong>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Overview</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_overview}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Country</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_country}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Program Code</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.program_code}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Cricos Code</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <strong>
+                        <li *ngFor="let maincricos of courseCompare.course_campus_location">
+                          {{maincricos.name}}: {{maincricos.code}}
+
+                        </li>
+                      </strong>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Duration</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <span *ngFor="let duration of courseCompare.course_duration_display">
+                      <strong>
+                        <span>
+                          {{duration.duration}}
+                          {{duration.unit | uppercase}} / {{duration.display | uppercase}}
+                        </span>
+                      </strong>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Fees</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <strong>
+                        <li *ngFor="let mainFees of courseCompare.course_tuition_fee.fees">
+                          {{mainFees.name}}:
+                          {{mainFees.value.international_student.amount}} /
+                          {{mainFees.value.international_student.unit | uppercase}}
+                        </li>
+                      </strong>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Intake</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <strong>
+                        <li *ngFor="let mainIntake of courseCompare.course_intake.intake">
+                          {{mainIntake.name}}:
+                          <span *ngFor="let subIntake of mainIntake.value">{{subIntake.actualdate}}, </span>
+                        </li>
+                      </strong>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Study Mode</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_study_mode}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Campuses</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <span *ngFor="let loc of courseCompare.course_campus_location">
+                      {{loc.name}}
+                    </span>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Course Discipline</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <li *ngFor="let category of courseCompare.course_discipline">
+                        {{category}}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">English Requirement</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <p *ngFor="let english of courseCompare.course_admission_requirement.english">
+                      <strong>{{english.name | uppercase}}: </strong>{{english.description}}
+                    </p>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="courseCompareData && courseCompareData.length==0">
+                <tr class="text-center text-color-red">
+                  <td colspan="6">
+                    No Data Found
+                  </td>
+                </tr>
+              </ng-container>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button role="button" aria-label="save as pdf" type="button" (click)="downloadPdf()"
+          class="btn btn-outline-secondary" [disabled]="downloadPDF"><span *ngIf="downloadPDF"><i
+              class="fa fa-lg fa-sync fa-refresh"></i></span><span *ngIf="!downloadPDF">
+            <i class="far fa-file-pdf"></i></span> Save as PDF</button>
+        <!-- <button role="button" aria-label="send mail" type="button" class="btn btn-outline-primary"><i
+            class="fa fa-lg fa-envelope"></i> Send</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Course Compare Model End -->

@@ -1,0 +1,97 @@
+<div class="modal fade" id="loginoptions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 500px !important;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button role="button" aria-label="closebtn2" type="button" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body  text-center" style="padding: 50px;">
+        <span style="font-size: large;
+      font-weight: 600;
+      font-family: sans-serif;">How would you like us to identify you?</span>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="">
+              <div class="container1">
+                <header class="landing-header" style="padding-left: 80px;">
+                  <div class="landing-header__right">
+                    <img alt="logo" src="../../../assets/images/smc-logo.png" style="width: 150px;">
+                  </div>
+                </header>
+                <hr>
+                <div class="row">
+                  <div class="col-md-12">
+                    <form novalidate #mainform="ngForm">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group form-group-lg">
+                            <input aria-label="username" type="text" placeholder="Username" [(ngModel)]="username"
+                              name="username" data-name="username" [required]="true" data-prefix="Username"
+                              data-type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group form-group-lg">
+                            <input aria-label="password" type="password" placeholder="Password" [(ngModel)]="password"
+                              name="password" data-name="password" [required]="true" data-prefix="Password"
+                              data-type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 text-justify">
+                          <div class="form-group">
+                            <input aria-label="staysignin" type="checkbox" id="staysignin" name="staysignin"
+                              [(ngModel)]="staysignin">
+                            <label aria-label="staysignin_label" for="staysignin" class="ml-1" style="font-family: 'Graphik', Helvetica, Arial, sans-serif;
+                                font-size: 14px;">Remember me</label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <button role="button" aria-label="makeMeLogin" class="btn btn-block btn-danger" appValidation
+                            [form]="mainform" [validparent]="'form-group'" (click)="makeMeLogin(mainform)"
+                            [disabled]="submitted">Login <span *ngIf="submitted"><i
+                                class="fa fa-lg fa-sync fa-refresh"></i></span><span *ngIf="!submitted"><i
+                                class="fa fa-lg fa-sign-in-alt"></i></span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-justify">
+                    <div class="form-group">
+                      <span>Don't have account?</span>&nbsp;<a aria-label="signup" (click)="redirect('signup')"
+                        href="javascript:void(0)"><strong class="text-danger">SignUp</strong></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-justify">
+                    <div class="form-group">
+                      <span>Forgot your password?</span>&nbsp;<a aria-label="resetit" (click)="redirect('reset')"
+                        href="javascript:void(0)"><strong class="text-danger">Reset it</strong></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button (click)="forward('G')" class="btn btn-block btn-danger"><i class="fab fa-google-plus-g"></i>
+                      Google</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

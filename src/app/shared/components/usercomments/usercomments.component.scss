@@ -1,0 +1,62 @@
+
+
+.comment-wrapper .panel-body {
+    max-height: 650px;
+  }
+  
+  .comment-wrapper .media-list .media img {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #e5e7e8;
+    border-radius: 50%;
+  }
+  
+  .comment-wrapper .media-list .media {
+    border-bottom: 1px dashed #efefef;
+    margin-bottom: 25px;
+  }
+  
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 0 !important;
+    margin-block-end: 0 !important;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px !important;
+  }
+  
+  .float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 9999999;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
+  
+  .fade {
+    // first we make all instances of this transparent.
+    opacity: 0;
+    animation: fadeInUp 0.3s ease-in-out 0s forwards;
+    animation-delay: 0s;
+  }
+  

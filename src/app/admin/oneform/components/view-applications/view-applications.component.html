@@ -1,0 +1,132 @@
+<div>
+    <div class="row">
+        <div class="left-sidebar col-2 p-3 border-right">
+            <h4>Place hear anything which you want</h4>
+        </div>
+        <div class="main-content col-12 px-4">
+            <div class="company-pills-tab bg-white py-3 rounded mt-4">
+                <ul class="nav nav-line border-bottom px-3 mb-3" id="company-pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#favourites"
+                            (click)="changeTab('c')" role="tab" aria-controls="pills-home"
+                            aria-selected="true">Application Drafts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#coursecompare" role="tab"
+                            (click)="changeTab('s')" aria-controls="pills-profile" aria-selected="false">Application
+                            Shared</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content px-3">
+                    <div class="tab-pane fade show active" id="favourites" role="tabpanel"
+                        aria-labelledby="pills-home-tab">
+                        <div>
+                            <div class="row flex-nowrap">
+                                <div class="col w-100">
+                                    <div class="w-100">
+                                        <div id="split-aside-resize" class="w-100">
+                                            <div class="row">
+                                                <div class="left-sidebar col-2 p-3 border-right">
+                                                    <h4>Place hear anything which you want</h4>
+                                                </div>
+                                                <div class="main-content col-12 px-4">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="table-responsive" id="displayUniversityRecords">
+                                                                <table class="table table-striped">
+                                                                    <thead class="text-uppercase">
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th *ngIf="activeFlag == 'c'">
+                                                                                Doc Owner
+                                                                            </th>
+                                                                            <th *ngIf="activeFlag == 's'">Shared by
+                                                                            </th>
+                                                                            <th>
+                                                                                Organization
+                                                                            </th>
+                                                                            <th *ngIf="activeFlag == 's'">Permission
+                                                                            </th>
+                                                                            <th>CreatedOn</th>
+                                                                            <th>Link</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody *ngIf="activeFlag == 'c'">
+                                                                        <ng-container
+                                                                            *ngIf="createdApplications && createdApplications.length>0">
+                                                                            <tr
+                                                                                *ngFor="let list of createdApplications; let i = index">
+                                                                                <td> {{i+1}} </td>
+                                                                                <td> {{list.docowner}} </td>
+                                                                                <td> {{list.agentOrganization}} </td>
+                                                                                <!-- <td> {{list.permission}} </td> -->
+                                                                                <td> {{list.createdon}} </td>
+                                                                                <td>
+                                                                                    <a class="btn btn-sm btn-outline-secondary"
+                                                                                        target="_blank"
+                                                                                        href="{{list.ulink}}">
+                                                                                        <i class="far fa-eye"></i> One
+                                                                                        form
+                                                                                    </a>
+                                                                                </td>
+
+
+                                                                            </tr>
+                                                                        </ng-container>
+                                                                        <tr class="text-center text-color-red"
+                                                                            *ngIf="!createdApplications || createdApplications.length == 0">
+                                                                            <td colspan="6">
+                                                                                No course found
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <tbody *ngIf="activeFlag == 's'">
+                                                                        <ng-container
+                                                                            *ngIf="sharedApplications && sharedApplications.length>0">
+                                                                            <tr
+                                                                                *ngFor="let list of sharedApplications; let i = index">
+                                                                                <td> {{i+1}} </td>
+                                                                                <td> {{list.sharedby}} </td>
+                                                                                <td> {{list.agentOrganization}} </td>
+                                                                                <td> {{list.permission}} </td>
+                                                                                <td> {{list.createdon}} </td>
+                                                                                <td>
+                                                                                    <a class="btn btn-sm btn-outline-secondary"
+                                                                                        target="_blank"
+                                                                                        href="{{list.ulink}}">
+                                                                                        <i class="far fa-eye"></i> One
+                                                                                        form
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </ng-container>
+
+                                                                        <tr class="text-center text-color-red"
+                                                                            *ngIf="!sharedApplications || sharedApplications.length == 0">
+                                                                            <td colspan="6">
+                                                                                No course found
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

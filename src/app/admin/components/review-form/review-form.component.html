@@ -1,0 +1,283 @@
+<div class="modal fade" style="overflow: auto !important;" id="reviewForm" role="dialog">
+    <div class="modal-dialog modal-lg" style="max-width: 90% !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Review Form</h4>&nbsp;&nbsp;
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body" style="max-height: 100% !important;height: 100%;">
+
+                <div class="row">
+                    <div class="col-md-9 ml-5">
+                        <table border="0" id="mainpdf" cellpadding="0" cellspacing="0" width="95%" class="main"
+                            *ngIf="sectionlist.length>0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table class="border-bottom" border="0" cellpadding="0" cellspacing="0"
+                                            align="center" width="100%" style="border-width: 2px;">
+                                            <tr>
+                                                <td height="20" style="font-size: 0;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <img alt="search-my-courses-logo" class=""
+                                                        src="../../../assets/images/smc-logo.png" height="80">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="20" style="font-size: 0;"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td height="20" style="font-size: 0;"></td>
+                                                </tr>
+                                                <tr
+                                                    *ngFor="let section of sectionlist;trackBy: trackByIndex; index as index; last as last">
+                                                    <td class="pb-30 px-20" *ngIf="section.sectionparentidf===0">
+                                                        <span
+                                                            class="bg-light-1 border-radius-top d-block font-14 font-bold p-10 text-uppercase">
+                                                            <div class="row">
+                                                                <div class="col-11">
+                                                                    {{section.sectionname}}
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <!-- <a aria-label="editform"
+                                                                        (click)="editAssessmentForm(section.sectionid)"
+                                                                        class="btn ml-1 btn-outline-danger btn-sm">
+                                                                        <i class="far fa-edit"></i>
+                                                                    </a> -->
+                                                                    <!-- <a aria-label="editform"
+                                                            [routerLink]="['/user/assessment',universityIdparam | encdec :'enc' ,applicantId | encdec :'enc' ,section.sectionid | encdec :'enc']"
+                                                            class="btn ml-1 btn-outline-danger btn-sm">
+                                                            <i class="far fa-edit"></i>
+                                                        </a> -->
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                        <table class="border" border="0" bordercolor="#ddd"
+                                                            cellpadding="10" cellspacing="0" align="center"
+                                                            width="100%">
+                                                            <tbody>
+                                                                <tr *ngFor="let question of questionlist| filterArrV2:{ sectionid: section.sectionid }
+                                                    ;trackBy: trackByIndex; index as index; last as last">
+                                                                    <td width="50%" *ngIf="question.controltypeidf!=37">
+                                                                        <div class="d-block">
+                                                                            {{question.question}}
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td *ngIf="question.controltypeidf!=37 && question.controltypeidf!=5 "
+                                                                        [innerHtml]="question.controlvalue">
+
+                                                                    </td>
+
+                                                                    <td *ngIf="question.controltypeidf==5">
+                                                                        <span
+                                                                            *ngFor="let ans of question.controlvalue | splitStringVar:'~'">
+                                                                            {{ans}}
+                                                                        </span>
+
+                                                                    </td>
+                                                                    <td style="width: 100%;" colspan="2"
+                                                                        *ngIf="question.controltypeidf==37">
+                                                                        <table style="width: 100%;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <span
+                                                                                        class="bg-light-1 border-radius-top d-block font-14 font-bold p-10 text-uppercase">
+                                                                                        Course Preferences
+                                                                                    </span>
+                                                                                    <table width="100%" border=1>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <th class="font-bold">
+                                                                                                    <div
+                                                                                                        class="d-block">
+                                                                                                        Cricos Code
+                                                                                                    </div>
+                                                                                                </th>
+                                                                                                <th class="font-bold">
+                                                                                                    Course Name
+                                                                                                </th>
+                                                                                                <th class="font-bold">
+                                                                                                    Campus Name
+                                                                                                </th>
+                                                                                                <th class="font-bold">
+                                                                                                    Intake
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                            <tr
+                                                                                                *ngFor="let preference of preferencelist;trackBy: trackByIndex; index as index; last as last">
+
+                                                                                                <td>
+                                                                                                    <div class="d-block"
+                                                                                                        [innerHtml]="preference.cricoscode">
+                                                                                                        <!-- {{preference.cricoscode}} -->
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td
+                                                                                                    [innerHtml]="preference.coursename">
+                                                                                                    <!-- {{preference.coursename}} -->
+                                                                                                </td>
+                                                                                                <td
+                                                                                                    [innerHtml]="preference.campusname">
+                                                                                                    <!-- {{preference.coursename}} -->
+                                                                                                </td>
+                                                                                                <td
+                                                                                                    [innerHtml]="preference.intake">
+                                                                                                    <!-- {{preference.coursename}} -->
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr
+                                                                    *ngFor="let subsection of sectionlist| filterArrV2:{ sectionparentidf: section.sectionid };trackBy: trackByIndex; index as index; last as last">
+                                                                    <td colspan="2">
+                                                                        <span
+                                                                            class="bg-light-1 border-radius-top d-block font-14 font-bold p-10 text-uppercase">
+                                                                            {{subsection.sectionname}}
+                                                                        </span>
+                                                                        <table class="border" border="0"
+                                                                            bordercolor="#ddd" cellpadding="10"
+                                                                            cellspacing="0" align="center" width="100%">
+                                                                            <tbody>
+                                                                                <tr
+                                                                                    *ngFor="let question of questionlist| filterArrV2:{ sectionid: subsection.sectionid }
+                                                                            ;trackBy: trackByIndex; index as index; last as last">
+                                                                                    <td width="50%"
+                                                                                        *ngIf="question.controltypeidf!=37">
+                                                                                        <div class="d-block">
+                                                                                            {{question.question}}
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                    <td *ngIf="question.controltypeidf!=37"
+                                                                                        [innerHtml]="question.controlvalue">
+                                                                                        <!-- {{question.controlvalue}} -->
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table border="0" id="mainpdf" cellpadding="0" cellspacing="0" width="95%" class="main"
+                            *ngIf="sectionlist.length==0">
+                            <tbody>
+                                <tr>
+                                    <td colspan="100" class="text-center text-danger">Application form not available for this
+                                        university.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-md-3 flex-containerv sticky">
+                        <div class="row ml-1" *ngIf="universityButtons">
+                            <div class="col-auto" style="padding-top: 5px;">
+                                <button role="button" aria-label="GoToReviewFormbtn" style="white-space: normal;
+                                width: 250px;text-align: justify;" type="button" class="btn btn-sm"
+                                    (click)="GoToReviewForm(-1,'defaultPdf')"
+                                    [ngClass]="(universityId ==-1)?'btn-secondary':'btn-default'"
+                                    [disabled]="universityId == -1"><i class="fa fa-lg fa-university"></i>
+                                    Default question PDF</button>
+                            </div>
+                            <div class="col-auto" style="padding-top: 5px;" *ngFor="let univ of universityButtons">
+                                <button role="button" aria-label="GoToReviewFormbtn" type="button" class="btn btn-sm"
+                                    style="white-space: normal;
+                                width: 250px;text-align: justify;"
+                                    [ngClass]="(universityId==univ.id)?'btn-secondary':'btn-default'"
+                                    [disabled]="univ.id===universityId" (click)="GoToReviewForm(univ.id,univ.name)"><i
+                                        class="fa fa-lg fa-university"></i>
+                                    {{univ.name}}</button>
+                            </div>
+                            <div class="col mt-1" style="padding-top: 5px;" *ngIf="sectionlist.length>0">
+                                <button role="button" style="margin-right: 5px;" aria-label="downloadPdf1"
+                                    (click)="downloadUniversityPDF()" class="btn btn-outline-primary btn-sm"
+                                    data-toggle="tooltip" title="" data-original-title="Download pdf"
+                                    [disabled]="loadService.downloadPDF"><span *ngIf="loadService.downloadPDF"><i
+                                            class="fa fa-lg fa-sync fa-refresh"></i></span><span
+                                        *ngIf="!loadService.downloadPDF">
+                                        <i class="fa fa-lg fa-download"></i></span>
+                                    Download</button>
+
+
+                                <button role="button" aria-label="downloadPdf1" *ngIf="univpdfaval"
+                                    (click)="downloadbyUniversityPDF()" class="btn btn-outline-primary btn-sm"
+                                    data-toggle="tooltip" title="" data-original-title="Download pdf"
+                                    [disabled]="downloadunivPDF"><span *ngIf="downloadunivPDF"><i
+                                            class="fas fa-sync fa-refresh"></i></span><span *ngIf="!downloadunivPDF">
+                                        <i class="fas fa-download"></i></span>
+                                    University PDF</button>
+
+                                <!-- <a aria-label="editform" (click)="editAssessmentForm('')"
+                                    class="btn ml-1 btn-outline-danger btn-sm">
+                                    <i class="far fa-edit"></i>
+                                </a> -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="progress" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body"
+                                style="height: 100%;width: 100%;padding:100px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                <h3 *ngIf="prepare">Preparing your document please wait..... <i
+                                        class="fas fa-sync fa-refresh"></i>
+                                </h3>
+                                <span *ngIf="download">
+                                    <h3>Downloading in progress </h3>
+                                    <!-- <div class="progress">
+                      <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{downloadpr}}" attr.aria-valuemin="0"
+                        attr.aria-valuemax="100" [ngStyle]="{width: downloadpr+'%'}">
+                        <span>{{downloadpr}}% Complete</span>
+                      </div>
+                    </div> -->
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: medium;padding: 5px;">
+                                            <!-- <strong>File size:</strong> {{(totalsize/1048576) | number : '1.2-2'}} in MB -->
+                                            <strong>File size:</strong> Unknown
+                                        </div>
+                                        <div class="col-md-12" style="font-size: medium;padding: 5px;">
+                                            <strong>Total download:</strong>
+                                            {{(downloadedsize/1048576) | number : '1.2-2'}} in MB
+                                        </div>
+                                        <div class="col-md-12" style="font-size: medium;padding: 5px;">
+                                            <strong>Network speed:</strong> {{speed}}
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

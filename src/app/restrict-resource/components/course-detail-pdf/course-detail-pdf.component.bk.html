@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+  <title>Test</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Yellowtail' rel='stylesheet'>
+
+</head>
+
+<body style="background: white;" *ngIf="coursedata">
+  <table border="0" cellpadding="0" cellspacing="0" width="795" class="main">
+    <tr>
+      <td>
+        <table width="100%" id="logo">
+          <tr>
+            <td align="center" height='70px'>
+              <img height='70px' src='http://localhost:52719//Documents/company_5/butterfly_before_20191128123949.jpg'
+                alt=''>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height='92px'>
+        <div class="text-center" id="heading-text">Course Search Report</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center" height='34px'>
+        <div class='text-center m-auto w-40' id='stud-visa'>Student Visa - Subclass 500</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img style='height:419px' src='assets/images/searchmycourse.png' class="m-auto" id="Document-Checklist-img">
+      </td>
+    </tr>
+    <tr>
+      <td style="height:291px; background-color:  #6d6e70;">
+        <table width="100%" class="text-center" id="footer">
+          <tr>
+            <td>
+              <img src='assets/images/Location.svg' class="m-auto">
+            </td>
+          </tr>
+          <tr>
+            <td height="20px"></td>
+          </tr>
+          <tr>
+            <td class="footer-text">South Boulevard, University Place, &nbsp;</td>
+          </tr>
+          <tr>
+            <td class="footer-text">TG ROAD,mahatma sainy highway&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="footer-text"> Ahmedabad,GUJARAT - 34343434, INDIA</td>
+          </tr>
+          <tr class="row">
+
+            <!-- <td class="text-center">
+              <table width="100%">
+                <tr>
+                  <td class="text-center">
+                    <table width="20%" class="d-block">
+                      <tr>
+                        <td class="text-center">
+                          <img src='assets/images/Phone.svg'>
+                        </td>
+                        <td class="footer-text">
+                          <a href="tel:8128274015" class="ancher-text">8128274015</a>
+                        </td>
+                      </tr>
+                    </table>
+                    <table width="20%" class="d-block">
+                      <tr>
+                        <td class="text-center">
+                          <img src='assets/images/Mail.svg'>
+                        </td>
+                        <td class="footer-text">
+                          <a class="ancher-text" href="mailto:meghap.aussizz@gmail.com">meghap.aussizz@gmail.com</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td> -->
+          </tr>
+
+          <tr>
+            <td>
+              <a href="" class="footer-text ancher-text"> ittrend.com </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <!-- 
+  <table border="0" cellpadding="0" cellspacing="0" width="795" class="no-break shadow-none main px-25">
+    <tr>
+      <td align="center" id="main-applicant-strip">
+        <div class="pt-30" style="display: flex">
+          <strong>MAIN APPLICANT</strong>
+          <span class="title-shape"></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td height="20"></td>
+    </tr>
+  </table> -->
+  <div class="no-break">
+    <table border="0" cellpadding="0" cellspacing="0" width="795" class="shadow-none main px-25">
+      <tr>
+        <td height="20"></td>
+      </tr>
+      <tr>
+        <div class="row gutter-x-5 mt-2 mb-3">
+          <div class="col-md-12">
+            <div class="card shadow">
+              <div class="card-body p-md-3 p-2">
+                <div class="row align-items-center">
+                  <div class="col-12 col-md-auto text-center">
+                    <img alt="logourl" class="img-fluid" style="max-height:70px; max-width: 300px;"
+                      src="{{environment.API_URL+'Document/images/'+universitydata.logourl}}">
+                  </div>
+                  <div class="col-12 col-md-auto">
+                    <h5 class="mb-0">{{universitydata.name}}
+                    </h5>
+                  </div>
+                  <div class="col">
+                    <h5 class="bg-light border-left-5 mb-0 p-2 shadow-sm my-2 my-md-0">{{coursedata.course_title}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row gutter-x-5 flex-md-row sticky-sidebar-wrap">
+          <div class="col-md-12">
+            <div class="card mb-3">
+              <div class="card-body px-1 px-md-2 py-1 d-flex justify-content-between">
+                <div class="media py-2">
+                  <i class="la la-clock-o align-self-center mr-3 la-2x text-color-cyan"></i>
+                  <div class="media-body">
+                    <div class="h6 mb-1">
+                      Duration
+                    </div>
+                    <span *ngIf="coursedata.course_duration_display.length > 0">
+                      <span *ngFor='let durationDisplay of coursedata.course_duration_display'>
+                        <p class="text-muted"> {{durationDisplay.duration}} {{durationDisplay.unit}}
+                          {{durationDisplay.display}}</p>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="media py-2">
+                  <i class="la la-money align-self-center mr-3 la-2x text-success"></i>
+                  <div class="media-body">
+                    <div class="h6 mb-1">
+                      Tuition Fee
+                    </div>
+                    <ng-container *ngFor="let feeData of coursedata.course_tuition_fee.fees">
+                      <span *ngIf="feeData.name == universitycampus">
+                        <span *ngFor="let fee of feeData.value.international_student">
+                          <p class="text-muted" *ngIf="fee.amount != 0">{{fee.amount}} {{feeData.value.currency}}
+                          </p>
+                          <p class="text-muted" *ngIf="fee.amount == 0">Not Available</p>
+                        </span>
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="media py-2">
+                  <i class="la la-map-marker align-self-center mr-3 la-2x text-color-teal"></i>
+                  <div class="media-body">
+                    <div class="h6 mb-1">
+                      Location
+                    </div>
+                    <p class="text-muted">South Bank</p>
+                  </div>
+                </div>
+                <div class="media py-2">
+                  <i class="la la-calendar align-self-center mr-3 la-2x text-secondary"></i>
+                  <div class="media-body">
+                    <div class="h6 mb-1">
+                      Intake Date
+                    </div>
+                    <p class="text-muted">25 February, 2019</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="accordion-search-my-courses" id="accordion-service-wrap">
+
+              <div class="card mb-4 shadow" id="about-university-tab">
+                <div class="card-header font-weight-500 mb-2 p-0 alert alert-primary" id="heading-services-1">
+                  <div class="px-2 py-1" data-toggle="collapse" data-target="#collapse-services-1" aria-expanded="true"
+                    aria-controls="collapse-services-1">
+                    <div class="row align-items-center gutter-x-5">
+                      <div class="col-auto">
+                        <i class="la la-university la-2x"></i>
+                      </div>
+                      <div class="col h5">
+                        About
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body p-2 p-md-3">
+                  <div class="lead font-weight-normal text-muted" *ngFor="let rankings of universityrankingdata">
+                    <i class="la la-university pr-1"></i>University rank
+                    <span class="text-body">#{{rankings.name}} (</span>
+                    <span *ngFor="let rank of rankings.ranking; let ind=index">{{(ind!=0)?', ':''}}{{rank.levelname}} :
+                      {{rank.value}} </span>)
+                  </div>
+                  <div class="border-bottom h4 mt-2 pb-1">About University</div>
+                  <p class="text-justify" *ngIf="universitydata.about">
+                    {{universitydata.about}}
+                  </p>
+
+                  <div class="border-bottom h4 mt-2 pb-1" *ngIf="coursedata.course_overview">About Course</div>
+                  <p class="text-justify" *ngIf="coursedata.course_overview">
+                    {{coursedata.course_overview}}
+                  </p>
+
+                </div>
+              </div>
+
+              <div class="card mb-4 shadow" id="career-outcome">
+                <div class="card-header font-weight-500 mb-2 p-0 alert alert-primary" id="heading-services-2">
+                  <div class="px-2 py-1" data-toggle="collapse" data-target="#collapse-services-1" aria-expanded="true"
+                    aria-controls="collapse-services-1">
+                    <div class="row align-items-center gutter-x-5">
+                      <div class="col-auto">
+                        <i class="la la-users la-2x"></i>
+                      </div>
+                      <div class="col h5">
+                        Career Outcome
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body p-2 p-md-3">
+                  <span *ngIf="coursedata.course_career_outcome.length>0">
+                    <ul>
+                      <span *ngFor="let outcome of coursedata.course_career_outcome">
+                        <li *ngIf="outcome != ''">
+                          {{outcome}}
+                        </li>
+                      </span>
+                    </ul>
+                  </span>
+                  <span *ngIf="coursedata.course_career_outcome.length==0">
+                    <p class="mb-0">
+                      Visit the programme website for more information
+                      <a aria-label="course_url_4" target="_blank" href="{{coursedata.course_url}}">Click</a>
+                    </p>
+                  </span>
+
+                  <div class="border-bottom h5 mt-2 pb-1">Course Discipline
+                  </div>
+                  <span *ngIf="coursedata.course_discipline.length>0">
+                    <ul>
+                      <span *ngFor="let discipline of coursedata.course_discipline">
+                        <li *ngIf="discipline != ''">
+                          {{discipline}}
+                        </li>
+                      </span>
+                    </ul>
+                  </span>
+                </div>
+              </div>
+
+              <div class="card mb-4 shadow" id="v-pills-key-facts">
+                <div class="card-header font-weight-500 mb-2 p-0 alert alert-primary" id="heading-services-1">
+                  <div class="px-2 py-1" data-toggle="collapse" data-target="#collapse-services-1" aria-expanded="true"
+                    aria-controls="collapse-services-1">
+                    <div class="row align-items-center gutter-x-5">
+                      <div class="col-auto">
+                        <i class="la la-key la-2x"></i>
+                      </div>
+                      <div class="col h5">
+                        Key facts
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div id="collapse-services-4" class="collapse show" aria-labelledby="heading-services-4">
+                  <div class="card-body p-2 p-md-3">
+                    <div class="h4"> Detailed Programme Facts </div>
+                    <span *ngIf="coursedata.course_intake.intake.length>0">
+                      <div class="row mt-3" *ngFor="let intakeDates of coursedata.course_intake.intake">
+                        <span class="col-md-12 h5"
+                          *ngIf="intakeDates.name == universitycampus">{{intakeDates.name}}</span>
+                        <ng-container *ngIf="intakeDates.name == universitycampus">
+                          <div class="col-md-6 mb-3" *ngFor="let intakeValue of intakeDates.value">
+                            <div class="border d-flex flex-column p-3 h-100">
+                              <div class="h-100">
+                                <p class="lead font-weight-normal mb-1">Starting in
+                                  <b> {{intakeValue.actualdate}}</b>
+                                  <b> (</b><b>{{intakeValue.filterdate}}</b><b>)</b>
+                                </p>
+                                <!-- There is no application deadline for this start date. -->
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <hr>
+                      </div>
+                    </span>
+
+
+                    <h5>Program Code</h5>
+                    <span *ngIf='coursedata.program_code.length > 0'>
+                      <p>{{coursedata.program_code}}</p>
+                    </span>
+                    <hr *ngIf='coursedata.program_code.length > 0'>
+                    <h5>Cricos Code</h5>
+                    <span *ngFor='let cricos of coursedata.course_cricos_code'>
+                      <span *ngIf='cricos.location == universitycampus'>
+                        <p>{{cricos.code}}</p>
+                      </span>
+                    </span>
+                    <hr>
+                    <h5>Programme intensity</h5>
+                    <hr>
+                    <!-- <b>Full-time</b> -->
+                    <span *ngIf="coursedata.course_duration_display.length>0">
+                      <ng-container *ngFor="let durationDisplay of coursedata.course_duration_display">
+
+                        <div class="h5 text-black-50 mt-3">{{durationDisplay.display}} duration</div>
+                        <abbr>{{durationDisplay.duration}} {{durationDisplay.unit}}</abbr>
+
+                      </ng-container>
+                    </span>
+                    <!-- <ng-container
+                          *ngIf="coursedata.course_duration_display && coursedata.course_duration_display.length>0 && coursedata.course_duration_display[0].display == 'Part-Time'">
+                          <div class="h5 text-black-50 mt-3">Full-time duration</div>
+                          <abbr>4 years</abbr>
+                        </ng-container> -->
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="h5">Languages</div>
+                        <p>English</p>
+                      </div>
+
+
+                    </div>
+                    <hr>
+                    <div class="h5">Delivery mode</div>
+                    <p>{{coursedata.course_study_mode}}</p>
+
+                    <!-- <div class="h3">More information</div> -->
+
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="card mb-4 shadow" id="v-pills-admission-requirements">
+                <div class="card-header font-weight-500 mb-2 p-0 alert alert-primary" id="heading-services-1">
+                  <div class="px-2 py-1" data-toggle="collapse" data-target="#collapse-services-1" aria-expanded="true"
+                    aria-controls="collapse-services-1">
+                    <div class="row align-items-center gutter-x-5">
+                      <div class="col-auto">
+                        <i class="la la-commenting-o la-2x"></i>
+                      </div>
+                      <div class="col h5">
+                        Admission requirements
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div id="collapse-services-5" class="collapse show" aria-labelledby="heading-services-5">
+                  <div class="card-body p-2 p-md-3">
+                    <div class="h4">English Language Requirements</div>
+                    <p>You only need to take one of these language tests: </p>
+
+                    <div class="row">
+                      <div class="col-md-4"
+                        *ngFor="let englishreq of coursedata.course_admission_requirement.english; let OuterIndex = index">
+                        <a class="nav-item border btn-lg nav-link mb-2 py-1 active bg-client" id="nav-home-tab"
+                          data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+                          aria-selected="true">{{englishreq.name | uppercase}}
+
+                        </a>
+                        <div class="tab-pane fade border p-3 show active" id="nav-home" role="tabpanel"
+                          aria-labelledby="nav-home-tab">
+                          <div class="ScoreBar" data-min="englishreq.min" data-max="englishreq.max" data-format="0">
+                            <div class="Background">
+                              <div class="Incrementation Min">{{englishreq.min}}</div>
+                              <div class="Incrementation Max">{{englishreq.max}}</div>
+                            </div>
+                            <div class="ScoreBackground BarIndex0" style="width: 35%;">
+                              <div class="Score js-Score" data-value="englishreq.require">
+                                {{englishreq.require}} </div>
+                            </div>
+                          </div>
+                          <p *ngIf="englishreq.description!=''">
+                            {{englishreq.description}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="h4" *ngIf="coursedata.course_admission_requirement.academic.length>0">Academic
+                      Requirements</div>
+                    <span *ngIf="coursedata.course_admission_requirement.academic.length>0">
+                      <ul>
+                        <li *ngFor="let academic of coursedata.course_admission_requirement.academic">
+                          {{academic}}
+                        </li>
+                      </ul>
+                    </span>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
+
+      <!-- <tr>
+        <td>
+          <table align="left" width="7%">
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+          <table class="bg-light-gray gray-border" width="93%">
+            <tr>
+              <td>
+                <table>
+                  <tr>
+                    <td class="main-applicant-subtext">
+                      <p>Two recent (dated) written professional references</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td height="20"></td>
+      </tr> -->
+    </table>
+  </div>
+</body>
+
+</html>

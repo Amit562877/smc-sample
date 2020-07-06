@@ -1,0 +1,80 @@
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.border-radius-100 {
+  border-radius: 100px !important;
+}
+
+.la-1x {
+  font-size: 1.5em;
+}
+.border-bottom-right-radius-8 {
+  border-bottom-right-radius: 8px !important;
+}
+
+.border-bottom-left-radius-8 {
+  border-bottom-left-radius: 8px !important;
+}
+
+.border-top-left-radius-8 {
+  border-top-left-radius: 8px !important;
+}
+
+.course-card-wrap .custom-control-label::after {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.course-card-wrap .custom-control-label::before {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.course-card-wrap {
+  border: 1px solid transparent;
+}
+
+.course-card-wrap:hover {
+  border: 1px solid #007bff;
+}
+
+.course-card-wrap:hover .card-header {
+  background-color: #007bff !important;
+}
+
+.course-card-wrap:hover .card-header a {
+  color: #fff !important;
+}
+
+.course-card-wrap:hover .usd-text-hover {
+  color: #007bff !important;
+}
+
+.course-card-wrap:hover .custom-control-label::before {
+  border: 1px solid #fff;
+}
+.course-card-wrap .language-requirements-model .has-dropdown-arrow:after {
+  border-width: 0px 30px 20px 0px;
+  right: 30%;
+}
+.course-card-wrap .language-requirements-model:hover .dropdown-menu {
+  display: block;
+  transform: translate3d(0px, 40px, 0px);
+}
+.course-card-wrap .language-requirements-model:hover :after {
+  opacity: 1;
+  visibility: visible;
+}
+
+label {
+  display: block !important;
+  margin-bottom: 0.5rem;
+}

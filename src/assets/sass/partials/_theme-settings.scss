@@ -1,0 +1,102 @@
+
+
+$darkBgColor: #f3f3f3;
+$mediumDarkBgColor: #fff;
+
+ul.list-color-palette{display: flex; align-items: center; margin: -5px -5px 0; list-style-type: none; padding: 0;
+    > li{margin: 5px 5px 0; cursor: pointer; @include transition(ease all 0.3s);
+        &:not(.default){display: flex; align-items: center; justify-content: center; width: 30px; height: 26px; border: 1px solid transparent; border-radius: 5px;
+            &:before{display: none; content: "\f17b"; @include lineawesome; font-size: 10px; color: #fff;}
+            &.active:before{display: block;}
+        }
+        &:hover, &.active{@include box-shadow(0 0 10px 0 rgba(#000, 0.2)); @include transform(scale(1.3));}
+        &.default{
+            &:hover, &.active{@include transform(scale(1.2));}
+        }
+    }
+
+    $loop: 1;
+    @each $name, $color in $theme-colors-map {
+        [data-theme-ctrl="theme-ctrl-#{$loop}"]{background: $color;}
+        $loop: $loop + 1;
+    }
+}
+
+
+/* Brand background */
+.brand-col{
+    $loop: 1;
+    @each $name, $color in $theme-colors-map {
+        &.theme-ctrl-#{$loop}{background: $color;}    
+        $loop: $loop + 1;
+    }
+}
+/* / Brand background */
+
+/* Top navbar */
+.top-navbar{
+    &%darkBg{color: $darkBgColor;
+        .breadcrumb-nav > li.active {
+            color: #eaeaea;
+        }
+        .btn-icon { color: $darkBgColor; 
+            &:hover, &:active, &:focus{color: #fff; background: rgba(#000, 0.2);}
+        }
+        .nav-trigger-black .navSidebarTrigger > span{background: $darkBgColor;}
+    }
+    &%mediumDarkBg{color: #ffffff;
+        .breadcrumb-nav > li.active {
+            color: #f5f5f5;
+        }
+        .btn-icon { color: #ffffff; 
+            &:hover, &:active, &:focus{color: #fff; background: rgba(#000, 0.1);}
+        }
+        .nav-trigger-black .navSidebarTrigger > span{background: #fff;}
+    }
+
+    @mixin navbar-set-color($color){
+        @if (lightness($color) > 30) {
+            @extend %mediumDarkBg;
+        }
+        @else {
+            @extend %darkBg;
+        }
+    }
+    $loop: 1;
+    @each $name, $color in $theme-colors-map{
+        &.theme-ctrl-#{$loop}{background: $color; @include navbar-set-color($color);}
+        $loop: $loop + 1;
+    }
+}
+/* / Top navbar */
+
+/* Sidebar navigation */
+.nav-sidebar{
+    $loop: 1;
+    @each $name, $color in $theme-colors-map{
+        &.theme-ctrl-#{$loop}{background: $color; 
+            @if (lightness($color) > 30) {background: $color; 
+                @include rxtAdminNav(
+                    $nav-bg: $color, 
+                    $link-color: #fff, 
+                    $link-hover-bg: darken($color, 15%), 
+                    $link-hover-color: #fff, 
+                    $sub-bg: darken($color: $color, $amount: 5%), 
+                    $sub-lavel2-bg: darken($color: $color, $amount: 10%)
+                );
+            }
+            @else {background: $color; 
+                @include rxtAdminNav(
+                    $nav-bg: $color, 
+                    $link-color: #fff, 
+                    $link-hover-bg: lighten($color, 18%), 
+                    $link-hover-color: #fff, 
+                    $sub-bg: lighten($color: $color, $amount: 15%), 
+                    $sub-lavel2-bg: lighten($color: $color, $amount: 20%)
+                );
+            }
+        }
+        $loop: $loop + 1;
+    }
+}
+/* / Sidebar navigation */

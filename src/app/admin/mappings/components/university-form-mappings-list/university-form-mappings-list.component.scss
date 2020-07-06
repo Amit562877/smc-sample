@@ -1,0 +1,54 @@
+// .table-container {
+//     height: 600px;
+//   }
+//   table {
+//     display: flex;
+//     flex-flow: column;
+//     height: 100%;
+//     width: 100%;
+//   }
+//   table thead {
+//     /* head takes the height it requires,
+//     and it's not scaled when table is resized */
+//     flex: 0 0 auto;
+//     width: calc(100%);
+//   }
+//   table tbody {
+//     /* body takes all the remaining available space */
+//     flex: 1 1 auto;
+//     display: block;
+//     overflow-y: scroll;
+//   }
+//   table tbody tr {
+//     width: 100%;
+//     height: 50px;
+//   }
+//   table thead,
+//   table tbody tr {
+//     display: table;
+//     table-layout: fixed;
+//   }
+//   /* decorations */
+//   .table-container {
+//     border: 1px solid black;
+//     padding: 0.3em;
+//   }
+//   table {
+//     border: 1px solid lightgrey;
+//   }
+//   table td {
+//     padding: 0.3em;
+//     border: 1px solid lightgrey;
+//   }
+//   table th {
+//     padding: 0.3em;
+//     border: 1px solid lightgrey;
+//     color: #fff;
+//     background-color: #6c757d;
+//     border-color: #6c757d;
+//   }
+
+.invalid {
+  border: 1px solid #ff0000 !important;
+  box-shadow: 0 0 5px #999 !important;
+}

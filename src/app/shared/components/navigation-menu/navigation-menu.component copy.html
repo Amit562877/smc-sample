@@ -1,0 +1,48 @@
+<div class="bd-example border-bottom" style="background-color: white; border-bottom: 1px solid black!important;">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">
+            <img src="./assets/images/search-my-courses-logo.png" width="50" height="40"
+                class="d-inline-block align-top" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav" style="font-weight: 700;color: black;">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="cursor:pointer" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        Your Account
+                    </a>
+                    <div *ngIf="islogin" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" [routerLink]="['/user/workspace']">Your Workspace</a>
+                        <a class="dropdown-item" *ngIf="dashboardPermission.canView"
+                            [routerLink]="['user/workspace/student/history']">Your Favourites</a>
+                        <a class="dropdown-item" *ngIf="dashboardPermission.canView"
+                            [routerLink]="['user/workspace/student/history']">Your Compare Course
+                            List</a>
+                        <a class="dropdown-item" [routerLink]="['/program/course-search/smc/',projectid,userid]">Create
+                            Application</a>
+                        <a class="dropdown-item" [routerLink]="['/user/logout']">Logout</a>
+                    </div>
+                    <div *ngIf="!islogin" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" [routerLink]="['/auth/login']">Login</a>
+                        <a class="dropdown-item" [routerLink]="['/auth/signup']">Signup</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/program/course-list/']">Browse Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/program/university-list/']">Browse Universities</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li> -->
+
+            </ul>
+        </div>
+    </nav>
+</div>

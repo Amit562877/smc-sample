@@ -1,0 +1,5 @@
+<div class="container-fluid h-100 wrapperap">
+    <span *ngIf="!issmcloggedin">Initiate connection with SMC.......<i class="fas fa-sync fa-refresh"></i></span>
+    <button *ngIf="issmcloggedin" (click)="makelogin()" class="btn btn-primary">Re-Initialize</button> &nbsp;
+    <button *ngIf="issmcloggedin" (click)="clear()" class="btn btn-primary">Clear other session</button>
+</div>

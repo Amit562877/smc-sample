@@ -1,0 +1,76 @@
+<div class="split-aside-close nav-sidebar-minimize">
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col w-100">
+                <div class="w-100">
+                    <div id="split-aside-resize" class="">
+                        <div class="row w-100">
+                            <div class="left-sidebar col-2 p-3 border-right">
+                                <h4>Place hear anything which you want</h4>
+                            </div>
+                            <div class="main-content col-12 px-4">
+                                <div class="mt-4 row">
+                                    <div class="col">
+                                        <div class="card shadow mb-4">
+                                            <div class="card-header py-2">
+                                                <div class="row align-items-center">
+                                                    <div class="col">
+                                                        <h5 class="m-0">Lead List</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead class="text-uppercase">
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Phone</th>
+                                                            <th>email</th>
+                                                            <!-- <th>Course Name</th>
+                                                            <th>University Name</th> -->
+                                                            <th>Register Date</th>
+                                                            <th>Comment</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="container-fluid">
+                                                        <ng-container *ngIf="leadlist">
+                                                            <tr class="tr-action-outer"
+                                                                *ngFor="let objlst of leadlist;let index = index">
+                                                                <td>{{objlst.name}}</td>
+                                                                <td>{{objlst.phoneno}}</td>
+                                                                <td>{{objlst.email}}</td>
+                                                                <!-- <td>{{objlst.coursename}}</td>
+                                                                <td>{{objlst.universityname}}</td> -->
+                                                                <td>{{objlst.registerdate}}</td>
+                                                                <td>{{objlst.comment}}</td>
+                                                                <td>
+                                                                    <a class="btn btn-sm btn-outline-secondary"
+                                                                        target="_blank"
+                                                                        (click)="viewOnform(objlst)">
+                                                                        <i class="far fa-eye"></i> One form
+                                                                </a>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="leadlist && leadlist.length==0">
+                                                            <tr class="text-center text-color-red">
+                                                                <td colspan="6">
+                                                                    No Data Found
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

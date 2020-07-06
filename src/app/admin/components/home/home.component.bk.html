@@ -1,0 +1,309 @@
+<!-- <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"> -->
+
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" aria-label="show-sidebar">
+    <i class="fa fa-lg fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a>Search my course</a>
+        <div id="close-sidebar">
+          <i class="fa fa-lg fa-times"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+        <div class="user-pic">
+          <img class="img-responsive img-rounded"
+            src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">Super
+            <strong>Admin</strong>
+          </span>
+          <span class="user-role">Administrator</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+      <div class="sidebar-search" style="display: none;">
+        <div>
+          <div class="input-group">
+            <label class="visuallyhidden" for="search">Search</label>
+            <input type="text" class="form-control search-menu" placeholder="Search..." aria-label="search">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- sidebar-search  -->
+      <div class="sidebar-menu">
+        <ul>
+          <li *ngFor="let menu of menudata | filter3 : 'parentid' : '0' | orderBy : 'sequence'"
+            [ngClass]="(menu.path.length==0)?'sidebar-dropdown':''">
+            <a (click)="clickedsdbar($event)" aria-label="clicksidebar" *ngIf="menu.path.length==0">
+              <i [ngClass]="menu.icon" aria-hidden="true"></i>
+              <span>{{menu.displayname}}</span>
+            </a>
+            <div class="sidebar-submenu" *ngIf="menu.path.length==0">
+              <ul>
+                <li *ngFor="let submenu of menudata | filter3 : 'parentid' : menu.id | orderBy : 'sequence'">
+                  <a [routerLink]="[submenu.path]" attr.aria-label="{{submenu.displayname}}">
+                    <i [ngClass]="submenu.icon" aria-hidden="true"></i>{{submenu.displayname}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <a *ngIf="menu.path.length>0" [routerLink]="[menu.path]" aria-label="Email">
+              <i [ngClass]="menu.icon" aria-hidden="true"></i>
+              <span>{{menu.displayname}}</span>
+            </a>
+          </li>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li>
+            <a [routerLink]="['email/inbox']" aria-label="Email">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Email</span>
+            </a>
+          </li>
+          <li class="sidebar-dropdown">
+            <a (click)="clickedsdbar($event)" aria-label="clicksidebar">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Course Criteria</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a [routerLink]="['criteria/course-criteria']" aria-label="course-criteria">Course Criteria
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['courseissue/course-issue']" aria-label="course-issue">Course Issue
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a (click)="clickedsdbar($event)" aria-label="course-criteria_1">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Change Logs</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a [routerLink]="['mchangelog/change-log']" aria-label="change_log_1">
+                    <span>Change Logs</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a (click)="clickedsdbar($event)" aria-label="oneform">
+              <i class="far fa-gem"></i>
+              <span>Oneform</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a [routerLink]="['oneform/conditions']" aria-label="condition">
+                    <span>Conditions</span>
+                  </a>
+                </li>
+                <!-- <li>
+                  <a [routerLink]="['oneform']">
+                    <span>Oneform</span>
+                  </a>
+                </li> -->
+                <li>
+                  <a [routerLink]="['oneform/manageOneform']" aria-label="manage_oneform">
+                    <span>Manage Oneform</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['oneform/univ-one-form']" aria-label="university_oneform">
+                    <span>University Oneform</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['oneform/manage-course-preference']" aria-label="manage_preference">
+                    <span>Manage Preferences</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a (click)="clickedsdbar($event)" aria-label="settings">
+              <i class="fa fa-cogs"></i>
+              <span>Settings</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a [routerLink]="['/user/workspace/profile']" aria-label="condition">
+                    <span>Profile Setup</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="header-menu">
+            <span>Administrator</span>
+          </li>
+          <li class="sidebar-dropdown">
+            <a (click)="clickedsdbar($event)">
+              <i class="far fa-gem"></i>
+              <span>Mappings</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a [routerLink]="['mapping/managediscipline']" aria-label="discipline">
+                    <span>Discipline</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['mapping/managestudylevel']" aria-label="studylevel">
+                    <span>Study level</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['mapping/university-form-mapping']" aria-label="university form">
+                    <span>University Form</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a (click)="clickedsdbar($event)" aria-label="manage">
+              <i class="far fa-gem"></i>
+              <span>Manage</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a [routerLink]="['manage/manage-discipline']" aria-label="master discipline">
+                    <span>Master discipline</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['manage/manage-studylevel']" aria-label="studylevel_1">
+                    <span>Study level</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['manage/manage-currency']" aria-label="Currency">
+                    <span>Currency</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['manage/manage-country']">
+                    <span>Country</span>
+                  </a>
+                </li>
+                <!-- <li class="sidebar-dropdown">
+                  <a (click)="clickedsdbar($event)">
+                    <i class="far fa-gem"></i>
+                    <span>Location</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a [routerLink]="['manage-discipline']">
+                          <span>Country</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a [routerLink]="['manage-studylevel']">
+                          <span>State</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a [routerLink]="['manage-currency']">
+                          <span>City</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a (click)="clickedsdbar($event)" aria-label="rolepermission">
+              <i class="far fa-gem"></i>
+              <span>Role & Permission</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a [routerLink]="['rolepermission/role']" aria-label="roles">
+                    <span>Roles</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['rolepermission/menu']" aria-label="roles">
+                    <span>Menu</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['rolepermission/pemission']" aria-label="Permission">
+                    <span>Permission</span>
+                  </a>
+                </li>
+                <!-- <li>
+                  <a [routerLink]="['rolepermission/advance-pemission']" aria-label="advance-pemission">
+                    <span>Advance Permission</span>
+                  </a>
+                </li> -->
+                <li>
+                  <a [routerLink]="['rolepermission/menu-pemission']" aria-label="menu-pemission">
+                    <span>Menu Permission</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="header-menu">
+            <span>Student Panel</span>
+          </li>
+          <li class="sidebar-dropdown">
+            <a [routerLink]="['student/history']" aria-label="spanel">
+              <i class="far fa-gem"></i>
+              <span>Student Panel</span>
+            </a>
+
+          </li>
+        </ul>
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+      <a [routerLink]="['/user/logout']" aria-label="logout">
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+  </nav>
+  <!-- sidebar-wrapper  -->
+  <main class="page-content" appTogglenav>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+
+  </main>
+  <!-- page-content" -->
+</div>
+<!-- page-wrapper -->

@@ -1,0 +1,215 @@
+$top-nav-color: $primary-color;
+$top-nav-bg: #fff;
+$nav-sidebar-bg: #f5f5f5;
+
+.brand-col{background: darken($color: $primary-color, $amount: 15%); @include transition(ease all 0.3s);}
+.logo{color: $white; padding: 7px 15px;
+    img{max-height: 33px;}
+}
+.top-navbar{min-height: 40px; color: $top-nav-color; background: $top-nav-bg; @include box-shadow(0 0 10px rgba(#000, 0.2));
+    .link-color{color: $top-nav-color;
+        &:hover, &:focus{color: darken($color: $top-nav-color, $amount: 10%); text-decoration: none;}
+    }
+    .btn.rounded-circle:focus{@include box-shadow(none);}
+    .btn-icon{color: #545454;
+        &:hover{color: #000;}
+    }
+}
+
+.nav-sidebar{background: $nav-sidebar-bg; position: fixed; top: 0; bottom: 0; left: 0; z-index: 100; padding: 40px 0 0; @include box-shadow(1px 0 0 darken($nav-sidebar-bg, 10%)); @include transition(ease all 0.3s);
+    &.nav-faxability{ position: static;}
+    .nav-link {color: darken($color: $primary-color, $amount: 10%);
+        &.active{color: $white; font-weight: 500; background: darken($color: $primary-color, $amount: 8%);}
+        &:hover:not(.active){color: $white; background: darken($color: $primary-color, $amount: 3%);}
+    }
+    .sidebar-heading{color: lighten($color: $primary-color, $amount: 25%); font-size: .75rem; text-transform: uppercase;}
+}
+.sidebar-sticky { position: relative; top: 0; height: 100%; /* padding: 0.5rem 0 2rem; */ overflow-x: hidden; overflow-y: auto }
+
+
+/* Breadcrumb */
+.breadcrumb-nav{display: flex; align-items: center; list-style-type: none; margin: 0; padding: 0;
+    > li{padding: 0 8px; position: relative;
+        a{color: inherit; font-weight: normal; display: block; height: 100%; padding: 5px 8px; margin: 0 -8px;}
+        &.active{color: lighten($color: $primary-color, $amount: 40%);}
+    }
+}
+.bc-devider-right{position: absolute; right: 0; top: 50%; color: inherit; @include transform(translate(50%, -50%));}
+/* / Breadcrumb */
+
+.navSidebarTrigger{display: flex; flex-direction: column; justify-content: center; width: 28px; height: 40px; padding: 0 10px; box-sizing: content-box;
+    > span{display: block; height: 1px; background: $white; margin-bottom: 5px; margin-left: auto; @include transition(ease all 0.3s);
+        &:nth-child(1){width: 50%;}
+        &:nth-child(2){width: 100%;}
+        &:nth-child(3){width: 70%; margin-bottom: 0;}
+    }
+    &:hover{
+        > span{width: 100%;}
+    }
+}
+.nav-trigger-black{display: none; margin-right: -10px;
+    .navSidebarTrigger > span{background: #000;}
+}
+
+
+/* RXT Admin nav */
+ul.rxt-admin-nav{list-style-type: none; margin: 0; padding: 0;
+    /* global style */
+    li{
+        .scroll-up, .scroll-down{ position: absolute;
+            position: absolute;
+            display: none;
+            visibility: hidden;
+            overflow: hidden;
+            background: #fff;
+            height: 20px;
+            left: 6px;
+            .scroll-up-arrow {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                margin-left: -6px;
+                width: 0;
+                height: 0;
+                overflow: hidden;
+                border-width: 6px;
+                border-style: dashed dashed solid dashed;
+                border-color: transparent transparent #555555 transparent;
+            }
+            .scroll-down-arrow {
+                top: 8px;
+                border-style: solid dashed dashed dashed;
+                border-color: #555555 transparent transparent transparent;
+            }
+        }
+        a{color: $primary-color; display: flex; align-items: center; justify-content: space-between;
+            .nav-icon{font-size: 19px; color: lighten($color: $primary-color, $amount: 45%); min-width: 35px;}
+            .nav-text{flex: 1; color: lighten($color: $primary-color, $amount: 20%);}
+            &:hover{text-decoration: none;}
+        }
+        &.has-sub{position: relative;
+            > ul{display: none;}
+            > a:after{content: "\f110"; @include lineawesome; font-size: 0.9em; @include transition(ease transform 0.3s);}
+        }
+        > a:hover{background: lighten($color: $primary-color, $amount: 20%); color: color-from-bg(lighten($color: $primary-color, $amount: 20%)); }
+        &.shown-sub{background: darken($color: $nav-sidebar-bg, $amount: 5%);/* background: lighten($color: $primary-color, $amount: 20%); border-bottom: 1px solid lighten($color: $primary-color, $amount: 60%); */
+            > a{/* color: color-from-bg(lighten($color: $primary-color, $amount: 20%)); border-bottom: 1px solid darken($color: lighten($color: $primary-color, $amount: 20%), $amount: 10%); */
+                &:after{@include transform(rotate(-180deg));}
+                /* .nav-icon{color: color-from-bg(lighten($color: $primary-color, $amount: 20%));}
+                .nav-text{color: color-from-bg(lighten($color: $primary-color, $amount: 20%));} */
+            }
+            > ul{display: block;}
+            .shown-sub > a{background: darken($color: $nav-sidebar-bg, $amount: 15%);
+                &:hover{background: lighten($color: $primary-color, $amount: 20%); color: color-from-bg(lighten($color: $primary-color, $amount: 20%));}
+            }
+        }
+        ul{list-style-type: none; padding: 0; background: darken($color: $nav-sidebar-bg, $amount: 5%);
+            li{
+                a{padding: 6px 15px 6px 20px;}
+            }
+            ul{background: darken($color: $nav-sidebar-bg, $amount: 15%);
+                li a{padding-left: 25px;}
+            } 
+        }
+    }
+    /* / global style */
+    /* First lavel */
+    > li{
+        > a{padding: 4px 15px; min-height: 32px;}
+        &.active > a, > a:hover{color: $white; background: lighten($color: $primary-color, $amount: 20%);
+            .nav-icon{color: color-from-bg(lighten($color: $primary-color, $amount: 10%));}
+            .nav-text{color: color-from-bg(lighten($color: $primary-color, $amount: 10%));}
+        }
+    }
+    /* / First lavel */
+}
+
+
+.nav-sidebar-minimize [role="main"]{-ms-flex-preferred-size: 0; flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%; margin-left: 80px !important;}
+.nav-sidebar-minimize:not(.nav-sidebar-minimize-hover){
+    .logo{padding: 9px 8px;}
+    .nav-trigger-white{display: none;}
+    .nav-trigger-black{display: block;}
+    .sidebar-sticky{position: static; height: auto; overflow: initial;}
+    .brand-col, .nav-sidebar{-ms-flex: 0 0 80px; flex: 0 0 80px; max-width: 80px;}
+    /* .nav-sidebar{position: static; min-height: 100vh;} */
+
+    .navSidebarTrigger{
+        > span{margin-left: 0; margin-right: auto;}
+    }
+
+    ul.rxt-admin-nav{
+        > li > a{font-size: 12px; display: block; text-align: center; padding: 6px 8px 6px 4px;}
+        li{
+            &.has-sub a:after{position: absolute; right: 5px; top: 50%; @include transform(translateY(-50%) rotate(-90deg));}
+            ul{width: 180px; visibility: hidden; opacity: 0; position: absolute; left:100%; top: 0; 
+                [aria-hidden="true"]{max-height:400px; overflow-y: scroll !important;}
+            }
+            &:hover > ul{visibility: visible; opacity: 1;}
+        }
+    }
+}
+.nav-sidebar-minimize.nav-sidebar-minimize-hover .nav-sidebar{@include box-shadow(0 10px 15px rgba(#000, .5));}
+@mixin rxtAdminNav($nav-bg, $link-color, $link-hover-bg, $link-hover-color, $sub-bg, $sub-lavel2-bg){
+    ul.rxt-admin-nav{
+        /* global style */
+        li{
+            a{color: $link-color;
+                .nav-icon{color: $link-color;}
+                .nav-text{color: $link-color;}
+            }
+            > a:hover{background: $link-hover-bg; color: $link-hover-color;}
+            &.shown-sub{/* background: $sub-bg; border-bottom: 1px solid lighten($color: $nav-bg, $amount: 10%); */
+                > a{background: $sub-bg;/* color: $link-color; border-bottom: 1px solid darken($color: lighten($color: $nav-bg, $amount: 20%), $amount: 10%);
+                    .nav-icon{color: $link-color;}
+                    .nav-text{color: $link-color;} */
+                }
+                .shown-sub > a{background: $sub-lavel2-bg;
+                    &:hover{background: $link-hover-bg; color: $link-hover-color;}
+                }
+            }
+            ul{background: $sub-bg;
+                ul{background: $sub-lavel2-bg;} 
+            }
+        }
+        /* / global style */
+        /* First lavel */
+        > li{
+            &.active > a, > a:hover{color: $link-color; background: $link-hover-bg;
+                .nav-icon{color: $link-color;}
+                .nav-text{color: $link-color;}
+            }
+        }
+        /* / First lavel */
+    }
+}
+
+.nav-sidebar{
+    &.theme-ctrl-default, &:not([class*="theme-ctrl-"]){
+        $loop: 1;
+        @each $name, $color in $web-colors-map {
+            @if (lightness($color) < 70) {
+                ul.rxt-admin-nav > li:nth-child(#{length($web-colors-map)}n+#{$loop}){
+                    .nav-icon{color: lighten($color, 20%);}
+                }
+                $loop: $loop + 1;
+            }
+        }
+    }
+}
+/* / RXT Admin nav */
+
+/* Client Portal nav */
+.navbar-client{padding: 0;
+    .navbar-nav{
+        .nav-item{
+            .nav-link{padding: .8rem 1rem;}
+            &.active .nav-link, .nav-link:hover{background: rgba($primary-color, .03);}
+        }
+    }
+}
+/* / Client Portal nav */
+
+.nav-overlay{visibility: hidden; opacity: 0; position: fixed; z-index: 99; background: rgba(#000, .7); top: 0; right: 0; bottom: 0; left: 0; @include transition(ease all 0.3s);}
+
+

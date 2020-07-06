@@ -1,0 +1,4 @@
+.client-login.cam-login {
+  background-image: url(../../images/search-bg.png);
+  @include bg-layer(rgba(#000, 0.7));
+}

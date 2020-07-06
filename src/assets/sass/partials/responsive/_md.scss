@@ -1,0 +1,11 @@
+/* Client Portal nav */
+.navbar-client{
+    .navbar-collapse{position: absolute; z-index: 999; top: 100%; left: 0; right: 0; background: lighten($color: #000, $amount: 20%);}
+    .navbar-nav{
+        .nav-item{
+            .nav-link{color: #fff;}
+            &.active .nav-link, .nav-link:hover{color: #fff; background: rgba(#000, .2);}
+        }
+    }
+}
+/* / Client Portal nav */

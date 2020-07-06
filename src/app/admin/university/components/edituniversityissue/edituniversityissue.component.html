@@ -1,0 +1,407 @@
+<div class="card shadow mb-4" id="ShowProcessesId">
+    <div class="card-header py-2">
+        <div class="row align-items-center" *ngIf="universitydetails.length>0">
+            <div class="col">
+                <h5 class="m-0">{{ universitydetails[0].name }}</h5>
+            </div>
+            <div class="p-2">
+                <a class="btn btn-outline-primary" [routerLink]="['/user/workspace/universityissue/university-issue']"
+                    title="" aria-label="back">BACK</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-body" *ngIf="universitydetails.length>0">
+        <div class="divbrd p-2 mt-2">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group text-left">
+                        <label for="uname" aria-label="uid">University Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].name"
+                            aria-label="uname" name="txtname">
+                    </div>
+                </div>
+                <!-- <div class="col-md-2" *ngFor=" let udetail of universitydetails ">
+                    <div class="form-group text-left">
+                        <label for="uname" aria-label="uid">Cricos Provider No</label>
+                        <input type="text" class="form-control" [(ngModel)]="udetail.cricosprovidercode"
+                            aria-label="uname">
+                    </div>
+                </div> -->
+                <div class="col-md-6">
+
+                    <div class="form-group text-left">
+                        <label for="uploadid" aria-label="cid">Upload Logo</label>
+
+                        <input type="file" class="form-control" (change)="setPhoto($event)" name="txtlogo">
+                        <span>{{universitydetails[0].logourl}}</span>
+
+                    </div>
+                    <!-- <div>
+                        <img
+                        src="
+                        VSSProjects/study_portal_api/Document/images/{{universitydetails[0].logourl}}"alt="University logo">
+                    </div> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label for="uname" aria-label="uid">Country :</label>
+                        <select class="form-control" [(ngModel)]="universitydetails[0].country" aria-label="country"
+                            name="txtcountry">
+                            <option *ngFor="let country of countrylist" [value]="country.name">{{country.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label for="uname" aria-label="uid">University Type</label>
+                        <select class="form-control" [(ngModel)]="universitydetails[0].universitytype"
+                            aria-label="txtutype" name="txtutype">
+                            <option *ngFor="let utype of universitytypelist" [value]="utype.univtype">{{utype.univtype}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group text-left">
+                        <label for="univurl" aria-label="uid">Website</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].url"
+                            aria-label="univurl" name="txtwebulr">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group text-left">
+                        <label for="overview" aria-label="overview">About university</label>
+                        <textarea class="form-control" [(ngModel)]="universitydetails[0].about" aria-label="overview"
+                            name="txtoverview"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group text-left">
+                        <label for="appurl" aria-label="uid">Application Url</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].applicationurl"
+                            aria-label="appurl" name="appurl">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label for="appurl" aria-label="uid">Application Fees</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].applicationfee"
+                            aria-label="appurl" name="afees">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col-md-2" *ngFor=" let udetail of universitydetails ">
+                    <div class="form-group text-left">
+                        <label for="uname" aria-label="uid">Cricos Provider No</label>
+                        <input type="text" class="form-control" [(ngModel)]="udetail.cricosprovidercode"
+                            aria-label="uname">
+                    </div>
+                </div> -->
+
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label for="placementurl" aria-label="placementurl">Placement URL</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].placementurl"
+                            aria-label="placementurl" name="purl">
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label for="fb" aria-label="fb">Facebook</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].fbpage"
+                            aria-label="fb" name="fb">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label for="twitter" aria-label="twitter">Twitter</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].twitterpage"
+                            aria-label="twitter" name="twitter">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label for="youtube" aria-label="youtube">Youtube</label>
+                        <input type="text" class="form-control" [(ngModel)]="universitydetails[0].youtubepage"
+                            aria-label="youtube" name="youtube">
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="divbrd p-2 mt-2">
+
+                <strong>University Brochure</strong>&nbsp;<button role="button" aria-label="addCampus"
+                class="btn btn-sm btn-outline-primary rounded-circle"
+                  (click)="addbrochure(index)" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+                    aria-hidden="true"></i></button>
+                <div class="row">
+
+                    <div class="col-md-11"
+                        *ngFor=" let bdetail of brochuredetails;trackBy: trackByIndex; index as index; last as last">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group text-left">
+                                    <label for="cname" aria-label="ccode">Description About Brochure</label>
+                                    <input type="text" class="form-control" [(ngModel)]="bdetail.description"
+                                        aria-label="ccode" name="description">
+                                    <input type="file" id="file" [(ngModel)]="bdetail.description" multiple 
+                               (change)="savebrochure($event)">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                                <div>
+                                    <label for="appurl" aria-label="uid">Brochure path</label>
+                                </div>
+                                <div class="custom-file text-left">
+
+                                     <input type="file" class="custom-file-input" id="customFile"
+                                    [(ngModel)]="bdetail.path" value="" multiple (change)="savebrochure($event,bdetail.description)"> 
+                                    <input type="file" class="custom-file-input" id="customFile"
+                                        [(ngModel)]="bdetail.path" name="txtupdatefile">
+                                    <label class="custom-file-label" for="customFile">{{bdetail.path}}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1">
+                            <button role="button" aria-label="addCampus_1" (click)="addbrochure(index)"
+                              class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;" data-toggle="tooltip"
+                              title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            <button role="button" aria-label="removeCampus_1" (click)="removebrochure(index)" *ngIf="index!=0"
+                              class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;margin-top: 27px;"
+                              data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+                                aria-hidden="true"></i></button>
+                          </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div> -->
+
+
+        </div>
+        <div class="divbrd p-2 mt-2">
+            <strong>Campuses:</strong>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive" id="displayUniversityRecords">
+                        <table class=" table table-bordered">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th>Sequence</th>
+                                    <th>Campus</th>
+                                    <th>Type</th>
+                                    <th>CricosProviderCode</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <ng-container *ngIf="tablecampusdetails.length>0">
+                                    <tr class="tr-action-outer" *ngFor="let cam of tablecampusdetails;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{cam.campus}}</td>
+                                        <td>{{cam.type}}</td>
+                                        <td>{{cam.cricosprovidercode}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary rounded-circle"><i
+                                                    class="fa fa-lg fa-edit" data-toggle="tooltip" title=""
+                                                    data-original-title="Edit" aria-label="edit_issue"
+                                                    (click)="opencontactinfoModal(cam.id,cam.campus,cam.cricosprovidercode,
+                                                    cam.address,cam.city,cam.state,cam.country,cam.overview,cam.lat,cam.long,cam.postcode)"></i></a>
+
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="tablecampusdetails.length==0">
+                                    <tr class="text-center text-color-red">
+                                        <td colspan="5">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row m-2">
+            <div class="col-md-12">
+                <button role="button" aria-label="saveCourse" class="btn btn-outline-primary" (click)="saveuniversity()"
+                    data-toggle="tooltip" title="" data-original-title="Save changes" name="btnsave">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    Save Changes</button>
+                <button role="button" aria-label="cancel" type="button" class="btn btn-outline-danger "
+                    style="margin:0 0 0 5px" name="btncancel"
+                    [routerLink]="['/user/workspace/universityissue/university-issue']">
+                    <i class="fa pr-2 fa-times" aria-hidden="true"></i>Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg" style='background-color:#f3ecdf;'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button role="button" aria-label="closebtn2" type="button" class="close"
+                    data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style='background-color:#f3ecdf;'>
+                <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-body">
+                        <div class="divbrd p-2 mt-2">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">Campus Name: </label>
+                                        <input type="text" class="form-control" name="txtcampusname"
+                                            [(ngModel)]="campusname" aria-label="uname">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">CricosProviderCode: </label>
+                                        <input type="text" class="form-control" name="txtccode"
+                                            [(ngModel)]="cricosproviderno" aria-label="uname">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">City:</label>
+                                        <select class="form-control" [(ngModel)]="ccity" aria-label="country"
+                                            name="txtcity">
+                                            <option *ngFor="let city of city" [value]="city.name">{{city.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">State:</label>
+                                        <select class="form-control" [(ngModel)]="cstate" aria-label="country"
+                                            name="txtstate">
+                                            <option *ngFor="let stat of state" [value]="stat.name">{{stat.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">Country :</label>
+                                        <input type="text" class="form-control" readonly name="txtcountry"
+                                            [(ngModel)]="country">
+                                        <!-- <select class="form-control" [(ngModel)]="country" 
+                                                aria-label="country" name="txtcountry">
+                                                <option *ngFor="let country of countrylist" [value]="country.name">{{country.name}}</option>
+                                            </select> -->
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">Address: </label>
+                                        <textarea class="form-control" [(ngModel)]="address" aria-label="overview"
+                                            name="txtoverview" name="txtaddress"></textarea>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group text-left">
+                                        <label for="postcode" aria-label="postcode">PostCode:</label>
+
+                                        <input type="text" class="form-control" name="txtpostcode"
+                                            [(ngModel)]="postcode" aria-label="txtpostcode">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">Longitude: </label>
+                                        <input type="text" class="form-control" name="txtcontactinfo"
+                                            [(ngModel)]="longitude" aria-label="txtcontactinfo">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group text-left">
+                                        <label for="uname" aria-label="uid">Latitude: </label>
+                                        <input type="text" class="form-control" name="txtcontactinfo"
+                                            [(ngModel)]="latitude" aria-label="txtcontactinfo">
+                                    </div>
+                                    <div> <input type="hidden" name="txtcid" [(ngModel)]="campusid"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group text-left">
+                                        <label for="overview" aria-label="overview">Overview</label>
+                                        <textarea class="form-control" [(ngModel)]="campusoverview"
+                                            aria-label="overview" name="txtoverview"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <div class="row mt-1">
+                    <div class="col-md-12">
+                        <button role="button" aria-label="addissue" type="button" class="btn btn-outline-primary"
+                            (click)="savecontactinfo()" name="btnsave">
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            Save</button>&nbsp;
+                        <button role="button" aria-label="clearall" type="button" class="btn btn-outline-danger"
+                            data-dismiss="modal" (click)="clearall()" name="btnclear">
+                            <i class="fa fa-ban" aria-hidden="true"></i>
+                            Cancel</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

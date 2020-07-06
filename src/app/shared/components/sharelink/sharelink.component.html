@@ -1,0 +1,297 @@
+<button role="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" (click)="addShareLink()"
+  data-target="#sharelink" *ngIf="showshare">Share <i class="fas fa-share"></i></button>
+
+<div class="modal fade preview-modal" id="sharelink" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light py-2" style="padding: 10px !important;">
+        <h5 class="modal-title">Share Document</h5>
+        <a href="javascript:void(0);" style="margin-left: 598px;" (click)="getShareLinkHistory()" data-toggle="modal"
+          data-target="#securelinkhistory">
+          <i class="fa fa-history" data-toggle="tooltip" title="History" style="font-size: 1.5rem;"
+            aria-hidden="true"></i></a>
+        <button role="button" aria-label="uploaddocuments" (click)="closeModel()" type="button" class="close"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-justify">
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <div class="form-row gutter-y-5">
+            <div class="col-md-2">
+              <span>Original link :</span>
+            </div>
+            <div class="col-md-10 text-justify">
+              {{securelink.olink}}
+            </div>
+          </div>
+        </div>
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <div class="form-row gutter-y-5">
+            <div class="col-md-2">
+              <span>Secure link :</span>
+            </div>
+            <div class="col-md-10 text-justify">
+              {{securelink.ulink}}
+            </div>
+          </div>
+        </div>
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <div class="form-row gutter-y-5">
+            <div class="col-md-2">
+              <span>Access code :</span>
+            </div>
+            <div class="col-md-10 text-justify">
+              {{securelink.accesscode}}
+            </div>
+          </div>
+        </div>
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <div class="form-row gutter-y-5">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 text-justify">
+              <input type="checkbox" [(ngModel)]="securelink.acceptpasscode" id="allowaccesscode"
+                aria-label="allowaccesscode" (change)="editShareLink()">
+              &nbsp;<label class="font-weight-500" for="allowaccesscode" aria-label="allowaccesscode">Accept access
+                code?</label>
+            </div>
+          </div>
+        </div>
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1" *ngIf="securelink.acceptpasscode">
+          <div class="form-row gutter-y-5">
+            <div class="col-md-2"><span>Code permission :</span></div>
+            <div class="col-md-2 text-justify">
+              <select class="form-control" [(ngModel)]="securelink.codepermission" (change)="editShareLink()">
+                <option>Edit</option>
+                <option>View</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <div class="form-row gutter-y-5">
+            <div class="col-md-2"></div>
+            <div class="col-md-10 text-justify">
+              <input type="checkbox" [(ngModel)]="securelink.canshare" (change)="editShareLink()" id="canshare"
+                aria-label="canshare">
+              &nbsp;<label class="font-weight-500" for="canshare" aria-label="canshare">Can user share this
+                link?</label>
+            </div>
+          </div>
+        </div> -->
+        <hr>
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <form novalidate #shareform="ngForm">
+            <div class="form-row gutter-y-5">
+
+              <div class="col-md-9 form-group">
+                <input type="email" placeholder="Email Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  name="email" data-name="email" [required]="true" data-prefix="Email" data-type="text"
+                  [(ngModel)]="email" class="form-control">
+              </div>
+              <div class="col-md-2">
+                <select class="form-control" name="permission" [(ngModel)]="permission">
+                  <option *ngFor="let op of permissionslist" [value]="op">{{op}}</option>
+                </select>
+              </div>
+              <div class="col-md-1">
+                <button class="btn btn-secondary" [disabled]="linksending" appValidation [form]="shareform"
+                  [validparent]="'form-group'" (click)="addShareLinkUser(shareform)"><span
+                    *ngIf="!linksending">Share</span>
+                  <span *ngIf="linksending"><i class="fa fa-lg fa-sync fa-refresh"></i></span></button>
+              </div>
+
+            </div>
+          </form>
+          <div *ngIf="docowner.length>0">
+            <hr>
+            <span><strong>Document Owner</strong></span>
+            <hr>
+            <div class="form-row gutter-y-5">
+              <div class="col-md-12 text-justify">
+                <table style="width: 100%;" class="table">
+                  <tbody>
+                    <tr>
+                      <td style="width: 70%;">{{docowner[0].emailid}}</td>
+                      <td style="width: 20%;"><select class="form-control"
+                          (change)="editShareLinkUser(docowner[0].id,docowner[0].permission,'E','P',-1)"
+                          [(ngModel)]="docowner[0].permission">
+                          <option *ngFor="let op of permissionslist" [value]="op">{{op}}</option>
+                        </select></td>
+                      <td style="width: 10%;"><button class="btn btn-danger rounded-circle"
+                          (click)="removeDocOwner(docowner[0].emailid)"><span><i
+                              class="fas fa-minus-circle"></i></span></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="securelinkusers.length>0">
+            <hr>
+            <span><strong>Shared Users</strong></span>
+            <hr>
+            <div class="form-row gutter-y-5">
+              <div class="col-md-12 text-justify">
+                <table style="width: 100%;" class="table">
+                  <tbody>
+                    <tr *ngFor="let user of securelinkusers;trackBy: trackByIndex; index as bindex; last as last">
+                      <td style="width: 70%;">{{user.emailid}}</td>
+                      <td style="width: 20%;"><select class="form-control"
+                          (change)="editShareLinkUser(user.id,user.permission,'E','P',bindex)"
+                          [(ngModel)]="user.permission">
+                          <option *ngFor="let op of permissionslist" [value]="op">{{op}}</option>
+                        </select></td>
+                      <td style="width: 10%;"><button class="btn btn-danger rounded-circle"
+                          (click)="editShareLinkUser(user.id,user.permission,'R','P',bindex)"><span><i
+                              class="fas fa-minus-circle"></i></span></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="requestedUsers.length>0">
+            <hr>
+            <span><strong>Access Requests</strong></span>
+            <hr>
+            <div class="form-row gutter-y-5">
+              <div class="col-md-12 text-justify">
+                <table style="width: 100%;" class="table">
+                  <tbody>
+                    <tr *ngFor="let user of requestedUsers;trackBy: trackByIndex; index as bindex; last as last">
+                      <td style="width: 70%;">{{user.emailid}}</td>
+                      <td style="width: 10%;">{{user.permission}}</td>
+                      <td style="width: 20%;"><button class="btn btn-primary"
+                          (click)="setPermission(user,bindex)"><span>Grant</span></button>
+                        <button class="btn btn-danger rounded-circle ml-1"
+                          (click)="editShareLinkUser(user.id,user.permission,'R','R',bindex)"><span><i
+                              class="fas fa-minus-circle"></i></span></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div *ngIf="showchat" class="row bootstrap snippets fade" id="cpanel" style="bottom: 100px;
+right: 40px;
+position: fixed;
+z-index: 9999999;
+width: 450px;
+max-height: 450px;
+max-width: 500px;
+overflow-x: scroll;
+padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    background-color: ghostwhite;
+    border: solid 1px black;
+">
+  <div class="col-md-12 col-md-offset-2 col-sm-12">
+    <div class="comment-wrapper">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Comment panel
+        </div>
+        <div class="panel-body">
+          <ul class="media-list">
+            <li class="media" *ngFor="let notes of securenotes">
+              <a href="#" class="pull-left">
+                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+              </a>
+              <div class="media-body">
+                <span class="text-muted pull-right">
+                  <small class="text-muted">{{notes.createdon | date:'short'}}</small>
+                </span>
+                <strong class="text-success">{{notes.email}}</strong>
+                <p class="text-justify ml-2">
+                  {{notes.comment}}
+                </p>
+              </div>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+          <hr>
+          <form novalidate #mainform="ngForm">
+            <textarea class="form-control" id="comment" autofocus [(ngModel)]="note.comment"
+              placeholder="write a comment..." rows="3" type="text" name="comment" data-name="comment" [required]="true"
+              data-prefix="comment" data-type="text"></textarea>
+            <br>
+            <button type="button" class="btn btn-info pull-right" [disabled]="notsent" appValidation [form]="mainform"
+              [validparent]="'form-group'" (click)="manageSecureNotes(note,mainform)">
+              <i class="fas fa-reply" *ngIf="!notsent"></i>
+              <i class="fa fa-sync fa-refresh" *ngIf="notsent"></i> Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<a href="javascript:void(0)" style="padding: 17px;" class="btn btn-primary float" (click)="openchat()">
+  <i *ngIf="!showchat" class="fa fa-plus"></i>
+  <i *ngIf="showchat" class="fa fa-minus"></i>
+</a> -->
+
+<div class="modal fade modal-right" data-modal-width="700" data-modal-offset-upto="992" id="securelinkhistory"
+  tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content prt lead-display">
+      <div class="modal-header py-2 alert-success">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="la la-close"></i>
+        </button>
+      </div>
+      <div class="modal-body p-0 rounded-0 theme-align-right">
+        <div class="row flex-nowrap">
+          <div class="col overflow-auto">
+            <div class="card mb-4 rounded-0 shadow">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="m-0">Share history</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body" *ngIf="securelinkhistory.length>0">
+                <ul class="user-timeline user-timeline-icons">
+                  <li class="latest" *ngFor="let h of securelinkhistory">
+                    <i class="user-timeline-ico fa fa-history"></i>
+                    <div class="user-timeline-date">
+                      {{((h.actiontime?h.actiontime:h.actiontime) | datepipe) | date: 'medium'}}</div>
+                    <div class="user-timeline-description" *ngIf="(h.statement && h.statement.length>0)">
+                      {{h.statement}} </div>
+                    <div class="user-timeline-description" *ngIf="(h.actionon && h.actionon.length>0)">Action on :
+                      {{h.actionon}} </div>
+                    <div class="user-timeline-description">Action by: {{h.actionby}} </div>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body text-center" *ngIf="securelinkhistory.length===0">
+                <span class="text-danger">No action taken</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

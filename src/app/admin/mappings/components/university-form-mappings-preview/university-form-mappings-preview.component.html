@@ -1,0 +1,75 @@
+<!-- <div class="row">
+  <div class="col-md-12">
+    <a [routerLink]="['pdf-university-form-mapping',masterid]"
+      aria-controls="collapseFilter" data-toggle="tooltip" title="" data-original-title="Back to edit"
+      class="btn btn-sm btn-outline-secondary btn-sm">
+      <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Edit
+    </a>
+  </div>
+</div>
+<br> -->
+<div style="width: 900px;" id="root">
+  <div id="maindiv">
+    <div class="row">
+      <div class="col-md-12" #masterDroppable>
+        <div *ngFor="let image of imagelist;trackBy: trackByIndex; index as mainindex;"
+          [ngClass]="((imagelist.length-1)!==mainindex)?divpdf:''" id="div{{mainindex}}">
+          <img [src]="apiurl+image.rootpath+'/'+image.filename" id="mainimg{{mainindex}}" style="width: 900px;">
+          <!-- <img id="mainimg{{mainindex}}" style="width: 900px;"> -->
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let prop of controllist;trackBy: trackByIndex; index as cindex;">
+      <div id="{{prop.id}}" *ngIf="prop.type=='textbox'" [style.position]="prop.position"
+        [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+        [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+        <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'"
+          [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'">
+          <input type="text" [style.text-align]="prop.textalign" [style.font-size]="prop.fontsize" [value]="box.value"
+            [ngStyle]="box.style" *ngFor="let box of prop.boxes" [ngClass]="(prop.iscapital=='true')?'capital':''">
+        </div>
+      </div>
+      <div id="{{prop.id}}" *ngIf="prop.type=='label'" [style.position]="prop.position"
+        [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+        [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+        <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'"
+          [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'">
+          <label [style.text-align]="prop.textalign" [style.font-size]="prop.fontsize" [ngStyle]="box.style"
+            *ngFor="let box of prop.boxes" [ngClass]="(prop.iscapital=='true')?'capital':''">{{box.value}}</label>
+        </div>
+      </div>
+      <div id="{{prop.id}}" *ngIf="prop.type=='date'" [style.position]="prop.position"
+        [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+        [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+        <div [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'" [style.width]="prop.width+'px'"
+          [style.height]="prop.height+'px'">
+          <input type="text" [style.text-align]="prop.textalign" [value]="box.value" [ngStyle]="box.style"
+            *ngFor="let box of prop.boxes" [ngClass]="(prop.iscapital==true)?'capital':''">
+        </div>
+      </div>
+      <div id="{{prop.id}}" *ngIf="prop.type=='radiobutton'" [style.position]="prop.position"
+        [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+        [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+        <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'"
+          [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'">
+          <label [ngStyle]="box.style" type="checkbox" *ngFor="let box of prop.boxes">
+            <span *ngIf="box.value"><i class="fa fa-lg fa-dot-circle"></i></span>
+            <span *ngIf="!box.value">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          </label>
+        </div>
+      </div>
+      <div id="{{prop.id}}" *ngIf="prop.type=='checkbox'" [style.position]="prop.position"
+        [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+        [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+        <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'"
+          [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'">
+          <label [ngStyle]="box.style" type="checkbox" *ngFor="let box of prop.boxes">
+            <span *ngIf="box.value"><i class="fa fa-lg fa-check"></i></span>
+            <span *ngIf="!box.value">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

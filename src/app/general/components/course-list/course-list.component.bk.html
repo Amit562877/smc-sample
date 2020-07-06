@@ -1,0 +1,535 @@
+<body class="bg-white">
+  <div class="container-fluid">
+    <div
+      style="background-image: url(./assets/images/search-bg.png); background-repeat: no-repeat; background-position: center center;"
+      class="mt-4">
+      <div class="align-items-center bg-white border border-radius-30 d-flex justify-content-center mx-auto shadow-sm"
+        style=" width: 55px; height: 55px; "><i class="la la-2x la-graduation-cap text-color-green"></i> </div>
+      <div class="row">
+        <div class="col-md-6 mb-md-4 mt-md-4 mb-0 mt-0 mx-auto text-center">
+          <div class="font-weight-400 h1 text-primary">Search my courses</div>
+          <p class="font-size-11 mb-2 mb-md-4"> Search for a course from Universities around the world</p>
+          <div class="input-group">
+            <div class="input-group-inside input-group-lg shadow border-radius-100">
+              <label aria-label="searchstring" for="input" class="visuallyhidden">Search:</label>
+              <input aria-label="globalhints" type="text" id="input" [(ngModel)]="courseFilterModel.searchstring"
+                placeholder="type at least three character for search.." (keyup)="globalhints($event)"
+                class="form-control pr-4 border-radius-100" (focus)="inputFocusFlag=false;" autocomplete="off"
+                (focusout)="inputFocusFlag=true;">
+              <div id="hint"
+                *ngIf="!isbuttonclicke && (searchhints.coursehint.length>0 || searchhints.universityhint.length>0)"
+                [ngClass]="courseFilterModel.searchstring.lenght>=2 ? '' : 'hidden'" class="card mt-1 hint-wrap">
+                <ul id="list" class="m-2 ml-3" (focus)="divFocusFlag=false;" (focusout)="divFocusFlag=true;"
+                  class="search-results search-resultsoption" infinite-scroll [infiniteScrollDistance]="2"
+                  [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="getNextHint()"
+                  [scrollWindow]="false">
+                  <!-- <div class="input-group bg-white mt-1" *ngFor="let data of universityhint">
+                        <a  aria-label="getNextHint"class="nav-link" style="color: black" [routerLink]="['/universitydetail/',data.id]">
+                          <div class="input-group-append">
+                            <img src="./assets/images/{{data.logourl}}" class="img-rounded" height="30" width="30">&nbsp;
+                            <span style="text-align: justify"> {{data.name}} <b>(University)</b></span>
+                          </div>
+                        </a>
+                      </div> -->
+
+                  <li class="input-group bg-white mt-1" *ngFor="let data of searchhints.coursehint">
+                    <a aria-label="getCourseByHint_link" class="nav-link" style="color: black"
+                      (click)="getCourseByHint(data.name)" value="data.name">
+                      <!-- [routerLink]="['course-detail',data.id]"> -->
+                      <div class="input-group-append">
+                        <div class="hintoption" [style.background]="data.name | firstcharactercolor">
+                          {{data.name | firstcharacter}}
+                        </div> &nbsp;
+                        <!-- <img src="./assets/images/{{data.logourl}}" class="img-rounded" style="height: 30px;width:30px;border: #000000 1px outset;border-radius: 30px;" > &nbsp; -->
+                        <span style="text-align: left">{{data.name}}</span>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- <button role="button" aria-label="getNextHint1" *ngIf="searchhints.ismorepage" class="btn btn-outline-primary btn-rounded btn-sm mt-2"
+                    (click)="getNextHint()">show more</button> -->
+                </ul>
+              </div>
+              <div class="input-group-inside-append">
+                <button class="btn btn-lg btn-trans" (click)="getCourseByFilter();" type="button" name="btnfiltersearch"
+                  role="button" aria-label="btnfiltersearch">
+                  <i class="la la-search"></i>
+                </button>
+              </div>
+            </div>
+            <div class="input-group-prepend">
+              <button type="button" data-toggle="collapse" href="#collapseFilter" aria-expanded="true"
+                aria-controls="collapseFilter" class="btn btn-primary btn-sm ml-1" name="closefilter" role="button"
+                aria-label="closefilter"> <i class="fa fa-lg fa-filter pr-1"></i>Filter</button>
+            </div>
+            <div class="input-group-prepend">
+              <button type="button" (click)="getAdavanceFilters()" class="btn btn-primary btn-sm ml-1" role="button"><i
+                  class="fa fa-lg fa-filter pr-1"></i>Advanced
+                Filter</button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <!-- <div class="row justify-content-center">
+        <div class="col-md-12 text-center mt-3 mt-md-0">
+          <button role="button" aria-label="getNextHint1" type="button" data-toggle="collapse" href="#collapseFilter" aria-expanded="true"
+            aria-controls="collapseFilter" class="btn btn-outline-primary btn-sm"> <i
+              class="fa fa-lg fa-filter pr-1"></i>Filter</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div class="mt-4 py-4 container-fluid bg-breadcrumb">
+    <div class="collapse" id="collapseFilter">
+      <div class="card shadow mb-3">
+        <div class="card-body p-3">
+          <div class="row gutter-x-5">
+            <div class="col-12 col-auto col-md py-md-2 py-0" *ngIf="uid==0">
+              <div class="form-group text-left">
+                <label aria-label="countryid_1" class="font-weight-500" for="exampleFormControlSelect1">Country</label>
+                <select aria-label="countryid" class="form-control border-secondary shadow"
+                  [(ngModel)]="courseFilterModel.countryid" id="exampleFormControlSelect1" (change)="filterstate()">
+                  <option value="0">-- Choose Country --</option>
+                  <option *ngFor="let country of coursedetails.countrylist" [ngValue]="country.id">
+                    {{country.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0" *ngIf="uid==0">
+              <div class="form-group text-left">
+                <label aria-label="stateid_1" class="font-weight-500" for="exampleFormControlSelect1">State</label>
+                <select aria-label="stateid" class="form-control border-secondary shadow"
+                  [(ngModel)]="courseFilterModel.stateid" id="exampleFormControlSelect1" (change)="filtercity()">
+                  <option value="0">-- Choose State --</option>
+                  <option *ngFor="let state of coursedetails.statelist" [ngValue]="state.id">
+                    {{state.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0" *ngIf="uid==0">
+              <div class="form-group text-left">
+                <label aria-label="cityid_1" class="font-weight-500" for="exampleFormControlSelect1">City</label>
+                <select aria-label="cityid" class="form-control border-secondary shadow" id="exampleFormControlSelect1"
+                  [(ngModel)]="courseFilterModel.cityid">
+                  <option value="0">-- Choose City --</option>
+                  <option *ngFor="let city of coursedetails.citylist" [ngValue]="city.id">
+                    {{city.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="universitytypeid_1" class="font-weight-500">University Type</label>
+                <select aria-label="getUniversityListByType" class="form-control border-secondary shadow"
+                  [(ngModel)]="universitytypeid" (change)="getUniversityListByType()">
+                  <option value="">-- Choose type --</option>
+                  <option *ngFor="let type of coursedetails.institutetypelist" [ngValue]="type.id">
+                    {{type.univtype}}</option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="getNextHint" class="font-weight-500" for="exampleFormControlSelect1">Intake</label>
+                <select aria-label="getNextHint" class="form-control border-secondary shadow" id="exampleFormControlSelect1">
+                  <option value="0">-- Choose Intake --</option>
+                  <option *ngFor="let intake of coursedetails.intakelist" [ngValue]="intake.id">
+                    {{intake.name}}</option>
+                </select>
+              </div>
+            </div> -->
+
+            <!-- <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="getNextHint" class="font-weight-500" for="exampleFormControlSelect1">Institute Type</label>
+                <select aria-label="getNextHint" class="form-control border-secondary shadow" [(ngModel)]="courseFilterModel.institutetype"
+                  id="exampleFormControlSelect1">
+                  <option value="0">-- Choose Institute Type --</option>
+                  <option *ngFor="let intitute of coursedetails.institutetypelist" [ngValue]="intitute.id">
+                    {{intitute.univtype}}</option>
+                </select>
+              </div>
+            </div> -->
+            <div class="col-12 col-auto col-md py-md-2 py-0" *ngIf="uid==0">
+              <div class="form-group text-left">
+                <label aria-label="universitylist_1" class="font-weight-500"
+                  for="exampleFormControlSelect1">University</label>
+                <select aria-label="universitylist" class="form-control border-info shadow"
+                  [(ngModel)]="courseFilterModel.universityid" id="exampleFormControlSelect1">
+                  <option value="0">-- Choose University --</option>
+                  <option *ngFor="let university of coursedetails.universitylist" [ngValue]="university.id">
+                    {{university.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="disciplineid_1" class="font-weight-500"
+                  for="exampleFormControlSelect1">Discipline</label>
+                <select aria-label="disciplineid" class="form-control border-secondary shadow"
+                  id="exampleFormControlSelect1" [(ngModel)]="courseFilterModel.disciplineid">
+                  <option value="0">-- Choose Discipline --</option>
+                  <option *ngFor="let discipline of coursedetails.disciplinelist" [ngValue]="discipline.id">
+                    {{discipline.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="educationleveldata_1" class="font-weight-500"
+                  for="exampleFormControlSelect1">Education
+                  Level</label>
+                <select aria-label="educationleveldata" class="form-control border-secondary shadow"
+                  [(ngModel)]="courseFilterModel.studylevelid" id="exampleFormControlSelect1">
+                  <option value="0">-- Choose Education Level --</option>
+                  <option *ngFor="let studylevel of coursedetails.educationleveldata" [ngValue]="studylevel.id">
+                    {{studylevel.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="coursetype_1" class="font-weight-500" for="exampleFormControlSelect1">Course
+                  Type</label>
+                <select aria-label="coursetype" class="form-control border-secondary shadow"
+                  [(ngModel)]="courseFilterModel.coursetype" id="exampleFormControlSelect1">
+                  <option value="">-- Choose Course Type --</option>
+                  <option value="parttime">Part-Time</option>
+                  <option value="fulltime">Full-Time</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="durationcourse_1" class="font-weight-500" for="exampleFormControlSelect1">Course
+                  Duration</label>
+                <select aria-label="durationcourse" class="form-control border-secondary shadow"
+                  [(ngModel)]="courseFilterModel.duration" id="exampleFormControlSelect1">
+                  <option value="0">-- Choose Duration --</option>
+                  <option value="1">less than 1 Year</option>
+                  <option value="2">less than 2 Year</option>
+                  <option value="3">less than 3 Year</option>
+                  <option value="4">more than 3 Year</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="maxfees_1" class="font-weight-500" for="exampleFormControlSelect1">Fees
+                  Limit</label>
+                <select aria-label="maxfees" class="form-control border-secondary shadow" id="exampleFormControlSelect1"
+                  [(ngModel)]="courseFilterModel.maxfees" (change)="getCourseByFilterFees()">
+                  <option value="0">-- Choose Limit --</option>
+                  <option value="20000">less than 20000</option>
+                  <option value="50000">20000 to 50000</option>
+                  <option value="100000">50000 to 100000 </option>
+                  <option value="100001">more than 100000</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row gutter-x-5">
+            <div class="col-12 col-auto col-md py-md-2 py-0 text-right">
+              <button role="button" aria-label="getCourseByFilter" type="button"
+                class="btn btn-outline-secondary btn-sm" (click)="getCourseByFilter()">
+                <i class="pr-1 mr-1"></i>Apply Filter</button>&nbsp;
+              <button role="button" aria-label="clearFilter" type="button" data-toggle="collapse" href="#collapseFilter"
+                aria-expanded="true" aria-controls="collapseFilter" class="btn btn-outline-danger btn-sm"
+                (click)="clearFilter()"> <i class="pr-1 mr-1"></i>Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+      [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()"
+      (scrolledUp)="onUp()" *ngIf="coursedetails.coursedata">
+      <div class="row gutter-x-5">
+        <div class="col-md-3 mb-3 count-item" *ngFor="let course of coursedetails.coursedata; let courseIndex = index">
+          <app-course-cards [coursedetail]=course [comparedata]="comparedata" [courseIndex]="courseIndex"
+            (courseCompare)="onCourseCompare($event)">
+          </app-course-cards>
+        </div>
+      </div>
+    </div>
+    <div class="text-danger text-center" *ngIf="!coursedetails.coursedata">
+      <strong>No data found</strong>
+    </div>
+    <!-- Login Model start -->
+    <app-login-model (success)="successLogin()"></app-login-model>
+    <!-- Login Model end -->
+  </div>
+
+  <div *ngIf="topbtnFlag" onclick="topFunction()" style="margin-right: 80px;" id="back-to-top"
+    class="btn btn-outline-primary"><i class="la la-arrow-up"></i>
+  </div>
+</body>
+<!-- Add to Course Compare Start -->
+<div class="sticky-bottom w-auto" style="left: auto;">
+  <div class="p-3">
+    <div data-toggle="tooltip" title="View Courses" class="dropdown dropdown-cust flex-1">
+      <a aria-label="comparedata"
+        class="Background badge badge-primary count-shopping-cart font-size-11 font-weight-bold hover-3d px-0 py-3 rounded-circle shadow text-white"
+        style="width: 60px; height:60px;cursor: pointer;" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <i class="fa fa-lg fa-graduation-cap mb-1"></i>
+
+        <span class="d-block" *ngIf="comparedata && comparedata.length > 0 ">{{comparedata.length}}</span>
+        <span class="d-block" *ngIf="comparedata && comparedata.length == 0 ">0</span>
+        <span class="d-block" *ngIf="!comparedata">0</span>
+      </a>
+      <div id="divcart" class="dropdown-menu dropdown-form dropdown-menu-lg pt-0" style="width: 450px !important; ">
+        <form>
+          <div class="dropdown-title-bar">
+            <div class="dropdown-title">Course List </div>
+          </div>
+          <div class="pt-0 px-3" style="max-height: 350px; overflow-y: auto; overflow-x: hidden;"
+            *ngIf="selectedCourses && selectedCourses.length > 0">
+            <div *ngFor="let course of selectedCourses">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <strong>{{course.key}}</strong>
+                </div>
+              </div>
+              <div *ngFor="let d of course.value">
+
+                <div class="row">
+                  <div class="col-md-2">
+
+                    <div class="hintoption"
+                      style="margin: 4px 4px 4px 4px;min-height: 35px !important;min-width: 35px !important;font-size: 20px !important;background: rgb(29, 123, 145);font-weight: 900;"
+                      [style.background]="d.coursename | firstcharactercolor">
+                      {{d.coursename | firstcharacter}}
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    {{d.coursename}}
+                  </div>
+                  <div class="col-md-2">
+                    <div (click)="removeCourse(d)" class="btn btn-default rounded">
+                      <i class="fa fa-trash text-color-red" aria-hidden="true"></i>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group" *ngIf="comparedata && comparedata.length>0">
+              <div class="row">
+                <div class="col-md-6 text-center">
+                  <button role="button" aria-label="clearCourseCompare" class="btn btn-sm btn-danger ml-2"
+                    style="width:100px" (click)="clearCourseCompare()">Clear</button>
+                </div>
+                <div class="col-md-6 text-center">
+                  <button role="button" aria-label="saveCourseCompare" data-dismiss="dropdown"
+                    class="btn btn-sm btn-primary" (click)="openCompareModal()">Compare</button>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="pt-0 px-3" style="max-height: 350px; overflow-y: auto; overflow-x: hidden;"
+            *ngIf="!selectedCourses">
+            <div class="row">
+              <h3>No Courses Selected</h3>
+            </div>
+
+          </div>
+          <div class="pt-0 px-3" style="max-height: 350px; overflow-y: auto; overflow-x: hidden;"
+            *ngIf="selectedCourses && selectedCourses.length==0">
+            <div>
+              <h5>No Courses Selected</h5>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add to Course Compare End -->
+
+<!-- Course Compare Model Start -->
+<div class="modal fade modal-right modal-full" data-modal-width="100vw" data-modal-offset-upto="992" id="Fullmodal"
+  tabindex="-1" role="dialog" aria-labelledby="exFourLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title  w-100 text-center" id="exFourLabel">Compare Course</h4>
+        <button role="button" aria-label="closeCompareModal" type="button" class="close" data-dismiss="modal"
+          (click)="closeCompareModal()" aria-label="Close">
+          <i class="la la-close"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="displayUniversityRecordsbody">
+        <div class="table-responsive" id="displayUniversityRecords">
+          <table class="table table-striped">
+            <tbody>
+              <ng-container *ngIf="courseCompareData">
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">University Name</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <strong>{{courseCompare.univ_name | uppercase}}</strong></td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Course Name</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <strong class="card-title"> {{courseCompare.course_title}}</strong>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Overview</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_overview}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Country</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_country}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Program Code</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.program_code}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Cricos Code</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <strong>
+                        <li *ngFor="let maincricos of courseCompare.course_cricos_code">
+                          {{maincricos.location}}: {{maincricos.code}}
+
+                        </li>
+                      </strong>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Duration</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <span *ngFor="let duration of courseCompare.course_duration_display">
+                      <strong>
+                        <span>
+                          {{duration.duration}}
+                          {{duration.unit | uppercase}} / {{duration.display | uppercase}}
+                        </span>
+                      </strong>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Fees</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <strong>
+                        <li *ngFor="let mainFees of courseCompare.course_tuition_fee.fees">
+                          {{mainFees.name}}:
+                          <span *ngFor="let subFee of mainFees.value.international_student">{{subFee.amount}} /
+                            {{subFee.unit | uppercase}} </span>
+                        </li>
+                      </strong>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Intake</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <strong>
+                        <li *ngFor="let mainIntake of courseCompare.course_intake.intake">
+                          {{mainIntake.name}}:
+                          <span *ngFor="let subIntake of mainIntake.value">{{subIntake.actualdate}}, </span>
+                        </li>
+                      </strong>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Study Mode</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_study_mode}} </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Campuses</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <span *ngFor="let loc of courseCompare.course_campus_location">
+                      {{loc.name}}
+                    </span>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">Course Discipline</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <ul>
+                      <li *ngFor="let category of courseCompare.course_discipline">
+                        {{category}}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr class="tr-action-outer">
+                  <td class="text-uppercase" style="width: 5%;">English Requirement</td>
+                  <td style="width: 25%;" *ngFor="let courseCompare of courseCompareData">
+                    <p *ngFor="let english of courseCompare.course_admission_requirement.english">
+                      <strong>{{english.name | uppercase}}: </strong>{{english.description}}
+                    </p>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="courseCompareData && courseCompareData.length==0">
+                <tr class="text-center text-color-red">
+                  <td colspan="6">
+                    No Data Found
+                  </td>
+                </tr>
+              </ng-container>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button role="button" aria-label="save as pdf" type="button" (click)="downloadPdf()"
+          class="btn btn-outline-secondary" [disabled]="downloadPDF"><span *ngIf="downloadPDF"><i
+              class="fa fa-lg fa-sync fa-refresh"></i></span><span *ngIf="!downloadPDF">
+            <i class="far fa-file-pdf"></i></span> Save as PDF</button>
+        <!-- <button role="button" aria-label="send mail" type="button" class="btn btn-outline-primary"><i
+            class="fa fa-lg fa-envelope"></i> Send</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Course Compare Model End -->
+
+
+<!-- Advanced Filter Model Start -->
+<div class="modal fade modal-full" data-modal-width="100vw" data-modal-offset-upto="992" id="multiModalInner"
+  tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Advanced Filter</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAdvancedFilterModel()">
+          <i class="la la-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-advanced-filter-main (advancedFilterModel)="advancedFilterModel($event)">
+
+        </app-advanced-filter-main>
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary">Save</button>
+        <button type="button" class="btn btn-secondary">lorem</button>
+        <button type="button" class="btn btn-secondary">lipsum</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<!-- Advanced Filter Model End -->

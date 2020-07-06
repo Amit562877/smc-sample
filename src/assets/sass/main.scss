@@ -1,0 +1,27 @@
+@import 'partials/material-icons';
+@import 'partials/base';
+@import 'partials/mixins';
+
+@import 'partials/buttons';
+@import 'partials/vendor-settings';
+@import 'partials/gridSettings';
+@import 'partials/vertical-gutter';
+@import 'partials/navigation';
+@import 'partials/global';
+@import 'partials/recentConversation';
+@import 'partials/anywhere-search';
+@import 'sticky-links/sticky-links';
+ 
+/* Projects */
+@import 'client-portal/main';
+@import 'camstudio/main';
+/* / Projects */
+
+/* main css */
+@import 'partials/main';
+@import 'prepare-document/main';
+@import 'partials/custom';
+@import 'partials/jsControls';
+@import 'partials/theme-settings';
+@import 'partials/responsive';
+/* / main css */

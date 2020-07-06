@@ -1,0 +1,111 @@
+import { Directive, Injectable, Input, EventEmitter, Output, ElementRef, HostListener } from '@angular/core';
+import * as $ from 'jquery';
+@Directive({
+  selector: '[appValidation]'
+})
+export class ValidationDirective {
+
+  @Input() public form: any;
+  @Input() public validparent: any;
+  constructor(private el: ElementRef) { }
+  issubmitted = false;
+  @HostListener('click', ['$event'])
+  onWindowScroll(event: any) {
+    this.issubmitted = true;
+    const formelements = Object.keys(this.form.controls);
+    formelements.forEach(element => {
+      const nodeelm: any = $('[ng-reflect-name=' + element + ']');
+      for (const node of nodeelm) {
+        node.addEventListener('window:change', (() => {
+          'myEvent()';
+        }));
+        if (this.form.controls[element].errors) {
+          node.classList.add('invalid');
+          const elmentdmold: any = document.getElementById(element + 'err');
+          if (!elmentdmold) {
+            const elmentdm: any = document.createElement('div');
+            elmentdm.classList.add('text-danger');
+            elmentdm.setAttribute('id', element + 'err');
+            let suffix = '';
+            if (this.form.controls[element].errors.required) {
+              if (node.dataset.validType === 'select') {
+                suffix = ' must be selected!';
+              } else {
+                suffix = ' must not be blank!';
+              }
+            } else if (this.form.controls[element].errors.pattern) {
+              if (node.dataset.validType === 'select') {
+                suffix = ' must match the format!';
+              } else {
+                suffix = ' must match the format!';
+              }
+            }
+            elmentdm.innerHTML = ((node.dataset.validName) ? node.dataset.validName : 'Field') + suffix;
+            if (this.validparent) {
+              $('[ng-reflect-name=' + element + ']').closest('.' + this.validparent).append(elmentdm);
+            } else {
+              $('[ng-reflect-name=' + element + ']').after(elmentdm);
+            }
+          }
+        } else {
+          node.classList.remove('invalid');
+          if ($('#' + element + 'err').length) {
+            $('#' + element + 'err').remove();
+          }
+        }
+      }
+    });
+  }
+
+  @HostListener('window:change', ['$event'])
+  myEvent(event: any) {
+    if (this.issubmitted) {
+      console.log(event.path[0].attributes['ng-reflect-name'].value);
+      const formelements = Object.keys(this.form.controls);
+      formelements.forEach(element => {
+        const nodeelm: any = $('[ng-reflect-name=' + element + ']');
+        for (const node of nodeelm) {
+          node.addEventListener('window:change', (() => {
+            'myEvent()';
+          }));
+          if (element === event.path[0].attributes['ng-reflect-name'].value) {
+            if (this.form.controls[element].errors) {
+              node.classList.add('invalid');
+              const elmentdmold: any = document.getElementById(element + 'err');
+              if (!elmentdmold) {
+                const elmentdm: any = document.createElement('div');
+                elmentdm.classList.add('text-danger');
+                elmentdm.setAttribute('id', element + 'err');
+                let suffix = '';
+                if (this.form.controls[element].errors.required) {
+                  if (node.dataset.validType === 'select') {
+                    suffix = ' must be selected!';
+                  } else {
+                    suffix = ' must not be blank!';
+                  }
+                } else if (this.form.controls[element].errors.pattern) {
+                  if (node.dataset.validType === 'select') {
+                    suffix = ' must match the format!';
+                  } else {
+                    suffix = ' must match the format!';
+                  }
+                }
+                elmentdm.innerHTML = ((node.dataset.validName) ? node.dataset.validName : 'Field') + suffix;
+                if (this.validparent) {
+                  $('[ng-reflect-name=' + element + ']').closest('.' + this.validparent).append(elmentdm);
+                } else {
+                  $('[ng-reflect-name=' + element + ']').after(elmentdm);
+                }
+              }
+            } else {
+              node.classList.remove('invalid');
+              if ($('#' + element + 'err').length) {
+                $('#' + element + 'err').remove();
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+}

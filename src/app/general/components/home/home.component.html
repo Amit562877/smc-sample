@@ -1,0 +1,204 @@
+<body class="bg-white">
+  <div class="container-fluid">
+    <div
+      style="background-image: url(./assets/images/search-bg.png); background-repeat: no-repeat; background-position: center center;"
+      class="mt-4">
+      <div class="align-items-center bg-white border border-radius-30 d-flex justify-content-center mx-auto shadow-sm"
+        style=" width: 55px; height: 55px; "><i class="la la-2x la-graduation-cap text-color-green"></i> </div>
+      <div class="row">
+        <div class="col-md-6 mb-md-4 mt-md-4 mb-0 mt-0 mx-auto text-center">
+          <div class="font-weight-400 h1 text-primary">Search my courses</div>
+          <p class="font-size-11 mb-2 mb-md-4"> Search for a course from Universities around the world</p>
+          <div class="input-group">
+            <div class="input-group-inside input-group-lg shadow border-radius-100">
+              <input aria-label="globalhints" type="text" id="input" placeholder="search..."
+                [(ngModel)]="courseFilterModel.searchstring" (keyup)="globalhints($event)"
+                class="form-control pr-4 border-radius-100" (focus)="inputFocusFlag=false;" autocomplete="off">
+              <div id="hint"
+                *ngIf="!isbuttonclicke && !inputFocusFlag && (searchhints.coursehint.length==0 && searchhints.universityhint.length==0)"
+                class="card mt-1 hint-wrap">
+                <ul id="list" class="m-2 ml-3">
+                  <li class="input-group bg-white mt-1">
+                    <a [routerLink]="['/program/university-list']" aria-label="getCourseByHint_link" class="nav-link"
+                      style="color: black">
+                      <div class="input-group-append">
+                        <span style="font-size: large;"><i class="fa fa-lg fa-university"
+                            style="color:red;"></i></span><span
+                          style="text-align: left;font-size: large;margin-left: 10px;">University</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="input-group bg-white mt-1">
+                    <a [routerLink]="['/program/course-list']" aria-label="getCourseByHint_link" class="nav-link"
+                      style="color: black">
+                      <div class="input-group-append">
+                        <span style="font-size: large;"><i class="fa fa-lg fa-graduation-cap"
+                            style="color:purple;"></i></span><span
+                          style="text-align: left;font-size: large;margin-left: 10px;">Courses</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div id="hint"
+                *ngIf="!isbuttonclicke && (searchhints.coursehint.length>0 || searchhints.universityhint.length>0)"
+                class="card mt-1 hint-wrap">
+                <ul id="list" class="m-2 ml-3" (focus)="divFocusFlag=false;" (focusout)="divFocusFlag=true;">
+                  <div *ngIf="searchhints.coursehint.length>0">
+                    <li class="input-group bg-white mt-1" *ngFor="let data of searchhints.coursehint">
+                      <a [routerLink]="['/program/course-list']" (click)="courseFilterModel.searchstring=data.name"
+                        aria-label="getCourseByHint_link" class="nav-link" style="color: black">
+                        <!-- [routerLink]="['course-detail',data.id]"> -->
+                        <div class="input-group-append">
+                          <div class="hintoption" [style.background]="data.name | firstcharactercolor">
+                            {{data.name | firstcharacter}}
+                          </div> &nbsp;
+                          <span style="text-align: left">{{data.name}}</span>
+                        </div>
+                      </a>
+                    </li>
+                    <a [routerLink]="['/program/course-list']" style="float: right;">Browse
+                      {{searchhints.coursehintcount}}
+                      courses</a>
+                    <hr>
+                  </div>
+                  <div *ngIf="searchhints.universityhint.length>0">
+                    <li class="input-group bg-white mt-1" *ngFor="let data of searchhints.universityhint">
+                      <a aria-label="getCourseByHint_link" class="nav-link" style="color: black"
+                        [routerLink]="['/program/univ-detail',data.universityid]">
+                        <div class="input-group-append">
+                          <div class="hintoption">
+                            <img
+                             [src]="environment.API_URL+'Document/images/'+data.logourl"
+                              height="30px" width="30px" alt="university logo">
+                          </div> &nbsp;
+                          <span style="text-align: left">{{data.name}}</span>
+                        </div>
+                      </a>
+                    </li>
+                    <a [routerLink]="['/program/university-list']"
+                      (click)="universityfiltermodel.searchstring=courseFilterModel.searchstring"
+                      style="float: right;">Browse
+                      {{searchhints.universityhintcount}}
+                      universities</a>
+                    <hr>
+                  </div>
+                </ul>
+              </div>
+              <div class="input-group-inside-append">
+                <button class="btn btn-lg btn-trans" type="button" name="btnfiltersearch" role="button"
+                  aria-label="btnfiltersearch">
+                  <i class="la la-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-1 py-1 container-fluid bg-breadcrumb" *ngIf="universitylist.length>0">
+    <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="text-center text-primary">Top 8
+      university by student
+      visits</h4>
+    <hr>
+    <div class="row m-2">
+      <div class="col-md-3 mb-2 customdivV1" *ngFor="let university of universitylist">
+        <div class="card card-ctrl-outside h-100 shadow-sm">
+          <div class="card-header bg-transparent px-3 py-2">
+            <div class="form-row align-items-center gutter-y-5">
+              <div class="col font-size-10 font-weight-600" title="Branch">
+                <div class="custom-control custom-checkbox align-middle custom-control-inline mb-1 mr-0">
+                  <input type="checkbox" class="custom-control-input" id="chk-1">
+                  <label class="custom-control-label" for="chk-1"></label>
+                </div>
+                <a data-toggle="modal" class="text-body"
+                  [routerLink]="['/program/univ-detail',university.universityid]">{{university.name | uppercase}}</a>
+              </div>
+              <div class="col-auto">
+                <div class="card-ctrls border-left d-inline-flex align-items-center">
+                  <button class="card-ctrl-fullscreen btn btn-link btn-sm" type="button">
+                    <i class="fullscreen material-icons material-icons-18">
+                      fullscreen </i>
+                    <i class="fullscreen-exit material-icons material-icons-18">
+                      fullscreen_exit </i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-3 py-2">
+            <table class="table table-sm table-borderless table-doc">
+              <tbody>
+                <tr>
+                  <td colspan="2" align="center">
+                    <a [routerLink]="['/program/univ-detail',university.universityid]">
+                      <!-- <img data-toggle=" modal" data-target="#course-details-Model" class="img-fluid count-img-redirect"
+                        style="max-height:80px;height: 80px; max-width: 200px;" alt="university logo"
+                        [src]="environment.API_URL+'Document/images/'+university.logourl" > -->
+                        <img data-toggle="modal" data-target="#course-details-Model" class="img-fluid count-img-redirect"
+                        style="max-height:70px;" alt="university logo" [defaultImage]="'./assets/default.gif'"
+                        [lazyLoad]="'./assets/univlogo.png'">
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Type:</th>
+                  <td>{{university.universitytype | uppercase}}</td>
+                </tr>
+                <tr>
+                  <th>Country:</th>
+                  <td>{{university.country | uppercase}}</td>
+                </tr>
+                <tr>
+                  <th>Google ratings:</th>
+                  <td><span><i class="fab fa-google"></i> {{university.overallrating}}</span></td>
+                </tr>
+                <tr>
+                  <th>Visitors</th>
+                  <td><span><i class="far fa-eye"></i> {{university.visitcount}}</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="ellipsis-3 full-card-break-ellipsis hover-ctrl mb-2">
+              {{university.about}}
+              <div class="lead font-weight-normal text-muted" *ngFor="let rankings of rankinglist| filterArrV2:{ universityid: university.id }
+                        ;index as index; last as last">
+                <i class="la la-university pr-1"></i>University rank
+                <span class="text-body">#{{rankings.name}} (</span>
+                <span>{{rankings.levelname}}
+                  :
+                  {{rankings.value}} </span>)
+              </div>
+              <button
+                class="hover-ctrl-right-bottom btn btn-sm btn-primary shadow full-card-d-none card-ctrl-fullscreen">Read
+                More</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 customdiv text-right">
+        <a [routerLink]="['/program/university-list']">Browse all universities</a>
+      </div>
+    </div>
+
+    <div class="row m-1">
+      <div class="col-md-3 customdivV1 mb-1" *ngFor="let discipline of disciplinelist">
+        <a (click)="navigatetoCourse(discipline.id)">
+          <div class="containerimg">
+            <img src="environment.API_URL+discipline.imagepath" alt="Discipline image"
+              style="width:100%;">
+            <div class="centered"><strong>{{discipline.name | uppercase}}</strong></div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-12 text-right">
+        <a [routerLink]="['/program/course-list']">Browse all courses</a>
+      </div>
+    </div>
+  </div>
+
+  <div onclick="topFunction()" style="margin-right: 80px;" id="back-to-top" class="btn btn-outline-primary"><i
+      class="la la-arrow-up"></i>
+  </div>
+</body>

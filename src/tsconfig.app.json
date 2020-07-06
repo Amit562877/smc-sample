@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "types": [
+      "googlemaps",
+      "node"
+    ],
+    // "module": "esnext"
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false,
+    "allowEmptyCodegenFiles": false,
+    "preserveWhitespaces": false
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}

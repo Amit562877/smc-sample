@@ -1,0 +1,40 @@
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+table td {
+  width: 100px;
+  word-wrap: break-word;
+}
+table td:first-child {
+  width: 10px;
+  word-wrap: break-word;
+}
+table th {
+  width: 100px;
+  word-wrap: break-word;
+}
+fieldset {
+  border-radius: 8px;
+  box-shadow: 0 0 5px #999;
+}
+legend {
+  width: auto;
+  margin-bottom: 0px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #1f497d;
+}
+.divbrd {
+  box-shadow: 0 0 5px #999;
+  border-radius: 12px;
+}
+.editabel {
+  display: none;
+}
+
+.invalid {
+  border: 1px solid #ff0000 !important;
+  box-shadow: 0 0 5px #999 !important;
+}

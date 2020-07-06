@@ -1,0 +1,62 @@
+<table class="table table-inbox table-hover">
+    <tbody *ngIf="emaillist.length>0">
+        <tr [ngClass]="((!email.isread || email.replycount>email.replyread) && emailtype!='sent')?'unread':''"
+            *ngFor="let email of emaillist">
+            <td class="inbox-small-cells">
+                <input type="checkbox" id="{{email.tuid}}" name="crs" (click)="clearCheckAll('all','crs')"
+                    class="mail-checkbox">
+            </td>
+            <td class="inbox-small-cells"><span
+                    *ngIf="email.isstared && (emailtype=='inbox' || emailtype=='stared') && email.messagetype!='from'"
+                    (click)="setStared(email)"><i class="fa fa-star inbox-started"></i></span>
+                <span
+                    *ngIf="!email.isstared && (emailtype=='inbox' || emailtype=='stared') && email.messagetype!='from'"
+                    (click)="setStared(email)"><i class="fa fa-star"></i></span></td>
+            <td class="view-message  dont-show" *ngIf="emailtype!='sent' && emailtype!='draft'">
+                <a
+                    (click)="email.isread=true;email.replycount=0;email.replyread=0;getmail(email.id,email.tuid,emailtype)">{{(email.from_user==useremail)?'me':email.from_user}}</a>
+            </td>
+            <td class="view-message  dont-show" *ngIf="emailtype=='sent' || emailtype=='draft'">
+                <a
+                    (click)="email.isread=true;email.replycount=0;email.replyread=0;getmail(email.id,email.tuid,emailtype)">{{(email.to_user==useremail)?'me':email.to_user}}</a>
+            </td>
+            <td class="view-message ">
+                <a
+                    (click)="email.isread=true;email.replycount=0;email.replyread=0;getmail(email.id,email.tuid,emailtype)">
+                    {{(email.replycount>email.replyread && emailtype!='sent')? (email.replycount-email.replyread)+' new reply on - '+((email.subject!='undefined')?email.subject:''):((email.subject!='undefined')?email.subject:'')}}</a>
+            </td>
+            <td class="view-message  inbox-small-cells"><span *ngIf="email.isattachment"><i
+                        class="fas fa-paperclip"></i></span></td>
+            <td class="view-message  text-right">{{email.createdon | date:'medium'}}</td>
+            <td class="tr-action">
+                <i class="tr-act-ico material-icons material-icons-15"> more_vert
+                </i>
+                <ul class="tr-action-list">
+                    <li>
+                        <a
+                            (click)="email.isread=true;email.replycount=0;email.replyread=0;getmail(email.id,email.tuid,emailtype)">
+                            <i class="far fa-envelope"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="emailtype!='trash'" (click)="remove(email.tuid)">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </li>
+                    <li *ngIf="emailtype=='trash'">
+                        <a (click)="undo(email.tuid)">
+                            <i class="fas fa-undo"></i>
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="emaillist.length==0">
+        <tr class="unread">
+            <td class="text-center text-danger" colspan="7">
+                No message available
+            </td>
+        </tr>
+    </tbody>
+</table>

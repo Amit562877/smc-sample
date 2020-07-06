@@ -1,0 +1,727 @@
+
+<div *ngIf="criteria!=undefined">
+  <fieldset *ngIf="criteriaid==0 && courselist.length==0">
+    <!-- <legend>Applicable coures filter</legend> -->
+    <form #headform="ngForm" novalidate>
+      <div class="row m-2">
+
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label class="font-weight-500">University Type</label>
+            <select class="form-control border-secondary shadow" name="universitytypeid" data-name="universitytypeid"
+              data-prefix="University type" data-type="select" [(ngModel)]="criteria.universitytypeid" aria-label="universitytypeid"
+              (change)="getUniversityListByType()">
+              <option value="0">-- Choose type --</option>
+              <option *ngFor="let type of universitytype" [ngValue]="type.id">
+                {{type.univtype}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label class="font-weight-500">University</label>
+            <select class="form-control border-secondary shadow" data-name="universityid" data-type="select"  aria-label="universityid"
+              name="universityid" data-prefix="University" [(ngModel)]="criteria.universityid" [required]="true">
+              <option value="">-- Choose University --</option>
+              <option *ngFor="let univ of universityidlist" [ngValue]="univ.id">
+                {{univ.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label class="font-weight-500">Study Level</label>
+            <select class="form-control border-secondary shadow" data-name="studylevelid" data-type="select"
+              name="studylevelid" data-prefix="Studylevel" [(ngModel)]="criteria.studylevelid" [required]="true" aria-label="Studylevel">
+              <option value="">-- Choose Level --</option>
+              <option *ngFor="let level of studylevellist" [ngValue]="level.id">
+                {{level.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label class="font-weight-500">Country</label>
+            <select class="form-control border-secondary shadow" name="country" data-name="country"
+              data-prefix="Country" data-type="select" [(ngModel)]="criteria.countryid" [required]="true" aria-label="country">
+              <option value="">-- Choose Country --</option>
+              <option *ngFor="let country of countrylist" [ngValue]="country.id">
+                {{country.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>   
+      <div class="row m-2">
+        <div class="col text-right">
+
+          <!-- <button (click)="getAllCourse(headform)" appValidation [form]="headform" [validparent]="'form-group'"
+            class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" title=""
+            data-original-title="Download excel">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            Download</button>&nbsp;
+          <button (click)="getAllCourse(headform)" appValidation [form]="headform" [validparent]="'form-group'"
+            class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" title=""
+            data-original-title="Upload excel">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            Upload</button>&nbsp; -->
+            
+            <button (click)="getAllCourse(headform)" appValidation [form]="headform" [validparent]="'form-group'"
+            class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="" data-original-title="Search courses" role="button" aria-label="Search courses">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            Apply Filter</button>&nbsp;
+           <button type="button" appClearValidation [form]="headform" aria-controls="collapseFilter"
+            class="btn btn-outline-danger btn-sm" (click)="clearFilter()" role="button" aria-label="filtercourses_1">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+            Clear</button>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+  <hr>
+ 
+  <form #mainform="ngForm" autocomplete="off" novalidate *ngIf="courselist.length>0">
+    <div class="row mt-2">
+      <div class="col-md-8">
+        <!-- for 10th requirements -->
+        <hr>
+        <input type="checkbox" name="istenapp" id="istenapp" [(ngModel)]="criteria.isapplicabletenth"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="istenapp">IsApplicable</label></strong>&nbsp;&nbsp;<label
+          class="font-weight-500 text-primary">10<sup>th</sup>
+          Requirements</label>
+         
+        <div [hidden]="!criteria.isapplicabletenth" class="divbrd">
+          <div class="row m-1"
+            *ngFor="let tenth of criteria.tenth;trackBy: trackByIndex; index as tindex; last as last">
+            <div class="col-md-4">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Board name</label>
+                <div class="input-group">
+                  <select class="form-control border-secondary shadow" [(ngModel)]="tenth.bid"
+                    [required]="(criteria.isapplicabletenth)" data-prefix="Board" data-type="select" aria-label="Choose board"
+                    attr.data-name="tenbor{{tindex}}" name="tenbor{{tindex}}">
+                    <option value="">-- Choose board --</option>
+                    <option *ngFor="let board of boardlist | filterArr:{ type: 'tenth' }" [ngValue]="board.id">
+                      {{board.name}}</option>
+                  </select>
+
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#addboard"
+                      (click)="boardtype='tenth'"><i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"
+                        title="" data-original-title="Add Board" role="button" aria-label="addboard"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Required</label>
+                <input type="text" name="tenreq{{tindex}}" pattern="[0-9]*" [required]="(criteria.isapplicabletenth)"
+                  data-prefix="Marks Required" data-type="text" id="ten_{{tindex}}" attr.data-name="tenreq{{tindex}}"
+                  placeholder="Minimum percentage required" class="form-control" [(ngModel)]="tenth.required">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Attempts Allow</label>
+                <input type="text" name="tenatt{{tindex}}" [required]="(criteria.isapplicabletenth)"
+                  attr.data-name="tenatt{{tindex}}" data-prefix="Maximum attempts" data-type="text"
+                  placeholder="Maximum attempts allow" id="tenback_{{tindex}}" class="form-control"
+                  [(ngModel)]="tenth.gapallow">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group text-left mt-4">
+                <button role="button" aria-label="addtenth" class="btn btn-outline-primary rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Add more" (click)="addtenth()"><i class="fa fa-plus"
+                    aria-hidden="true"></i></button>&nbsp;
+
+                <button role="button" aria-label="removetenth" *ngIf="tindex!=0" class="btn btn-outline-danger rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Remove" (click)="removetenth(tindex)"><i class="fa fa-times-circle"
+                    aria-hidden="true"></i></button>&nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- for 12th requirements -->
+       
+        <hr>
+        
+        <input type="checkbox" name="tweapp" id="tweapp" [(ngModel)]="criteria.isapplicabletwelfth"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="tweapp">IsApplicable</label></strong>&nbsp;&nbsp;<label
+          class="font-weight-500 text-primary">12<sup>th</sup>
+          Requirements</label>
+        <div [hidden]="!criteria.isapplicabletwelfth" class="divbrd">
+         
+          <div class="row m-1"
+            *ngFor="let tweth of criteria.tweth;trackBy: trackByIndex; index as twindex; last as last">
+            <div class="col-md-4">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Board name</label>
+                <div class="input-group">
+                  <select class="form-control border-secondary shadow" [(ngModel)]="tweth.bid" name="twebor{{twindex}}"
+                    [required]="criteria.isapplicabletwelfth" data-prefix="Board" data-type="select"
+                    attr.data-name="twebor{{twindex}}"  aria-label="Choose board_12">
+                    <option value="">-- Choose board --</option>
+                    <option *ngFor="let board of boardlist | filterArr:{ type: 'twelfth' }" [ngValue]="board.id">
+                      {{board.name}}</option>
+                  </select>
+                  <div class="input-group-append">
+                    <button role="button" aria-label="addboard" class="btn btn-outline-secondary" data-toggle="modal" data-target="#addboard"
+                      (click)="boardtype='twelfth'"><i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"
+                        title="" data-original-title="Add Board"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Required</label>
+                <input type="text" name="twereq{{twindex}}" attr.data-name="twereq{{twindex}}" id="twereq{{twindex}}"
+                  placeholder="Minimum percentage required" class="form-control" [(ngModel)]="tweth.required"
+                  [required]="criteria.isapplicabletwelfth" data-prefix="Minimum percentage" data-type="text">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Attempts allow</label>
+                <input type="text" name="twattempts{{twindex}}" attr.data-name="twattempts{{twindex}}"
+                  id="twattempts_{{twindex}}" [required]="criteria.isapplicabletwelfth" data-prefix="Maximum attempts"
+                  data-type="text" placeholder="Maximum attempts allow" class="form-control"
+                  [(ngModel)]="tweth.gapallow">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group text-left mt-4">
+                <button role="button" aria-label="addtweth" class="btn btn-outline-primary rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Add more" (click)="addtweth()"><i class="fa fa-plus"
+                    aria-hidden="true"></i></button>&nbsp;
+
+                <button role="button" aria-label="Remove" *ngIf="twindex!=0" class="btn btn-outline-danger rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Remove" (click)="removetweth(twindex)"><i class="fa fa-times-circle"
+                    aria-hidden="true"></i></button>&nbsp;
+              </div>
+            </div>
+          </div>
+         
+
+        </div>
+        <!-- for diploma requirements -->
+        <hr>
+        <input type="checkbox" name="dipapp" id="dipapp" [(ngModel)]="criteria.isapplicablediploma"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="dipapp">IsApplicable</label> </strong>&nbsp;&nbsp;<label
+          class="font-weight-500 text-primary">10<sup>th</sup> + Diploma
+          Requirements</label>
+        <div [hidden]="!criteria.isapplicablediploma" class="divbrd">
+          <div class="row m-1"
+            *ngFor="let diploma of criteria.diploma;trackBy: trackByIndex; index as dindex; last as last">
+            <div class="col-md-4">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Section</label>
+                <div class="input-group">
+                  <select class="form-control border-secondary shadow" [(ngModel)]="diploma.bid" name="dsec{{dindex}}"
+                    attr.data-name="dsec{{dindex}}" [required]="criteria.isapplicablediploma"  aria-label="Choose board_diploma"
+                    data-prefix="University section" data-type="select">
+                    <option value="">-- Choose Section --</option>
+                    <option *ngFor="let board of boardlist | filterArr:{ type: 'diploma' }" [ngValue]="board.id">
+                      {{board.name}}</option>
+                  </select>
+                  <div class="input-group-append">
+                    <button role="button" aria-label="addboard" class="btn btn-outline-secondary" data-toggle="modal" data-target="#addboard"
+                      (click)="boardtype='diploma'"><i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"
+                        title="" data-original-title="Add Board"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Required</label>
+                <input type="text" name="dipreq_{{dindex}}" attr.data-name="dipreq_{{dindex}}"
+                  placeholder="Minimum percentage required" id="dipreq_{{dindex}}" class="form-control"
+                  [(ngModel)]="diploma.required" [required]="criteria.isapplicablediploma"
+                  data-prefix="Minimum percentage" data-type="text">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Backlogs</label>
+                <input type="text" name="dipback_{{dindex}}" attr.data-name="dipback_{{dindex}}" id="dipback_{{dindex}}"
+                  [required]="criteria.isapplicablediploma" data-prefix="Maximum backlogs" data-type="text"
+                  placeholder="Maximum backlogs allow" class="form-control" [(ngModel)]="diploma.gapallow">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group text-left mt-4">
+                <button role="button" aria-label="adddiploma" class="btn btn-outline-primary rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Add more" (click)="adddiploma()"><i class="fa fa-plus"
+                    aria-hidden="true"></i></button>&nbsp;
+
+                <button role="button" aria-label="removediploma" *ngIf="dindex!=0" class="btn btn-outline-danger rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Remove" (click)="removediploma(twindex)"><i class="fa fa-times-circle"
+                    aria-hidden="true"></i></button>&nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- for Bachelor requirements -->
+        <hr>
+        <input type="checkbox" name="bachapp" id="bachapp" [(ngModel)]="criteria.isapplicablebachelor"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="bachapp">IsApplicable</label></strong>&nbsp;&nbsp;<label
+          class="font-weight-500 text-primary">Bachelor Requirements</label>
+        <div [hidden]="!criteria.isapplicablebachelor" class="divbrd">
+          <div class="row m-1"
+            *ngFor="let bachelor of criteria.bachelor;trackBy: trackByIndex; index as bindex; last as last">
+            <div class="col-md-4">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Section</label>
+                <div class="input-group">
+                  <select class="form-control border-secondary shadow" [(ngModel)]="bachelor.bid" name="bsec{{bindex}}"
+                    attr.data-name="bsec{{bindex}}" [required]="criteria.isapplicablebachelor" aria-label="isapplicablebachelor"
+                    data-prefix="University section" data-type="select">
+                    <option value="">-- Choose Section --</option>
+                    <option *ngFor="let board of boardlist | filterArr:{ type: 'bachelor' }" [ngValue]="board.id">
+                      {{board.name}}</option>
+                  </select>
+                  <div class="input-group-append">
+                    <button role="button" aria-label="addboard" class="btn btn-outline-secondary" data-toggle="modal" data-target="#addboard"
+                      (click)="boardtype='bachelor'"><i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"
+                        title="" data-original-title="Add Board"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Required</label>
+                <input type="text" name="breq_{{bindex}}" attr.data-name="breq_{{bindex}}" id="breq_{{bindex}}"
+                  placeholder="Minimum percentage required" class="form-control" [(ngModel)]="bachelor.required"
+                  [required]="criteria.isapplicablebachelor" data-prefix="Minimum percentage" data-type="text">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Backlogs</label>
+                <input type="text" name="bback_{{bindex}}" attr.data-name="bback_{{bindex}}" id="bback_{{bindex}}"
+                  placeholder="Maximum backlogs allow" class="form-control" [(ngModel)]="bachelor.gapallow"
+                  [required]="criteria.isapplicablebachelor" data-prefix="Maximum backlogs" data-type="text">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group text-left mt-4">
+                <button role="button" aria-label="addbachelor" class="btn btn-outline-primary rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Add more" (click)="addbachelor()"><i class="fa fa-plus"
+                    aria-hidden="true"></i></button>&nbsp;
+
+                <button role="button" aria-label="removebachelor" *ngIf="bindex!=0" class="btn btn-outline-danger rounded-circle" data-toggle="tooltip" title=""
+                  data-original-title="Remove" (click)="removebachelor(twindex)"><i class="fa fa-times-circle"
+                    aria-hidden="true"></i></button>&nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- for gap requirements -->
+        <hr>
+        <input type="checkbox" name="gapapp" id="gapapp" [(ngModel)]="criteria.isgapallow"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="gapapp">IsApplicable</label> </strong>&nbsp;&nbsp;<label class="font-weight-500 text-primary">Gap
+          Allow</label>
+        <div [hidden]="!criteria.isgapallow" class="divbrd">
+          <div class="row m-1">
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Years</label>
+                <input type="text" name="gapdurationyear" data-name="gapdurationyear" id="gapdurationyear"
+                  placeholder="Maximum gap allow in years" class="form-control" [(ngModel)]="criteria.gapduration"
+                  [required]="criteria.isgapallow" data-prefix="Maximum gap" data-type="text">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Accept Work Experience?</label>
+                &nbsp; <input type="radio" name="workhst" id="workyes"
+                  [checked]="criteria.isworkexperienceapplicable === true" (click)="setWorkExperienceOption(true)">
+                <label for="workyes">Yes</label>
+                &nbsp;<input type="radio" name="workhst" id="workno"
+                  [checked]="criteria.isworkexperienceapplicable === false"
+                  (click)="setWorkExperienceOption(false)"><label for="workno">No</label>
+                <input [hidden]="!criteria.isworkexperienceapplicable" type="text" name="workexperience"
+                  data-name="workexperience" id="workexperience" placeholder="Experience in years " class="form-control"
+                  [(ngModel)]="criteria.workexperience" [required]="criteria.isgapallow" data-prefix="Work experience"
+                  data-type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- for Immigration requirements -->
+        <hr>
+        <input type="checkbox" name="imgapp" id="imgapp" [(ngModel)]="criteria.isimmigrationapplicable"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="imgapp">IsApplicable</label></strong>&nbsp;&nbsp;<label
+          class="font-weight-500 text-primary">Immigration History Allow</label>
+        <div [hidden]="!criteria.isimmigrationapplicable" class="divbrd">
+          <div class="row m-1">
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">is allow any visa refusal?</label>
+                &nbsp; <input type="radio" name="imghst" id="imgyes"
+                  [checked]="criteria.isimmigrationrefusalallow === true" (click)="setImmigrationOption(true,'img')">
+                <label for="imgyes">Yes</label>
+                &nbsp;<input type="radio" name="imghst" id="imgno"
+                  [checked]="criteria.isimmigrationrefusalallow === false"
+                  (click)="setImmigrationOption(false,'img')"><label for="imgno">No</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-1" *ngIf="criteria.isimmigrationrefusalallow">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Do you want to allow any visa rejection cases?</label>
+                &nbsp; <input type="radio" name="imgcases" id="imgcasesyes"
+                  [checked]="criteria.isimmigrationrefusalallowcases === true"
+                  (click)="setImmigrationOption(true,'imgcases')">
+                <label for="imgcasesyes">Yes</label>
+                &nbsp;<input type="radio" name="imgcases" id="imgcasesno"
+                  [checked]="criteria.isimmigrationrefusalallowcases === false"
+                  (click)="setImmigrationOption(false,'imgcases')"><label for="imgcasesno">No</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-1" *ngIf="criteria.isimmigrationrefusalallowcases">
+            <div class="col-md-6">
+              <div class="form-group text-left">
+                <label class="font-weight-500">excluding which country</label>
+                <div class="input-group">
+                  <select class="selectpicker show-menu-arrow" name="exldcountry" data-name="exldcountry"
+                    [required]="criteria.isimmigrationrefusalallowcases" data-prefix="At least one country"  aria-label="excludeimgrationrefusalcountry"
+                    data-type="select" data-style="btn-secondary" [(ngModel)]="criteria.excludeimgrationrefusalcountry"
+                    data-live-search="true" multiple data-selected-text-format="count>3">
+                    <option *ngFor="let country of criteriacountrylist" [ngValue]="country.id">
+                      {{country.name}}</option>
+                  </select>
+               
+                  <!-- <div class="input-group-append">
+                    <button role="button" aria-label="addboard" class="btn btn-outline-secondary" data-toggle="modal" data-target="#country"><i
+                        class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" title=""
+                        data-original-title="Add Country"></i></button>
+                  </div> -->
+                  <!-- <div>
+                  <select [(ngModel)]="criteria.excludeimgrationrefusalcountry" >
+                    <option *ngFor="let country of criteriacountrylist" [ngValue]="country.id">{{country.name}}</option>
+                  </select>
+                 
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- for Marriage requirements -->
+        <hr>
+        <input type="checkbox" name="marapp" id="marapp" [(ngModel)]="criteria.ismarriageapplicable"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="marapp">IsApplicable</label></strong>&nbsp;&nbsp;<label
+          class="font-weight-500 text-primary">Marriage applicable</label>
+        <div [hidden]="!criteria.ismarriageapplicable" class="divbrd">
+          <div class="row m-1">
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Years</label>
+                <input type="text" name="marriagetime" data-name="marriagetime" id="marriagetime"
+                  [required]="criteria.ismarriageapplicable" class="form-control" placeholder="Marriage time in years"
+                  [(ngModel)]="criteria.marriageduration" data-prefix="Marriage time" data-type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row m-1">
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Spouse Qualification</label>
+                <input type="text" name="spousequalification" data-name="spousequalification" id="spousequalification"
+                  [required]="criteria.ismarriageapplicable" class="form-control"
+                  [(ngModel)]="criteria.spousequalification" placeholder="Spouse qualification"
+                  data-prefix="Spouse qualification" data-type="text">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Spouse Income by year</label>
+                <input type="text" name="spouseincome" data-name="spouseincome" id="spouseincome"
+                  [required]="criteria.ismarriageapplicable" placeholder="Yearly income" class="form-control"
+                  [(ngModel)]="criteria.spouseincome" data-prefix="Spouse income" data-type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row m-1">
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500 text-primary">Spouse Immigration History</label>
+                &nbsp;<input type="checkbox" name="spouseimg" id="spouseimg" (change)="resetPartialInfor()"
+                  [(ngModel)]="criteria.isspouseimmigrationapplicable">
+              </div>
+            </div>
+            <div class="col-md-5" *ngIf="criteria.isspouseimmigrationapplicable">
+              <div class="form-group text-left">
+                <label class="font-weight-500">is allow any visa refusal?</label>
+                &nbsp; <input type="radio" name="spimghst" id="spimgyes"
+                  [checked]="criteria.isimmigrationspouserefusalallow === true"
+                  (click)="setSpouseImmigrationOption(true,'img')"> <label for="spimgyes">Yes</label>
+                &nbsp;<input type="radio" name="spimghst" id="spimgno"
+                  [checked]="criteria.isimmigrationspouserefusalallow === false"
+                  (click)="setSpouseImmigrationOption(false,'img')"><label for="spimgno">No</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-1" *ngIf="criteria.isimmigrationspouserefusalallow">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Do you want to allow any visa rejection cases?</label>
+                &nbsp; <input type="radio" name="spimgcases" id="spimgcasesyes"
+                  [checked]="criteria.isimmigrationspouserefusalallowcases === true"
+                  (click)="setSpouseImmigrationOption(true,'imgcases')">
+                <label for="spimgcasesyes">Yes</label>
+                &nbsp;<input type="radio" name="spimgcases" id="spimgcasesno"
+                  [checked]="criteria.isimmigrationspouserefusalallowcases === false"
+                  (click)="setSpouseImmigrationOption(false,'imgcases')"><label for="spimgcasesno">No</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-1" *ngIf="criteria.isimmigrationspouserefusalallowcases">
+            <div class="col-md-6">
+              <div class="form-group text-left">
+                <label class="font-weight-500">excluding which country</label>
+                <div class="input-group">
+                  <select class="selectpicker show-menu-arrow" name="spexldcountry" data-name="spexldcountry"
+                    [required]="criteria.isimmigrationspouserefusalallowcases" data-prefix="At least one country"
+                    data-type="select" data-style="btn-secondary" aria-label="spouseexcludeimgrationrefusalcountry"
+                    [(ngModel)]="criteria.spouseexcludeimgrationrefusalcountry" data-live-search="true" multiple
+                    data-selected-text-format="count>3">
+                    <option *ngFor="let country of criteriacountrylist" [ngValue]="country.id">
+                      {{country.name}}</option>
+                  </select>
+                  <!-- <div class="input-group-append">
+                    <button role="button" aria-label="addboard" class="btn btn-outline-secondary" data-toggle="modal" data-target="#country"><i
+                        class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" title=""
+                        data-original-title="Add Country"></i></button>
+                  </div> -->
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- for Interview requirements -->
+        <hr>
+        <input type="checkbox" name="inrapp" id="inrapp" [(ngModel)]="criteria.isinterviewapplicable"
+          (change)="resetPartialInfor()"> <strong>
+          <label for="inrapp">IsApplicable</label></strong>&nbsp;&nbsp;<label
+          class="font-weight-500 text-primary">Interview applicable</label>
+        <div [hidden]="!criteria.isinterviewapplicable" class="divbrd">
+          <div class="row m-1">
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Media</label>
+                <div class="input-group">
+                  <select class="form-control border-secondary shadow" [(ngModel)]="this.criteria.ineterviewmediaid"
+                    [required]="criteria.isinterviewapplicable" name="ineterviewmediaid" data-name="ineterviewmedia" aria-label="ineterviewmedia"
+                    data-prefix="Ineterview media" data-type="select">
+                    <option value="0">-- Choose Media --</option>
+                    <option *ngFor="let media of medialist" [ngValue]="media.id">
+                      {{media.name}}</option>
+                  </select>
+                  <div class="input-group-append">
+                    <button role="button" aria-label="Add medium" class="btn btn-outline-secondary" data-toggle="modal" data-target="#media"><i
+                        class="fa fa-plus" data-toggle="tooltip" title="" data-original-title="Add medium"
+                        aria-hidden="true"></i></button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Interview Process</label>
+                <input type="text" name="interviewprocess" data-name="interviewprocess" class="form-control"
+                  placeholder="How interview will take place?" [required]="criteria.isinterviewapplicable"
+                  [(ngModel)]="criteria.interviewprocess" data-prefix="Ineterview process" data-type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- for funds requirements -->
+        <hr>
+        <label class="font-weight-500 text-primary">Fund information</label>
+        <div class="divbrd">
+          <div class="row m-1">
+            <div class="col-md-5">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Months</label>
+                <input type="text" name="funds" data-name="funds" id="funds" placeholder="How old fund can show?"
+                  class="form-control"[(ngModel)]="criteria.fundinmonths" [required]="true" data-prefix="Fund"
+                  data-type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- for group requirements remarks -->
+        <hr>
+        <label class="font-weight-500 text-primary">Remarks for future reference</label>
+        <div class="divbrd">
+          <div class="row m-1">
+            <div class="col">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Remarks</label>
+                <textarea type="text" name="remarks" placeholder="Remarks for future reference" class="form-control"
+                  [(ngModel)]="criteria.remarks"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row m-2">
+          <div class="col">
+            <button role="button" aria-label="saveCriteria" class="btn btn-primary" appValidation [form]="mainform" [validparent]="'form-group'"
+              (click)="saveCriteria(mainform)" [disabled]="submitted"><span *ngIf="submitted"><i
+                  class="fa fa-lg fa-sync fa-refresh"></i></span>
+              Save</button>&nbsp;
+            <!-- <button role="button" aria-label="resetCriteria" class="btn btn-secondary" (click)="resetCriteria()" appClearValidation
+              [form]="mainform">Reset</button> -->
+          </div>
+        </div>
+        <div>
+  <!-- <input type="file" (change)="onFileChange($event)" />
+  <p style="color: crimson;">*please choose .xlsx format file</p>
+<div id="container"></div> -->
+<!-- <div *ngIf="willDownload">{{this.arrs[0].isapplicabletenth }}</div> -->
+
+<!-- <div>
+  <a [href]=this.downloadJsonHref  download="coursecriterai.json">downloads JSON</a>
+  </div> -->
+
+</div>
+      </div>
+      <div class="col-md-4">
+        <table class="table table-hover">
+          <tbody *ngIf="courselist">
+            <tr>
+              <td><input type="checkbox" name="all" id="all" (click)="checkAll('all','crs')"></td>
+              <td>Select all</td>
+            </tr>
+            <tr *ngFor="let course of courselist">
+              <td><input type="checkbox" name="crs" id="{{course.id}}" (click)="clearCheckAll('all','crs')"></td>
+              <td>{{course.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!-- HTML Modal -->
+<div class="modal fade" id="addboard" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">Add new
+          {{(boardtype==='diploma' || boardtype==='bachelor')?'section':'board'}}</h4>&nbsp;&nbsp;&nbsp;
+        <button role="button" aria-label="close" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" style="height: 100%;width: 100%;">
+        <form #boardform="ngForm" novalidate>
+          <div class="row m-1">
+            <div class="col">
+              <div class="form-group text-left">
+                <label class="font-weight-500">{{(boardtype==='diploma' || boardtype==='bachelor')?'Section':'Board'}}
+                  name</label>
+                <div class="input-group">
+                  <input type="text" name="newboard" data-name="newboard" [required]="true" data-prefix="Name"
+                    data-type="text"
+                    placeholder="{{(boardtype==='diploma' || boardtype==='bachelor')?'Section':'Board'}} name"
+                    class="form-control" [(ngModel)]="boardname">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button role="button" aria-label="saveBoards" type="button" appValidation [form]="boardform" [validparent]="'form-group'"
+          class="btn btn-outline-primary" (click)="saveBoards(boardform)">Save</button>
+        <button role="button" aria-label="boardform" type="button" appClearValidation [form]="boardform" class="btn btn-default"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="media" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">Add new media</h4>&nbsp;&nbsp;&nbsp;
+        <button role="button" aria-label="closebtn" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" style="height: 100%;width: 100%;">
+        <form #mediaform="ngForm" novalidate>
+          <div class="row m-1">
+            <div class="col">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Media name</label>
+                <div class="input-group">
+                  <input type="text" name="newmedia" data-name="newmedia" [required]="true" data-prefix="Media name"
+                    data-type="text" placeholder="Media name" class="form-control" [(ngModel)]="medianame">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button role="button" aria-label="saveInterviewMedia" type="button" class="btn btn-outline-primary" appValidation [form]="mediaform"
+          [validparent]="'form-group'" (click)="saveInterviewMedia(mediaform)">Save</button>
+        <button role="button" aria-label="closebtn_1" type="button" appClearValidation [form]="mediaform" class="btn btn-default" id="clsbtn_1"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="country" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">Add new country</h4>&nbsp;&nbsp;&nbsp;
+        <button role="button" aria-label="closebtn_2" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" style="height: 100%;width: 100%;">
+        <form #countryform="ngForm" novalidate>
+          <div class="row m-1">
+            <div class="col">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Country name</label>
+                <div class="input-group">
+                  <input type="text" name="nmcountry" data-name="nmcountry" [required]="true" data-prefix="Country name"
+                    data-type="text" placeholder="Country name" class="form-control" [(ngModel)]="countryaname">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button role="button" aria-label="saveCriteriaCountry_1" type="button" class="btn btn-outline-primary" appValidation [form]="countryform"
+          [validparent]="'form-group'" (click)="saveCriteriaCountry(countryform)">Save</button>
+        <button role="button" aria-label="closebtn_3" type="button" appClearValidation [form]="countryform" class="btn btn-default" id="clsbtn"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div onclick="topFunction()" id="back-to-top" class="btn btn-outline-primary"><i class="la la-arrow-up"></i>
+</div>

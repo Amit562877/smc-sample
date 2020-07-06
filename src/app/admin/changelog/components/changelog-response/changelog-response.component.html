@@ -1,0 +1,25 @@
+<div id="logresponse"></div>
+<div class="stickynext" *ngIf="currentlog">
+  <!-- <button class="btn btn-outline-primary rounded-circle" *ngIf="currentlog.logstatus!=2" data-dismiss="modal"
+    (click)="changeLogStatus(currentlog.id,2)"><i class="fa fa-check-circle" aria-hidden="true" data-toggle="tooltip"
+      title="" data-original-title="Approve change"></i></button> -->
+
+  <button class="btn btn-outline-danger rounded-circle" data-toggle="tooltip" title=""
+    data-original-title="Reject change" *ngIf="currentlog.logstatus!=2" (click)="changeLogStatus(currentlog.id,3)" role="button" aria-label="Reject change"><i
+      class="fa fa-times-circle" aria-hidden="true"></i></button>&nbsp;
+
+
+  <button class="btn btn-outline-secondary rounded-circle" data-toggle="tooltip" title=""
+    data-original-title="Request change" *ngIf="!currentlog.responsegenerated" (click)="requestChange(currentlog)" role="button" aria-label="Request change"><i
+      class="fa fa-recycle" aria-hidden="true"></i></button>&nbsp;
+
+  <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title=""
+    data-original-title="Previuos change" (click)="prevChange()" role="button" aria-label="Previuos change">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+  </button>&nbsp;
+  <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title=""
+    data-original-title="Next change" (click)="nextChange()" role="button" aria-label="Next change">
+    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+  </button>
+
+</div>

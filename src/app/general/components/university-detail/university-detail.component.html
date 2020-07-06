@@ -1,0 +1,414 @@
+<body *ngIf="univdata" class="bg-white"> 
+  <app-navigation-menu></app-navigation-menu>
+  <div id="myScrollspy">
+    <div class="px-2">
+      <div class="row gutter-x-5 mt-2 mb-3">
+        <div class="col-md-12">
+          <div class="card shadow">
+            <div class="card-body p-2">
+              <div class="row align-items-center gutter-x-5">
+                <div class="col-12-auto text-center">
+                  <button type="button" (click)="backtoSearch()" class="btn btn-sm btn-rounded btn-primary">
+                    <i aria-hidden="true" class="fa fa-arrow-left"></i>
+                  </button>
+                </div>
+                <div class="col-12 col-md-auto text-center">
+                  <!-- <img alt="univ_logo" class="img-fluid" style="max-height:70px; max-width: 300px;"
+                    [src]="environment.API_URL+'Document/images/'+univdata.univ_logo"> -->
+                  <img data-toggle="modal" data-target="#course-details-Model" class="img-fluid count-img-redirect"
+                    style="max-height:70px;" alt="university logo" [defaultImage]="'./assets/default.gif'"
+                    [lazyLoad]="'./assets/univlogo.png'">
+                </div>
+                <div class="col">
+                  <div class="bg-primary border-radius-30 px-3 py-2 my-2 my-md-0 d-inline-block"><a
+                      class="font-size-12 font-weight-500 text-white" aria-label="univ_name_link" target="_blank"
+                      href="{{univdata.univ_url}}">{{univdata.univ_name}}</a></div>
+                </div>
+
+                <div class="col-12 col-md-auto p-md-0 mb-2 mb-md-0">
+                  <div class="align-items-center gutter-x-5 row">
+                    <div class="col-auto">
+                      <button type="button" class="btn btn-primary px-2 px-md-3 btn-rounded mr-2" data-toggle="modal"
+                        data-target="#ThirdPartyForm">
+                        <i class="far fa-envelope mr-2"></i>Inquiry Now
+                      </button>
+                      <button type="button" class="btn btn-primary px-2 px-md-3 btn-rounded mr-2" data-toggle="modal"
+                        data-target="#feedbackForm">
+                        Feedback
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="px-2 bg-breadcrumb">
+      <div class="row gutter-x-5 flex-md-row">
+        <div class="col-md-6">
+          <div class="card mb-4 shadow" id="about-university-tab">
+            <div class="card-body p-2 p-md-3">
+              <div class="lead font-weight-normal text-muted" *ngFor="let ranking of univdata.univ_rankings.rankings">
+                <i class="la la-university pr-1"></i>University rank
+                <span class="text-body">#{{ranking.name}} ( </span>
+                <span *ngFor="let rank of ranking.level; let ind=index">{{(ind!=0)?', ':''}}{{rank.name}} :
+                  {{rank.value}} </span>)
+              </div>
+
+              <div class="border-bottom h4 mt-2 pb-1">About</div>
+              <p class="text-justify" *ngIf="univdata.univ_about">
+                {{univdata.univ_about}}
+              </p>
+
+              <blockquote
+                class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm">
+                <p class="mb-0">
+                  Visit the university website for more information
+                  <a aria-label="univ_url" target="_blank" href="{{univdata.univ_url}}">Click</a>
+                </p>
+              </blockquote>
+              <h5 *ngIf="univdata.brochure_path && univdata.brochure_path.length>0">Brochures </h5>
+              <hr>
+              <div class="mb-3" *ngFor="let bpath of univdata.brochure_path">
+                <a aria-label="brochurepath" target="_blank" class="btn-link"
+                  href="{{environment.API_URL+'Document/images/'+bpath.name}}"><i class="far fa-folder mr-2"></i>
+                  {{bpath.text}} </a>
+              </div>
+              <h5 *ngIf="univdata.apply_url || univdata.placement_url">Useful Links </h5>
+              <hr>
+              <blockquote class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm"
+                *ngIf="univdata.placement_url">
+                <p class="mb-0">
+                  Visit the placement website of university for placement related information
+                  <a aria-label="placement_url" target="_blank" href="{{univdata.placement_url}}">Click</a>
+                </p>
+              </blockquote>
+              <blockquote class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm"
+                *ngIf="univdata.apply_url">
+                <p class="mb-0">
+                  To know how to apply for this university visit university link
+                  <a aria-label="apply_url" target="_blank" href="{{univdata.apply_url}}">Click</a>
+                </p>
+              </blockquote>
+
+            </div>
+          </div>
+          <div class="card mb-4 shadow" id="v-pills-career-outcome">
+            <div class="card-body p-2 p-md-3">
+              <div class="border-bottom h4 mt-2 pb-1">Others City
+              </div>
+              <div class="row mt-3" style="
+                width: 100%;
+                height: 119px;
+                overflow: auto;
+            ">
+                <div class="col-md-auto mb-3" *ngFor="let cinfo of contactdetails;let index = index">
+                  <div class="border px-3 py-2 rounded" (click)="setCount(index)">
+                    <div class="col">
+                      <p class="font-weight-normal mb-0 text-uppercase text-primary">
+                        {{cinfo.name}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="nav-wrap1">
+
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade active show" id="hrShifts" role="tabpanel">
+                <div class="row">
+                  <div class="col" *ngIf="prevBtnFlag">
+                    <div class="form-group mb-2">
+                      <a href="javascript:void(0)" (click)="getPrevContactInfo()"
+                        class="btn btn-sm btn-secondary prev-step1"><i aria-hidden="true"
+                          class="fa fa-arrow-left pr-2"></i>Previous</a>
+                    </div>
+                  </div>
+                  <div class="col" *ngIf="nextBtnFlag">
+                    <div class="form-group mb-2 text-right">
+                      <a href="javascript:void(0)" (click)="getNextContactInfo()"
+                        class="btn btn-sm btn-success next-step1">Next
+                        Step<i aria-hidden="true" class="fa fa-arrow-right pl-2"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="pr-2 mb-3" style="height:230px; overflow-y: scroll;">
+                  <div class="card mb-3 shadow">
+                    <div class="card-body p-2 p-md-3">
+                      <div class="row align-items-center gutter-x-5">
+                        <div class="col-md-6 mb-3">
+                          <i class="fa fa-university fa-2 text-color-blue mr-2"></i> <b>Name</b>
+                          <p>{{contactdetails[count].name}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <i class="fa fa-building fa-2 text-color-blue mr-2"></i> <b>City</b>
+                          <p>{{contactdetails[count].city}} </p>
+                        </div>
+                        <div class="col-md-6 mb-3" *ngIf="contactdetails[count].address">
+                          <i class="fa fa-address-book fa-2 text-color-blue mr-2"></i> <b>Address</b>
+                          <p>{{contactdetails[count].address}}
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3" *ngIf="contactdetails[count].state">
+                          <i class="fa fa-location-arrow fa-2 text-color-blue mr-2"></i> <b>State</b>
+                          <p>{{contactdetails[count].state}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3" *ngIf="contactdetails[count].overview">
+                          <i class="fa fa-address-book fa-2 text-color-blue mr-2"></i> <b>Overview</b>
+                          <p>{{contactdetails[count].overview}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3" *ngIf="contactdetails[count].additional_info">
+                          <i class="fa fa-location-arrow fa-2 text-color-blue mr-2"></i> <b>Additional Details</b>
+                          <p>{{contactdetails[count].additional_info}}</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="card mb-3 shadow" *ngFor="let cinfo of contactdetails[count].contact_info">
+                    <div class="card-body p-2 p-md-3">
+                      <div class="row align-items-center gutter-x-5">
+                        <div class="col-md-6 mb-3">
+                          <i class="fa fa-user-circle fa-2 text-color-blue mr-2"></i> <b>Name</b>
+                          <p *ngIf="cinfo.name">{{cinfo.name}}</p>
+                          <p *ngIf="!cinfo.name">----</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <i class="fa fa-envelope fa-2 text-color-blue mr-2"></i> <b>Email</b>
+                          <p *ngIf="cinfo.email_address">{{cinfo.email_address}}</p>
+                          <p *ngIf="!cinfo.email_address">----</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <i class="fa fa-phone fa-2 text-color-blue mr-2"></i> <b>Phone no
+                          </b>
+                          <p *ngIf="cinfo.phone_no">{{cinfo.phone_no}}</p>
+                          <p *ngIf="!cinfo.phone_no">----</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <i class="fa fa-info-circle fa-2 text-color-blue mr-2"></i> <b>Description</b>
+                          <p *ngIf="cinfo.description">{{cinfo.description}}</p>
+                          <p *ngIf="!cinfo.description">----</p>
+                        </div>
+                      </div>
+                    </div>
+                    {{cinfo.vtour_url}}
+                  </div>
+                </div>
+                <div class="card mb-3 shadow">
+                  <div class="card-body p-2 p-md-3">
+                    <h4> Take the Virtual Tour</h4>
+                    <div *ngIf="contactdetails[count].vtour_url.length>0">
+                      <iframe title="myFrame_3" style="height:500px;" class="border-0 m-0 p-0 w-100" alt="Virtual Tour"
+                        frameborder="0" [src]="contactdetails[count].vtour_url | safe"></iframe>
+                    </div>
+                    <div *ngIf="contactdetails[count].vtour_url.length==0">
+                      Virtual tour is not available for this campus
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4 shadow">
+          <div class="card-body p-2 p-md-3">
+            <div class="row m-1">
+              <div class="col-md-3 customdivV1 mb-1" *ngFor="let discipline of disciplinelist">
+                <a (click)="navigatetoCourse(discipline.id)">
+                  <div class="containerimg">
+                    <img src="{{environment.API_URL+discipline.imagepath}}"
+                      onerror="this.src = 'assets/images/deafultdiscipline.png'" alt="alternate image"
+                      style="width:100%;max-height: 285px;">
+                    <div class="centered"><strong>{{discipline.name | uppercase}}</strong></div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-12 text-right text-danger" style="font-size: large;">
+                <a (click)="navigatetoCourse(0)">Browse all discipline</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+<div onclick="topFunction()" id="back-to-top" class="btn btn-outline-primary"><i class="la la-arrow-up"></i>
+</div>
+
+
+<div class="modal fade" id="modalServicedocumentEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light py-2">
+        <h5 class="modal-title">Service Documents</h5>
+        <button role="button" aria-label="getNextHint" type="button" class="close" data-dismiss="modal"
+          aria-label="Close">
+          <i class="la la-close"></i>
+        </button>
+      </div>
+      <form #documentemailForm="ngForm" novalidate>
+        <div class="modal-body">
+
+          <div class="form-group row">
+            <label aria-label="contactdetails_fullname_1" for="inputEmail3" class="col-sm-2 col-form-label"><span
+                class="text-color-light-red">*</span> Full
+              Name </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="txtname" name="txtname" [required]="true"
+                [(ngModel)]="txtname"
+                [ngClass]="(docemailSubmitted && documentemailForm.controls.txtname.invalid)?'invalid':''"
+                placeholder="Full Name...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label aria-label="contactdetailstxtemail" for="inputEmail3" class="col-sm-2 col-form-label"><span
+                class="text-color-light-red">*</span>
+              Email</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="txtemail" name="txtemail" [(ngModel)]="txtemail"
+                [required]="true"
+                [ngClass]="(docemailSubmitted && documentemailForm.controls.txtemail.invalid)?'invalid':''"
+                placeholder="Email...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label aria-label="contactdetailsphoneno" for="inputEmail3" class="col-sm-2 col-form-label"><span
+                class="text-color-light-red">*</span>
+              Phone</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="txtphone" name="txtphone" [(ngModel)]="txtphone"
+                [required]="true"
+                [ngClass]="(docemailSubmitted && documentemailForm.controls.txtphone.invalid)?'invalid':''"
+                placeholder="Phone...">
+            </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <!-- <button role="button" aria-label="getNextHint" type="button" class="btn btn-primary" (click)="senddocemail(documentemailForm)">Save</button> -->
+          <button role="button" aria-label="cancelbtn" type="button" class="btn btn-outline-secondary"
+            data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Inquiry Form start -->
+<div class="modal fade ModalThirdParty" data-modal-width="100vw" data-modal-offset-upto="992" id="ThirdPartyForm"
+  tabindex="-1" role="dialog" aria-hidden="true">
+  <form #mainform="ngForm" autocomplete="off" novalidate>
+    <div class="modal-dialog" role="document" style="max-width: 1000px;">
+      <div class="modal-content">
+        <button type="button" class="close close-point" data-dismiss="modal" aria-label="Close">
+          <i class="la la-close"></i>
+        </button>
+        <div class="modal-body p-3 p-md-5">
+          <div class="px-2 text-center">
+            <h5 class="modal-title text-center h1 text-primary-light">Inquiry Form</h5>
+            <div *ngIf="univdata && univdata.univ_name"
+              class="d-inline-block arrow-right py-2 px-2  px-md-5 border border-dark mt-3 font-weight-bold position-relative">
+              You have requested inquiry for {{univdata.univ_name}}</div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-lg-6 d-none d-lg-block">
+              <img src="assets/images/img-notification-modal.jpg" class="img-fluid" alt="download Visa Fees in Email">
+            </div>
+            <div class="col-lg-6 align-self-center">
+              <div class="form-group">
+                <input data-name="Leadname" name="Leadname" type="text" class="modal-custom-form-control"
+                  placeholder="Name*" [required]=true [(ngModel)]="leadInquiryPayload.name">
+              </div>
+              <div class="form-group">
+                <input data-name="Leademail" name="Leademail" type="email" class="modal-custom-form-control"
+                  placeholder="Email*" [required]=true [(ngModel)]="leadInquiryPayload.email">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadnumber" name="Leadnumber" type="tel" maxlength="10" placeholder="Phone Number"
+                  class="modal-custom-form-control" [(ngModel)]="leadInquiryPayload.phoneno">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadcomments" name="Leadcomments" type="text" placeholder="Comments"
+                  class="modal-custom-form-control" [(ngModel)]="leadInquiryPayload.comments">
+              </div>
+              <div class="form-group text-center mt-4">
+                <button appValidation [validparent]="'form-group'" [form]="mainform" type="button"
+                  class="btn btn-primary-light btn-lg font-weight-bold px-5 text-uppercase text-white"
+                  (click)="submitLeadInquiry(mainform)">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Inquiry Form end -->
+
+<!-- Feedback Form start -->
+<div class="modal fade ModalThirdParty" data-modal-width="100vw" data-modal-offset-upto="992" id="feedbackForm"
+  tabindex="-1" role="dialog" aria-hidden="true">
+  <form #feedbackform="ngForm" autocomplete="off" novalidate>
+    <div class="modal-dialog" role="document" style="max-width: 1000px;">
+      <div class="modal-content">
+        <button type="button" class="close close-point" data-dismiss="modal" aria-label="Close" appClearValidation
+          [form]="feedbackform" [resetform]="true">
+          <i class="la la-close"></i>
+        </button>
+        <div class="modal-body p-3 p-md-5">
+          <div class="px-2 text-center">
+            <h5 class="modal-title text-center h1 text-primary-light">Feedback Form</h5>
+            <!-- <div *ngIf="coursedata && coursedata.course_title"
+              class="d-inline-block arrow-right py-2 px-2  px-md-5 border border-dark mt-3 font-weight-bold position-relative">
+              You have requested inquiry for {{coursedata.course_title}}</div> -->
+          </div>
+          <div class="row mt-4">
+            <div class="col-lg-6 d-none d-lg-block">
+              <img src="assets/images/feedback-img.jpg" class="img-fluid" alt="download Visa Fees in Email">
+            </div>
+            <div class="col-lg-6 align-self-center">
+              <div class="form-group">
+                <input data-name="Leadname" name="Leadname" type="text" class="modal-custom-form-control"
+                  placeholder="Name*" [required]=true [(ngModel)]="feedbackPayload.name">
+                <!-- <span class="error">Name is Required.</span> -->
+              </div>
+              <div class="form-group">
+                <input data-name="Leademail" name="Leademail" type="email" class="modal-custom-form-control"
+                  placeholder="Email*" [required]=true [(ngModel)]="feedbackPayload.email">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadnumber" name="Leadnumber" type="tel" maxlength="10" placeholder="Phone Number"
+                  class="modal-custom-form-control" [(ngModel)]="feedbackPayload.phoneno">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadcomments" name="Leadcomments" type="text" placeholder="Feedback"
+                  class="modal-custom-form-control" [(ngModel)]="feedbackPayload.feedback">
+              </div>
+              <div class="form-group text-center mt-4">
+                <button appValidation [validparent]="'form-group'" [form]="feedbackform" type="button"
+                  class="btn btn-primary-light btn-lg font-weight-bold px-5 text-uppercase text-white"
+                  (click)="sendFeedback(feedbackform)">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Feedback Form end -->

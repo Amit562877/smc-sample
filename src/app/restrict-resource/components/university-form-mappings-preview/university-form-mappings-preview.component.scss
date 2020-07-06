@@ -1,0 +1,72 @@
+input[type="checkbox"] {
+  width: 100%;
+  height: 100%;
+}
+input[type="radio"] {
+  width: 100%;
+  height: 100%;
+}
+
+.flex-containerh {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-containerv {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-containerh > input {
+  width: 100%;
+}
+.flex-containerv > input {
+  width: 100%;
+}
+.capital {
+  text-transform: uppercase;
+}
+.divpdf {
+  page-break-inside: avoid;
+  page-break-after: always;
+}
+input,
+button,
+select,
+optgroup,
+textarea,
+label {
+  margin: 0;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font: 400 13.3333px Arial !important;
+}
+input[type="text"] {
+  border: 0;
+  background: transparent;
+  align-self: flex-end;
+}
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+.row {
+  margin-right: 0px !important ;
+}
+// html,
+// body {
+//   height: 100%;
+// }
+// @media print {
+//   @page {
+//       size: A4 portrait;
+//       margin: 0;
+//   }
+// }

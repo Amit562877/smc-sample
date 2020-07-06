@@ -1,0 +1,91 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" [routerLink]="['']"><img src="./assets/logo.png" width="120px" height="50px"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/course-finder/']">Course-Finder</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/university-finder/']">University-Finder</a>
+      </li>
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <div>
+        <input id="search" type="text" [(ngModel)]="searchstring" (keyup)="getHints()" placeholder="Search.."
+          autocomplete="off" (focus)="focus=true" (focusout)="focus=false" class="form-control"
+          style="max-width: 100%;width: 300px;" />
+        <div id="hint" [ngClass]="focus && !searchstring ? '' : 'hidden'" class="card mt-1">
+          <div class="m-2 ml-3">
+            <div class="input-group bg-client">
+              <div class="input-group-append">
+                <button class="btn btn-primary text-uppercase" type="button" (click)="getCourseDataByFilter()"
+                  style="border-radius: 30px;"><i class="fa fa-university" aria-hidden="true"></i></button>
+              </div>
+              <a class="nav-link" [routerLink]="['/university-finder/']">Universities</a>
+            </div>
+            <div class="input-group mt-2 bg-client">
+              <div class="input-group-append">
+                <button class="btn btn-primary text-uppercase" type="button" (click)="getCourseDataByFilter()"
+                  style="border-radius: 30px;"><i class="fa fa-graduation-cap" aria-hidden="true"></i></button>
+              </div>
+              <a class="nav-link" [routerLink]="['/course-finder/']">Courses</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="hint" *ngIf="hintdatacourse" [ngClass]="searchstring ? '' : 'hidden'" class="card mt-1">
+          <div class="m-2 ml-3">
+            <div class="input-group bg-client mt-1" *ngFor="let data of hintdatacourse">
+              <a class="nav-link" style="color: black" [routerLink]="['/coursedetail',data.uid,data.cid]">
+                <div class="input-group-append">
+                  <img [src]="data.logo_url" height="30" width="30" style="border-radius: 20px; background-color: white"> &nbsp;
+                  <span> {{data.course_name}}</span>
+                </div>
+              </a>
+            </div>
+            <div class="input-group mt-2 bg-client" *ngIf="hintdatacoursecount[0].coursecount>0">
+              <div class="input-group-append">
+                <button class="btn btn-primary text-uppercase" type="button" (click)="getCourseDataByFilter()"
+                  style="border-radius: 30px;"><i class="fa fa-graduation-cap" aria-hidden="true"></i></button>
+              </div>
+              <a class="nav-link" style="color: black" [routerLink]="['/course-finder/']">Browse All ({{hintdatacoursecount[0].coursecount}})
+                Courses</a>
+            </div>
+            <div class="input-group bg-client mt-1" *ngFor="let data of hintdatauniversity">
+              <a class="nav-link" style="color: black" [routerLink]="['/universitydetail/',data.uid,0]">
+                <div class="input-group-append">
+                  <img [src]="data.logo_url" height="30" width="30" style="border-radius: 20px; background-color: white">&nbsp;
+                  <span> {{data.university_name}}</span>
+                </div>
+              </a>
+            </div>
+            <div class="input-group mt-2 bg-client" *ngIf="hintdatauniversitycount[0].universitycount>0">
+              <div class="input-group-append">
+                <button class="btn btn-primary text-uppercase" type="button" (click)="getCourseDataByFilter()"
+                  style="border-radius: 30px;"><i class="fa fa-university" aria-hidden="true"></i></button>
+              </div>
+              <a class="nav-link" style="color: black" [routerLink]="['/university-finder/']">Browse All
+                ({{hintdatauniversitycount[0].universitycount}})
+                Universities</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav> -->
+
+<router-outlet></router-outlet>
+<div class="loader" [hidden]="!loadService.loadme && !loadService.loadmesecure">
+  <div class="circle t-l"></div>
+  <div class="circle t-r"></div>
+  <div class="circle b-l"></div>
+  <div class="circle b-r"></div>
+</div>

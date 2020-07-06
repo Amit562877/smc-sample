@@ -1,0 +1,28 @@
+$border-color: rgba($black, 0.125);
+$style-prefix: rxt-;
+
+
+/* Theme color palette */
+$palette-zindex: 9999;
+$palette-width: 380px;
+/* / Theme color palette */
+
+/* left sticky plugins */
+$plugins-font-size: 16px;
+$plugins-zindex: 9999;
+$plugins-icons-width: 28px;
+$plugins-icons-box-size: 50px;
+$plugins-icon-bg: darken($white, 5%);
+$plugins-radius: 10px;
+/* / left sticky plugins */
+
+/* left sticky plugins sm */
+$plugins-font-size-sm: 12px;
+$plugins-icons-width-sm: 16px;
+$plugins-icons-box-size-sm: 28px;
+$plugins-radius-sm: 6px;
+/* / left sticky plugins sm */
+
+/* Modal */
+$modal-zindex: 99999;
+/* / Modal */

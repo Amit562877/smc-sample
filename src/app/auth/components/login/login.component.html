@@ -1,0 +1,1234 @@
+<div class="row min-h-100vh no-gutters">
+
+    <div class="col-md-4 bg-white d-flex flex-column justify-content-between">
+        <div class="w-100 text-center p-3 mt-2">
+            <img class="img-fluid" src="../../../assets/images/smc-logo.png" alt="" height="60"
+                style="max-width: 200px;">
+        </div>
+        <div class="d-flex justify-content-center flex-column h-100">
+            <div class="py-3 px-3 px-sm-4 px-lg-5 mx-lg-4">
+                <div class="text-center mb-4">
+                    <h3 class="text-blue-smc">Hello!</h3>
+                    <h5 class="font-weight-normal text-blue-smc">Log in to your account</h5>
+                </div>
+                <form novalidate #mainform="ngForm" (keydown)="enterLogin(mainform,$event)">
+                    <div class="form-group border bg-breadcrumb rounded px-3">
+                        <div class="form-row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <img src="../../../assets/images/smc-mail-icon.png" alt="" height="20">
+                            </div>
+                            <div class="col">
+                                <input aria-label="username" type="text" placeholder="Username" [(ngModel)]="username"
+                                    name="username" data-name="username" [required]="true" data-prefix="Username"
+                                    data-type="text"
+                                    class="form-control bg-transparent px-0 border-0 shadow-none text-blue-smc">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group border bg-breadcrumb rounded px-3">
+                        <div class="form-row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <img src="../../../assets/images/smc-lock-icon.png" alt="" height="20">
+                            </div>
+                            <div class="col">
+                                <input aria-label="password" type="{{(showPassFlag)?'password':'text'}}"
+                                    placeholder="Password" [(ngModel)]="password" name="password" data-name="password"
+                                    [required]="true" data-prefix="Password" data-type="text"
+                                    class="form-control bg-transparent px-0 border-0 shadow-none text-blue-smc">
+                            </div>
+                            <div class="col-auto">
+                                <span width="20" (click)="showPassFlag= !showPassFlag">
+                                    <i class="fa fa-eye" style="color: #f3492a !important" *ngIf="!showPassFlag"
+                                        aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" style="color: #f3492a !important" *ngIf="showPassFlag"
+                                        aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-blue-smc">
+                        <div class="d-inline-block w-auto">
+                            <div class="custom-control custom-checkbox">
+                                <input aria-label="staysignin" type="checkbox" id="staysignin" name="staysignin"
+                                    [(ngModel)]="staysignin" class="custom-control-input">
+                                <label class="custom-control-label" aria-label="staysignin_label"
+                                    for="staysignin">Remember me</label>
+                            </div>
+                        </div>
+                        <span class="float-right">
+                            <a class="text-blue-smc" aria-label="resetit" [routerLink]="['/auth/password/reset']">Forget
+                                Password</a>
+                        </span>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-primary rounded font-weight-bold px-5" role="button"
+                            aria-label="makeMeLogin" appValidation [form]="mainform" [validparent]="'form-group'"
+                            (click)="makeMeLogin(mainform)" [disabled]="submitted">LOG IN <span *ngIf="submitted"><i
+                                    class="fa fa-lg fa-sync fa-refresh"></i></span><span *ngIf="!submitted"><i
+                                    class="fa fa-lg fa-sign-in-alt"></i></span></button>
+                    </div>
+                    <div class="text-center text-blue-smc">
+                        Don't have an account? <a class="text-blue-smc font-weight-bold" aria-label="signup"
+                            [routerLink]="['/auth/signup']">Create</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center mb-4">
+            <a class="text-blue-smc" href="#" data-toggle="modal" data-target="#TermsandConditions">Terms and
+                Conditions</a> &nbsp; | &nbsp;
+            <a class="text-blue-smc" href="#" data-toggle="modal" data-target="#PrivacyPolicy">Privacy
+                Policy</a>
+        </div>
+    </div>
+    <div class="gradient-blue-bg col-md-8">
+        <div class="row h-100 justify-content-between align-items-baseline m-0 prt w-100">
+            <div class="flex-column w-100 px-5">
+                <div class="text-center text-md-right w-100 text-white">
+                    <div class="h5 font-weight-normal mt-4 mb-3"> <em>Powered By</em> </div>
+                    <div class="w-100">
+                        <a href="https://www.konze.com/" target="_black">
+                            <img class="img-fluid" src="../../../assets/images/Konze-Logo-white.png" alt=""
+                                style="height:25px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-text-block position-relative text-white mb-4">
+                <div class="owl-carousel owl-theme">
+                    <div class="item mb-3">
+                        <div class="p-3 text-center">
+                            <h2 class="h2 mb-4">Agility. Efficiency. Transformation</h2>
+                            <p class="font-weight-normal">Experience the transformation your business deserves
+                                <br>Delight your customers so that they keeping back to you.</p>
+                        </div>
+                    </div>
+                    <div class="item mb-3">
+                        <div class="p-3 text-center">
+                            <h2 class="h2 mb-4">Intuitive. Intelligent. Impactful.</h2>
+                            <p class="font-weight-normal">Understand customer needs better
+                                <br> Exceed customer expectations every time</p>
+                        </div>
+                    </div>
+                    <div class="item mb-3">
+                        <div class="p-3 text-center">
+                            <h2 class="h2 mb-4">Innovation. Automation. Growth.</h2>
+                            <p class="font-weight-normal">Simplify processes so you can do more
+                                <br> Grow your business smarter, faster, better</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center flex-column w-100">
+                <div class="row">
+                    <div class="col-md-5 mx-auto">
+                        <img class="img-fluid" src="../../../assets/images/smc-slider.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-right" data-modal-width="100vw" data-modal-offset-upto="992" id="PrivacyPolicy"
+    tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Privacy Policy</h5>
+                <button type="button" class="close initial" data-dismiss="modal" aria-label="Close">
+                    <i class="la la-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-0 mb-4">
+
+                    <div class="card-body">
+                        <p>
+                            KONDESK is the CRM system owned and operated by KONZE Enterprise Pty Ltd (“KONZE”). We
+                            ("Our", "Us", KONZE, or "Kondesk")
+                            are committed to protecting Your (the company you represent, collectively “You”)
+                            Privacy.
+                            This Privacy Policy describes how We protect Your personal data in its capacity as a
+                            controller.
+                            It also explains Your choices in terms of use, accessibility and modification of Your
+                            Personal
+                            Data. This Privacy Policy is also incorporated in Our Terms &amp; Conditions and relates
+                            to Your use of kondesk.com and its associated products and services (collectively, our
+                            “Service”).
+                        </p>
+
+                        <p>
+                            This Privacy Policy is also incorporated in Our Terms &amp; Conditions and relates to
+                            Your use of kondesk.com and its associated
+                            products and services (collectively, our “Service”).
+                        </p>
+
+                        <p>
+                            This Privacy Policy is in addition to the Privacy Policy available on
+                            <a href="https://konze.com/privacy-policy" target="_blank">konze.com.</a>
+                        </p>
+
+                        <h6>I.
+                            <span style="text-decoration:underline">Information we collect from You</span>
+                        </h6>
+                        <h6 class="mt-2">A. Personal Information Collected from You</h6>
+                        <div class="ml-4 mb-5">
+
+
+                            <p>Personal data, or personal information, means any information about an individual
+                                from which
+                                that person can be identified. It does not include data where the identity has been
+                                removed
+                                (anonymous data). We may collect, use, store and transfer different kinds of
+                                personal
+                                data including but not limited to:</p>
+
+                            <h6>i. Identity and contact data</h6>
+                            <p>
+                                Includes first name, maiden name, last name, email address and phone number. When
+                                You create a user account with Us, We request
+                                for Your name and email address. You will also be asked to choose a unique username
+                                and
+                                a password, which will be used solely for the purpose of providing access to your
+                                user
+                                account. Upon registration you will have the option of choosing a security question
+                                and
+                                an answer to the security question, which if given, will be used solely for the
+                                purpose
+                                of resetting your password. Your name and email address will be used to inform you
+                                regarding
+                                new services, releases, upcoming events and changes in this Privacy Policy
+                                Statement.
+                            </p>
+                            <h6>ii. Usage data</h6>
+                            <p>
+                                Includes information on how the Service is accessed and used. This may consist of
+                                information such as your computer's Internet
+                                Protocol address (e.g. IP address), type of browser, version of the browser, the
+                                pages
+                                of our website that you visit, the time and date of your visit, the time spent on
+                                those
+                                pages, unique device identifiers and other diagnostic data
+                            </p>
+                            <h6>iii. Financial Data</h6>
+                            <p>
+                                On subscribing with us, we ask You to provide payment account details such as name,
+                                address and credit card details. Once
+                                you provide this information, we store the name and address of the card holder, the
+                                card
+                                expiry date and the last four digits of the credit card number. Additionally, in
+                                order
+                                to process future payments quickly, if we have Your approval, we may store your
+                                credit
+                                card data and other payment information in an encrypted format in the secure servers
+                                of our Payment Gateway Service Providers.
+                            </p>
+                            <h6>iv. Aggregated Data</h6>
+                            <p>
+                                Such as statistical or demographic data for any purpose. Aggregated Data may be
+                                derived from your personal data but is not
+                                considered personal data in law as this data does not directly or indirectly reveal
+                                your
+                                identity. For example, we may aggregate your Usage Data to calculate the percentage
+                                of
+                                users accessing a specific website feature. However, if we combine or connect
+                                Aggregated
+                                Data with your personal data so that it can directly or indirectly identify you, we
+                                treat
+                                the combined data as personal data which will be used in accordance with this
+                                privacy
+                                notice.
+                            </p>
+                            <h6>v. Testimonials</h6>
+                            <p>
+                                We post user testimonials on our website. These testimonials may include names and
+                                other Personal Information and we acquire
+                                permission from our users prior to posting these on our website. Kondesk is not
+                                responsible
+                                for the Personal Information users elect to post within their testimonials.
+                            </p>
+                            <h6>vi. Your third-party information</h6>
+                            <p>
+                                KONZE will have access to third party personal information provided by you as part
+                                of using Kondesk Services. This information
+                                may include third party names, email addresses, phone numbers and physical addresses
+                                and will be used for servicing your requirements and as part and parcel of your use
+                                of
+                                the Service. We may share this information with other third-parties we engage with
+                                in
+                                order to offer you personalised services and a quality customer service experience.
+                            </p>
+                        </div>
+
+                        <h6>B. Personal information we collect from other sources</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                We may collect publicly available information about You through third party sources
+                                such as search engines. Similarly, we
+                                may collect such information about You when you interact with us via social media
+                                sites
+                                such as Facebook, Twitter or Google+ through comments, posts, questions and other
+                                forms
+                                of interactions. This is to improve our user engagement and better understand user
+                                behaviour.
+                                Please be informed that once collected, this information will be retained with us
+                                indefinitely,
+                                even if You delete it from the social media sites.
+                            </p>
+                        </div>
+
+
+                        <h6>II.
+                            <span style="text-decoration:underline">Tools used to collect your information</span>
+                        </h6>
+                        <h6 class="mt-2">A. Cookies and Other Tracking Technology</h6>
+                        <div class="ml-4 mb-5">
+
+
+                            <p>We use temporary and permanent cookies to enhance your experience of Kondesk
+                                Services. Temporary
+                                cookies will be removed from your computer each time you close your browser.
+                                Technologies
+                                such as: cookies, beacons, tags and scripts are used by KONZE Enterprises Pty Ltd
+                                and
+                                our partners [such as reseller partners], affiliates, or service providers [such as
+                                analytics
+                                service providers]. These technologies are used in analysing trends, administering
+                                the
+                                site, tracking users’ movements around the site and to gather demographic
+                                information
+                                about our user base as a whole. We may receive reports based on the use of these
+                                technologies
+                                by these companies on an individual as well as aggregated basis.</p>
+                            <p>We use Local Storage Objects to store content information and preferences. Third
+                                parties
+                                with whom we partner to provide certain features on our site or to display
+                                advertising
+                                based upon your Web browsing activity use LSOs to collect and store information.
+                                Various
+                                browsers may offer their own management tools for removing LSOs.</p>
+                            <p>We also use other methods to collect data from and about you including through: </p>
+
+                            <h6>Direct interactions. </h6>
+                            <p>
+                                You may give us your Identity, Contact and Financial Data by filling in forms or by
+                                corresponding with us by post, phone,
+                                email or otherwise. This includes personal data you provide when you:
+                            </p>
+                            <ul style="list-style-type:disc">
+                                <li>apply for our products or services;</li>
+                                <li>subscribe to our service or publications;</li>
+                                <li>request marketing to be sent to you;</li>
+                                <li>provide your contact details at trade shows;</li>
+                                <li>enter a competition, promotion or survey; or</li>
+                                <li>give us some feedback. </li>
+                            </ul>
+                            <p></p>
+
+                            <h6>Automated technologies or interactions. </h6>
+                            <p>
+                                As you interact with our website, we may automatically collect Technical Data about
+                                your equipment, browsing actions and
+                                patterns. We collect this personal data by using cookies and other similar
+                                technologies.
+                                Please see our cookie policy for further details.
+                            </p>
+                            <br>
+                            <h6>Third parties or publicly available sources. </h6>
+                            <p>
+                                We may receive personal data about you from various third parties as set out below
+                                but not limited to:
+                            </p>
+                            <ul style="list-style-type:upper-alpha">
+                                <li>analytic providers such as Google</li>
+                                <li>advertising networks; and</li>
+                                <li>search information providers</li>
+                            </ul>
+                            <p></p>
+                        </div>
+
+
+                        <h6>III.
+                            <span style="text-decoration:underline">Use of Information Collected</span>
+                        </h6>
+
+                        <div class="ml-4 mb-5">
+                            <p>
+                            </p>
+                            <ul style="list-style-type:disc">
+                                <li>
+                                    <h6>Communication</h6>
+                                </li>
+                                <p>We use the collected data to communicate with you (via email or otherwise) about
+                                    the
+                                    Services you have chosen as part of your plan, new products as well as important
+                                    changes to the Privacy Policy and Terms &amp; Conditions. We will also
+                                    communicate
+                                    with you in regard to new products and services, offers or promotions that might
+                                    be of your interest</p>
+                                <li>
+                                    <h6>Account Maintenance </h6>
+                                </li>
+                                <p>We process your personal information to support the set-up and maintenance of
+                                    your account,
+                                    and for providing our services smoothly by enabling collaboration, providing
+                                    website
+                                    and mail hosting, as well as data back up and restoring. </p>
+                                <li>
+                                    <h6>Managing Payments</h6>
+                                </li>
+                                <p>On subscribing with us, the financial information provided by you is used to
+                                    verify your
+                                    credentials and to complete necessary payment transactions </p>
+                                <li>
+                                    <h6>Product Improvement</h6>
+                                </li>
+                                <p>The data we collect from you is used to better understand the usability of our
+                                    products
+                                    and services, supervise and prevent potential problems and overall improve our
+                                    products
+                                    and services. It also helps us provide customer support, and to analyse and
+                                    improve
+                                    our interactions with you and future customers</p>
+
+                                <li>
+                                    <h6>Avoid Service Misuse</h6>
+                                </li>
+                                <p>Your personal information will also be used to uncover and block counterfeit
+                                    transactions
+                                    and other unlawful activities, report spam, and safeguard the rights and
+                                    interests
+                                    of Kondesk and its users, third parties and the public</p>
+                                <li>Analyse Consumer Trends</li>
+                                <p>Your personal information will help us analyse trends by monitoring website
+                                    visitor navigation
+                                    and activities and understand what consumers are looking for. This helps us to
+                                    manage
+                                    our website effectively and improve our marketing strategy accordingly</p>
+                                <li>
+                                    <h6>Marketing and Advertising</h6>
+                                </li>
+                                <p>Your personal data is processed to effectively carry out market research and
+                                    provide
+                                    you with personalised advertisements based on your activities and interests to
+                                    the
+                                    extent permissible. This will be in accordance with what you will have consented
+                                    to previously.</p>
+                                <li>
+                                    <h6>Legal Compliance</h6>
+                                </li>
+                                <p>Your personal data may also be used to fulfil our legal obligations in accordance
+                                    with
+                                    the applicable laws in cooperating with public or government authorities if/when
+                                    required. Your data will only be shared/disclosed to the extent necessary. This
+                                    may
+                                    occur in case of misuse/abuse of our website, services or personal property in
+                                    order
+                                    to pursue judicial remedies, proceedings or responses to lawful requests. </p>
+
+                            </ul>
+                            <p></p>
+                        </div>
+
+
+                        <h6>IV.
+                            <span style="text-decoration:underline">Sharing Your Personal Data</span>
+                        </h6>
+
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Konze may share your personal data for internal business purposes or with external
+                                third-parties, to improve the services
+                                offered to you and to ensure quality customer service. This helps us to provide you
+                                with
+                                personalized value-added services. The following are some ways in which we might
+                                share
+                                your personal information:
+
+
+                            </p>
+                            <h6>A. Business purposes</h6>
+                            <p>We may share your information with Konze or with an of our subsidiaries for storage
+                                or data
+                                processing purposes. We may also share your information with our business partners
+                                and
+                                vendors, authorized third parties or contractors to meet service requests or provide
+                                transaction information. For example, this might include, financial transactions,
+                                managing
+                                orders, event registrations, website hosting, pre and post-sale support and
+                                delivering
+                                customer support. </p>
+                            <h6>B. Third-parties</h6>
+                            <p>We may need to share your personal information with our contracted third-party
+                                service providers,
+                                those providing us services such as finance, IT, hosting and system administration
+                                among
+                                others.
+                            </p>
+                            <h6>C. Mergers and Restructures</h6>
+                            <p>If we are involved in a merger, restructuring, acquisition or other major corporate
+                                change
+                                of any kind, we may share your information with the third-party involved. In
+                                accordance
+                                with related laws, we will use reasonable efforts to inform you of any transferal of
+                                personal data to an unaffiliated third-party.</p>
+                            <h6>D. Employees</h6>
+                            <p>Konze employees may have access to your information on a need to know basis. All our
+                                employees
+                                are expected to follow the Privacy Policy guidelines outlined in this document while
+                                they handle your personal information.</p>
+
+                            <h6>E. Legal/Government Entities</h6>
+                            <p>We may share your personal data with legal, government or law enforcement entities if
+                                they
+                                request for information disclosure in accordance with any applicable law or
+                                regulation.
+                                This is in order to protect the rights and ensure safety of Konze, its contractors
+                                or
+                                you, or for any other lawful purposes.</p>
+
+                            <p></p>
+                        </div>
+
+
+                        <h6>V.
+                            <span style="text-decoration:underline">Your choice in information use</span>
+                        </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                You may choose to opt out of receiving marketing communications such as newsletters
+                                and advertisements from us at any point.
+                                However, you will continue to receive emails about important any important
+                                information
+                                related to your account.
+                            </p>
+                        </div>
+
+
+                        <h6>VI.
+                            <span style="text-decoration:underline">Data Retention</span>
+                        </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Kondesk will preserve your Personal Data only for as long as is necessary for the
+                                reasons set out in this Privacy Policy.
+                                The maximum period of data retention is 12 months. We will hold and use your
+                                Personal
+                                Data to the degree required to comply with our legal obligations (for example, if we
+                                are required to retain your data to comply with applicable laws), resolve disputes
+                                and
+                                enforce our legal agreements and policies.
+                            </p>
+                            <p>
+                                Kondesk will also retain Usage Data for internal analysis. Usage Data is retained
+                                for a smaller period of time, except when
+                                this data is used to reinforce the security or to improve the functionality of our
+                                Services,
+                                or if we are lawfully obligated to retain this data for lengthier periods.
+                            </p>
+                            <h6>
+                                Contents of your User Account
+                            </h6>
+                            <p>
+                                We store and maintain files, documents, to-do lists, emails and other data stored in
+                                your user account at our facilities
+                                in Australia. In order to prevent loss of data due to errors or system failures, we
+                                also
+                                keep backup copies of data including the contents of your user account. Hence your
+                                files
+                                and data may remain on our servers even after deletion or termination of your user
+                                account.
+                                We may retain and use your Personal Information and data as necessary to comply with
+                                our legal obligations, resolve disputes, and enforce our rights or any other
+                                purposes
+                                as specified in this Privacy Policy Statement and Terms of Services.
+                            </p>
+                        </div>
+
+                        <h6>VII.
+                            <span style="text-decoration:underline">Data Security</span>
+                        </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                We adopt industry appropriate data collection, storage and processing practices and
+                                security measures, as well as physical
+                                security measures to protect against unauthorized access, alteration, disclosure or
+                                destruction
+                                of your Personal Information and data stored with us. Access to your name and email
+                                address
+                                is restricted to our employees who need to know such information in connection with
+                                providing
+                                KONZE Services to you and are bound by confidentiality obligations.
+                            </p>
+
+                        </div>
+
+                        <h6>VIII.
+                            <span style="text-decoration:underline">Accessing, Updating and Removing Personal
+                                Information</span>
+                        </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Upon request, we may provide you with information about whether we hold any of your
+                                Personal Information. If you wish to
+                                correct, update or remove any Personal Information including those from a public
+                                forum,
+                                directory or testimonial on our site, you may do so either by accessing your user
+                                account
+                                or by contacting KONZE Customer Support Services at
+                                <a href="mailto:info@kondesk.com" target="_blank">info@kondesk.com.</a> Such changes
+                                may take up to 48 hours to take effect. We respond
+                                to all enquiries within 30 days.
+                            </p>
+
+                        </div>
+
+                        <h6>IX.
+                            <span style="text-decoration:underline">Enforcement of Privacy Policy</span>
+                        </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                We make every effort, including periodic reviews to ensure that Personal Information
+                                provided by you is used in conformity
+                                with this Privacy Policy Statement. If you have any concerns regarding our adherence
+                                to this Privacy Policy Statement or the manner in which Personal Information is used
+                                for the purpose of providing KONZE Services, kindly contact KONZE Customer Support
+                                Services
+                                at
+                                <a href="mailto:info@kondesk.com" target="_blank">info@kondesk.com.</a> We will
+                                contact you to address your concerns and we will also co-operate
+                                with regulatory authorities in this regard if needed.
+                            </p>
+
+                        </div>
+
+                        <h6>X.
+                            <span style="text-decoration:underline">Notification of Changes</span>
+                        </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                We may modify the Privacy Policy Statement upon notice to you at any time through a
+                                service announcement or by sending email
+                                to your primary email address. If we make significant changes in the Privacy Policy
+                                Statement
+                                that affect your rights, you will be provided with at least 30 days advance notice
+                                of
+                                the changes by email to your primary email address. You may terminate your use of
+                                KONZE
+                                Services by providing a notice by email within 30 days of being notified of the
+                                availability
+                                of the modified Privacy Policy Statement if the Privacy Policy Statement is modified
+                                in a manner that substantially affects your rights in connection with use of KONZE
+                                Services.
+                                Your continued use of KONZE Services after the effective date of any change to the
+                                Privacy
+                                Policy Statement will be deemed to be your agreement to the modified Privacy Policy
+                                Statement.
+                                You will not receive email notification of minor changes to the Privacy Policy
+                                Statement.
+                            </p>
+
+                        </div>
+
+                        <h6>XI.
+                            <span style="text-decoration:underline">Contact Us</span>
+                        </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                If you have any questions or concerns regarding this Privacy Policy Statement,
+                                please contact us at
+                                <a href="mailto:info@kondesk.com" target="_blank">info@kondesk.com.</a> We shall
+                                respond to all inquiries within 30 days of receipt upon
+                                ascertaining your identity.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-right" data-modal-width="100vw" data-modal-offset-upto="992" id="TermsandConditions"
+    tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Terms and Conditions</h5>
+                <button type="button" class="close initial" data-dismiss="modal" aria-label="Close">
+                    <i class="la la-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-0 mb-4">
+
+                    <div class="card-body">
+                        <p>
+                            KONDESK is the CRM system owned and operated by KONZE Enterprise Pty Ltd (“KONZE”).
+                            These Terms &amp; Conditions are in addition
+                            to the Terms &amp; Conditions available on
+                            <a href="https://www.konze.com" target="_blank">konze.com.</a>
+                        </p>
+
+                        <p>
+                            This document shall be a legally binding electronic contract between You, which includes
+                            the company you represent and the
+                            company that registered you (collectively "You"), and kondesk.com, which includes its
+                            owner
+                            and assignees ("Our", "We", "Us", KONZE, or "Kondesk"). The Terms of Service described
+                            below
+                            govern your use of kondesk.com and its related products and services (collectively, our
+                            “Service”).
+                        </p>
+
+                        <p>
+                            KONZE reserves the right to update or change the Terms of Service any time without prior
+                            notice. Any new feature/s that augments
+                            or advances the present Service, such as involving the release of new tools and
+                            resources,
+                            will be subject to the Terms of Service. Your continued use of the Service after any
+                            such
+                            changes will constitute your assent to said changes.
+                        </p>
+
+                        <h6 class="mt-2">I. Account/User Terms </h6>
+                        <div class="ml-4 mb-5">
+
+
+                            <p>KONZE may choose to communicate with you via email regarding your account, news,
+                                updates
+                                or any other issues related to your account. You will hence automatically subscribe
+                                to
+                                our mailing lists or newsletters. You may choose to opt out of the subscription at
+                                any
+                                time
+                            </p>
+
+                            <p>
+                                It is your responsibility to maintain the security of your account, username and
+                                password. KONZE is not liable for any loss
+                                or damage from your failure to conform with safety obligations
+                            </p>
+                            <p>
+                                You are accountable for all published content and activity under your account
+                                (including user generated content) - be it
+                                live chat, help desk, phone or social.
+                            </p>
+                            <p>
+                                Kondesk and its related Services require and active internet connection. It is Your
+                                responsibility to provide for and arrange
+                                a secure Internet access and pay any service charges linked to such access. If We
+                                believe
+                                that You are misusing the Service, We may until further notice, interrupt your use
+                                of
+                                the account and Service and may seek your cooperation to resolve the same
+
+                            </p>
+                            <p>
+                                We reserve the right to accept or refuse our Service to a potential client. We
+                                solely have the discretion on whether to allow
+                                you to register, renew, change plan, or use our services.
+                            </p>
+                            <p>
+                                You must provide your Company name, business email address, full legal name and any
+                                other information required to create
+                                an account with us
+                            </p>
+                            <p>
+                                The Service is available free of charge if You register only up to 5 users on the
+                                account. If you wish to register more than
+                                5 users, a trial/demo period will be available for 20 days after which You will be
+                                automatically
+                                charged a monthly Subscription Fee. This fee will be auto-debited using the payment
+                                details
+                                provided by You. If You cancel your subscription, you will still have access to our
+                                Service
+                                till the end of Your trial period.
+                            </p>
+                        </div>
+
+
+
+                        <h6>II. Your Rights</h6>
+                        <div class="ml-4 mb-5">
+
+
+                            <p>The Terms of Service apply throughout Your free trial/demo period and during Your
+                                subscription
+                                to the Service based on the plan you choose. </p>
+
+                            <h6>Service Use: </h6>
+                            <p>
+                                Conditional upon your compliance with these Terms of Service throughout your period
+                                of Subscription, You have regulated,
+                                non-exclusive, and revocable right to access and use this Service for Your internal
+                                commercial
+                                purposes. You are responsible for the activities of any third parties using the
+                                Service
+                                through your account. You may subscribe to more than one supplementary Service
+                                within
+                                Kondesk. They may be subject to independent and separate Service Plans based on the
+                                Service
+                                you purchase
+
+                            </p>
+
+
+                        </div>
+
+
+                        <h6>III. Restrictions on use of website:</h6>
+
+                        <div class="ml-4 mb-5">
+                            <p>
+                                In accessing or using the Websites you agree that you will not:
+
+                            </p>
+                            <ul style="list-style-type:disc">
+                                <li>Alter, delete or conceal any copyright, trademark, service mark or other notices
+                                    contained
+                                    on the Services, and/or modify, reverse engineer, decompile or disassemble any
+                                    part
+                                    of the Services, whether in whole or in part, or create any derivative works
+                                    from
+                                    any part of the Services, or encourage, assist or authorize any other person in
+                                    doing
+                                    so;
+                                </li>
+                                <li>Except as expressly authorized by KONZE, you shall not, nor shall you allow any
+                                    third
+                                    party (whether or not for your benefit or otherwise) to, reproduce, modify,
+                                    create
+                                    derivative works from, display, perform, publish, distribute, disseminate,
+                                    broadcast
+                                    or circulate to any third party (including, without limitation, on or via a
+                                    third-party
+                                    website or platform), or otherwise use, the Services, including, without
+                                    limitation,
+                                    any content therein, without the express, prior written consent of KONZE or its
+                                    owner
+                                    if KONZE is not the owner;</li>
+                                <li>
+                                    Engage in or encourage conduct that:
+                                    <ul style="list-style-type:lower-alpha">
+                                        <li>Would violate any applicable law or violate or infringe upon any
+                                            intellectual
+                                            property, proprietary, privacy, moral, publicity or other rights of
+                                            KONZE
+                                            as an entity or any of its personnel </li>
+                                        <li>Affects adversely or reflects negatively on KONZE, its affiliates, the
+                                            Services,
+                                            our goodwill, name or reputation or causes duress, distress or
+                                            discomfort
+                                            to KONZE as an entity or any of its personnel </li>
+                                        <li>Discourages any person or entity from using all or any portion, features
+                                            or functions
+                                            of the website, or from advertising, linking or becoming a supplier to
+                                            us
+                                            in connection with any of the Services;</li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    Impersonate any person or entity or falsely state or otherwise represent your
+                                    affiliation with a person or entity
+
+                                </li>
+                            </ul>
+                            <p></p>
+                        </div>
+
+
+                        <h6>IV. Billing, plan modifications and payments</h6>
+
+                        <div class="ml-4 mb-5">
+
+                            <h6>Subscription Charges: </h6>
+                            <p>Unless otherwise stated in the Supplementary terms of an individual Service,
+                                excluding Your
+                                free trial/demo, all charges related to Your Account (“Subscription Charges”) are
+                                owed
+                                in full and billed in advance, when You subscribe to any Service. The Subscription
+                                Charges
+                                are based on the Service Plans You select and are owed in full until Your account is
+                                terminated, unless otherwise specified. We will provide You with a receipt for each
+                                payment
+                                made by You. You may also track your payment history from within the Service. </p>
+
+                            <p>Subscription charges and the Service Plan prices are subject to change at our
+                                discretion.
+                                You will be notified of such changes via email. Kondesk shall not be liable to You
+                                or
+                                any third-party for any modification, price change, suspension, or discontinuance of
+                                the Service. </p>
+
+                            <h6>Payment methods: </h6>
+                            <p>Subscription charges are payable by Your credit card or any other accepted method of
+                                payment
+                                by setting up automatic debit during account set-up. You hereby consent Us or Our
+                                approved
+                                agents, as applicable, to bill Your credit card upon Your subscription to the
+                                Service
+                                (and any renewal thereof). Payments are due on a monthly basis.</p>
+                            <h6>Renewal: </h6>
+                            <p>
+                                Your subscription to the Service will automatically renew for the next term
+                                equivalent to the then elapsing term. The Subscription
+                                Charges for each renewal will remain the same for your chosen service plan unless
+                                otherwise
+                                specified
+                                <br> You acknowledge and agree that, unless You terminate Your Account according to
+                                the Terms
+                                set out the in the Suspension and Account Termination section, Your credit card will
+                                be charged automatically for the applicable Subscription Charges
+                                <br>We may use a third-party service provider to manage credit card details and
+                                other payments;
+                                provided that the provider is not permitted to store, retain or use Your payment
+                                account
+                                information except to process your payments for Us. You must notify Us if there are
+                                any
+                                changes in Your credit card or other payment account details, by either updating
+                                Your
+                                Account or by e-mailing Us at
+                                <a href="mailto:info@kondesk.com" target="_blank">info@kondesk.com.</a>
+
+                            </p>
+
+                            <h6>Refunds: </h6>
+                            <p>Unless otherwise indicated in these Terms or as part of Your Service Plan, all
+                                Subscription
+                                Charges are non-refundable. No repayments shall be issued for partial use or non-use
+                                of the Service by You.</p>
+                            <h6>Applicable Taxes: </h6>
+                            <p>Unless otherwise indicated, the Subscription Charges exclude any taxes, levies,
+                                duties or
+                                similar governmental assessments, including value-added, sales, use or withholding
+                                taxes
+                                assessable by any local, state, provincial or foreign jurisdiction (collectively
+                                “Taxes”).
+                                You are accountable for paying the Taxes that would be imposed on You by government
+                                authorities.
+                                You will receive an invoice form Us for such Taxes if We believe We have a lawful
+                                obligation
+                                to do so and You agree to pay such Taxes if so invoiced</p>
+                            <h6>User Benefits: </h6>
+                            <p>We may, at Our sole discretion, offer You certain benefits such as discounts on
+                                Subscription
+                                Charges or an extension in Subscription Term for no extra payments from You, in
+                                terms
+                                of Service use. Such benefits would be specific to Your Account and the Service
+                                identified
+                                while offering these benefits. They are not transferrable. The benefits may have an
+                                expiry
+                                date. </p>
+
+                        </div>
+
+
+                        <h6>V. Suspension &amp; Account Termination</h6>
+                        <div class="ml-4 mb-5">
+                            <h6>Suspension and Termination</h6>
+                            <p>We shall not be liable to You or any other third party for suspension or termination
+                                of Your
+                                Account or access to and use of the Service, if such suspension or termination is in
+                                accordance with these Terms. </p>
+                            <h6>Payment of Subscription Charges: </h6>
+                            <p>
+                                We will notify You if the auto-debit for Your Account fails and We do not receive
+                                payment towards the Subscription Charges
+                                within the due date for Your Account. You will be given seven (7) days to make a
+                                payment
+                                using Your credit card or any other acceptable payment method as specified on the
+                                payment
+                                Form. If We do not receive payment within the foregoing time period, in addition to
+                                Our
+                                rights to other remedies available under law, We may (i) Suspend Your access to and
+                                use
+                                of the Service until We receive the payment for the Subscription Charges as
+                                specified
+                                in these Terms (ii) Restrict Your access to premium features of the Service and/or
+                                (iii)
+                                Terminate Your Account.
+                            </p>
+                            <h6>Suspension and Termination by Us: </h6>
+                            <p>In addition to suspension for late payment or non-payment of Subscription Charges, We
+                                may
+                                suspend Your access to and use of Your Account and the Service if You are in
+                                violation
+                                of the Terms; these may include misuse of the Service or a breach of the Terms
+                                specified
+                                in this document. You will be notified of Your activities that violate these Terms
+                                and,
+                                at Our sole discretion, provide You with a period of seven (7) days to rectify or
+                                cease
+                                such activities. If You do not rectify such activities within said period or if We
+                                believe
+                                that Your breach of these Terms cannot be rectified, Your Account shall be
+                                terminated.
+                            </p>
+                            <h6>Termination by You:</h6>
+                            <p>Only the individual Account owner can terminate the Account. This individual is
+                                solely liable
+                                for correctly cancelling Your account. If You pay for Your Account through credit
+                                card,
+                                You may elect to terminate Your Account at any time by clicking on the ‘Account
+                                Settings’
+                                link in the ‘Admin’ page when You log in to Kondesk. You may also terminate Your
+                                Account
+                                by writing to
+                                <a href="mailto:info@kondesk.com" target="_blank">info@kondesk.com.</a> Account
+                                cancelations typically take about 2-3 business days to
+                                be processed. Once your account is cancelled, all your account information will be
+                                deleted
+                                after 20 days. You won't be charged again after your official cancelation date. </p>
+                            <h6>Effect of Terminating Your Account: </h6>
+                            <div class="ml-4 mb-5">
+                                <h6>Data Export: </h6>
+                                <p>We strongly recommend that You export all Your Service Data before You terminate
+                                    Your
+                                    Account even if You do not renew Your Subscription after the trial period. In
+                                    any
+                                    event, following the termination of Your Account either by You or Us, including
+                                    the
+                                    trial period, We will retain Your Service Data for a period of one (1) year
+                                    after
+                                    termination, unless otherwise specified. </p>
+                                <h6>Data Migration: </h6>
+                                <p>Throughout Your Subscription term, You may request Us to import data into Your
+                                    Account.
+                                    You hereby recognise and acknowledge that We may access and process Your data in
+                                    connection with offering You support during such migration of data. </p>
+                                <h6>Exit Charges: </h6>
+                                <p>If You choose to terminate a lock-in contract before the end of its term, We may
+                                    charge
+                                    you an exit fee. Similarly, any technical support You may require for data
+                                    export
+                                    after the termination of Your subscription is also chargeable by us at $100-$
+                                    250
+                                    per hour. </p>
+                                <h6>Charges: </h6>
+                                <p>If You terminate Your Account prior to the end of Your then-effective
+                                    Subscription Term
+                                    or We effect such termination, in addition to other amounts You may owe Us, You
+                                    must
+                                    immediately make any outstanding payments associated with the remainder of Your
+                                    Subscription
+                                    Term, unless waived by Us in writing. </p>
+                                <p>You will not be required to pay this amount in the event You terminate Your
+                                    subscription
+                                    or Your Account due to a material breach of these Terms by Us, provided that You
+                                    provide advance notice of such breach to Us and allow Us not less than thirty
+                                    (30)
+                                    days to reasonably rectify such a breach. </p>
+                                <p>KONZE in its sole discretion, has the right to suspend or terminate your account
+                                    and
+                                    refuse any and all current or future use of the Service, or any other KONZE
+                                    service,
+                                    for any reason, at any time. Such termination of the Service will result in the
+                                    deactivation
+                                    or deletion of your Account or access to your Account, and the forfeiture and
+                                    relinquishment
+                                    of all content in your Account. </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <h6>VI. Modification or Change of Purchased Service</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                You may modify, change or customise Your Service Plan or between two Service plans.
+                                However, You acknowledge that downgrading
+                                a service plan may lead to loss of content, features or capacity of the Service. We
+                                are
+                                not liable for this loss. New Subscription charges may also be applicable based of
+                                the
+                                new/modified Service Plan You choose If you choose to update a plan, the
+                                Subscription
+                                charges for the existing month will be charged on a pro-rata basis and the following
+                                months will be charged according to the new Service plan. If the new Service plan is
+                                a downgrade from the previous plan, You will obtain a refund for the existing period
+                                in the form of credits; these will be credited to Your Account and will act as an
+                                offset
+                                for the new Subscription Charges payable for the following months.
+                            </p>
+
+                        </div>
+
+                        <h6>VII. Copyright and Ownership </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                All software, technology, designs, materials, information, communications, text,
+                                graphics, links, electronic art, animations,
+                                illustrations, artwork, audio clips, video clips, photos, images, reviews, ideas,
+                                and
+                                other data or copyrightable materials or content, including the selection and
+                                arrangements
+                                thereof is "Content." Where KONDESK provides Content to You in connection with the
+                                Services,
+                                including, without limitation, the software, the products and the site, it is
+                                "Company
+                                Content". Content remains the proprietary property of the person or entity supplying
+                                it (or their affiliated and/or third-party providers and suppliers) and is
+                                protected,
+                                without limitation, pursuant to Australian and foreign copyright and other
+                                intellectual
+                                property laws.
+                            </p>
+                            <p>
+                                KONZE hereby grants You (as a User) a limited, non-exclusive, non-transferable
+                                license to access Company Content available
+                                on kondesk for Your personal, non- commercial purposes in accordance with these
+                                Terms
+                                and any conditions. All other uses are expressly prohibited absent Our express
+                                written
+                                consent. You may not reproduce, redistribute, transmit, assign, sell, broadcast,
+                                rent,
+                                share, lend, modify, adapt, edit, create derivative works of, license, or otherwise
+                                transfer
+                                or use any Company Content unless We give You explicit permission to do so. Company
+                                Content
+                                is licensed, and not sold to You. Notwithstanding the foregoing, We reserve the
+                                right
+                                to revoke this license to access and use Company Content granted to You as described
+                                above.
+                            </p>
+                        </div>
+
+                        <h6>VIII. Access to the Services</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Your access to the Service may be restricted or unavailable (a) during
+                                scheduled downtime for upgrades and maintenance to the Service (We will use
+                                reasonable
+                                efforts to inform You in advance through Our Service, or (b) during any
+                                inaccessibility
+                                caused by conditions beyond Our control, such as, but not restricted to, natural
+                                calamities,
+                                acts of government, acts of terror or political conflict, mechanical breakdowns
+                                beyond
+                                Our control (including, without limitation, incapability to access the internet), or
+                                acts undertaken by third parties, including without limitation, distributed denial
+                                of
+                                service attacks. We will use commercially reasonable efforts to schedule downtimes
+                                for
+                                weekends (Pacific Time zone) and other off- peak hours.
+                            </p>
+
+
+
+                        </div>
+
+                        <h6>IX. Other Integrated Services </h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Additional services such as integrations and applications may be made available to
+                                You when You use Kondesk. You have the
+                                choice to enable these additional Services and integrate them into Our Service as a
+                                part
+                                of Your Service plan. These services are directed by their own terms and privacy
+                                policies.
+                                You therefore acknowledge that we are not responsible for Your use of these
+                                Services,
+                                and We are not liable for any warranties, loss or damage due to Your choice to
+                                integrate,
+                                access and use these services. You are responsible for Your reliance on the privacy
+                                practices,
+                                data security procedures or additional policies of such Services and hence cannot
+                                hold
+                                us liable in connection to the same. We are also not accountable for the data
+                                hosting
+                                and data transfer practices of the providers of such Services. You must contact the
+                                providers
+                                of these Services in relation to any comments, queries, complaints or feedback about
+                                such other Services.
+                            </p>
+
+                        </div>
+
+                        <h6>X. Privacy</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Our Privacy and Cookies Policy is incorporated into these Terms &amp; Conditions
+                            </p>
+
+                        </div>
+
+                        <h6>XI. Disclaimer and Limitation of Liability</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Neither KONZE nor any of our directors, officers or employees are responsible or
+                                liable for any indirect, incidental, consequential,
+                                special, exemplary, punitive or other damages (including without limitation, damages
+                                for loss of business, loss of data or lost profits), under any contract, negligence,
+                                strict liability or other theory arising out of or relating in any way to the
+                                services
+                                and/or materials, available through our website. Your sole remedy for
+                                dissatisfaction
+                                with the services, is to stop using the services or linked third-party websites, as
+                                applicable.
+                            </p>
+                            <p>
+                                In jurisdictions where the exclusion of implied warranties or limitation of
+                                liability for incidental or consequential damages
+                                is not permitted, our liability will be limited to the greatest extent permitted by
+                                law.
+                            </p>
+                            <p>You agree that the damage exclusions in these terms of use shall apply even if any
+                                remedy
+                                fails of its essential purpose.</p>
+                        </div>
+
+                        <h6>XII. Indemnity</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                You hereby indemnify, defend and hold harmless, KONZE and its officers, directors,
+                                or employees from and against all reasonably
+                                foreseeable losses, expenses, damages, costs, claims and demands, including
+                                reasonable
+                                attorneys' fees and related costs and expenses, due to or arising out of Your breach
+                                of any representation or warranty hereunder. We reserve the right, at Our own
+                                expense,
+                                to assume the exclusive defence and control of any matter otherwise subject to
+                                indemnification
+                                by You, and in such a case, you agree to fully cooperate as reasonably required with
+                                such defences and in asserting any available defences.
+                            </p>
+
+                        </div>
+
+                        <h6>XIII. Australian Consumer Law</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                Notwithstanding any other provision in the Conditions, nothing shall limit your
+                                rights as a consumer under Australia law.
+                            </p>
+
+                        </div>
+
+                        <h6>XIV. Governing law</h6>
+                        <div class="ml-4 mb-5">
+                            <p>
+                                These Terms &amp; Conditions are governed by the laws of Victoria, Australia.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

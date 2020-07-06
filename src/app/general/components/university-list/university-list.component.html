@@ -1,0 +1,241 @@
+<body class="bg-white">
+  <app-navigation-menu></app-navigation-menu>
+  <div class="container-fluid p-lg-0">
+    <div
+      style="background-image: url(./assets/images/new-search-bg.png); background-repeat: no-repeat;background-size: cover; background-position: top center;">
+      <div class="row no-gutters">
+        <div class="col-lg-5 col-md-8 my-3 mx-auto text-center">
+          <div> <img class="img-fluid" src="./assets/images/search-my-courses-logo.png" alt="search-my-courses-logo">
+          </div>
+          <p class="font-size-13 pt-2"> Search for a course from Universities around the world</p>
+          <div class="row">
+            <div class="col-md mb-3">
+              <div class="input-group">
+                <div class="input-group-inside input-group-lg shadow border-radius-100 mr-2">
+                  <input aria-label="globalhints" type="text" id="input"
+                    [(ngModel)]="universityfiltermodel.searchstring" placeholder="search university" autocomplete="off"
+                    (keyup)="globalhints($event)" class="form-control pr-4" (focus)="inputFocusFlag=false;"
+                    (focusout)="inputFocusFlag=true;">
+                  <div id="hint" *ngIf="!isbuttonclicke && (searchhints.coursehint.length>0)"
+                    [ngClass]="universityfiltermodel.searchstring.lenght>=2 ? '' : 'hidden'"
+                    class="card mt-1 hint-wrap">
+                    <ul id="list" class="m-2 ml-3" (focus)="divFocusFlag=false;" (focusout)="divFocusFlag=true;"
+                      class="search-results search-resultsoption" infinite-scroll [infiniteScrollDistance]="2"
+                      [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="getNextHint()"
+                      [scrollWindow]="false">
+                      <!-- <div class="input-group bg-white mt-1" *ngFor="let data of universityhint">
+                        <a  aria-label="getNextHint"class="nav-link" style="color: black" [routerLink]="['/universitydetail/',data.id]">
+                          <div class="input-group-append">
+                            <img src="./assets/images/{{data.logourl}}" class="img-rounded" height="30" width="30">&nbsp;
+                            <span style="text-align: justify"> {{data.name}} <b>(University)</b></span>
+                          </div>
+                        </a>
+                      </div> -->
+
+                      <li class="input-group bg-white mt-1" *ngFor="let data of searchhints.coursehint">
+                        <a aria-label="getCourseByHint_link" class="nav-link" style="color: black"
+                          (click)="getUnivesityList(data.name)" value="data.name">
+                          <!-- [routerLink]="['course-detail',data.id]"> -->
+                          <div class="input-group-append">
+                            <div class="hintoption" [style.background]="data.name | firstcharactercolor">
+                              {{data.name | firstcharacter}}
+                            </div> &nbsp;
+                            <!-- <img src="./assets/images/{{data.logourl}}" class="img-rounded" style="height: 30px;width:30px;border: #000000 1px outset;border-radius: 30px;" > &nbsp; -->
+                            <span style="text-align: left">{{data.name}}</span>
+                          </div>
+                        </a>
+                      </li>
+                      <!-- <button role="button" aria-label="getNextHint1" *ngIf="searchhints.ismorepage" class="btn btn-outline-primary btn-rounded btn-sm mt-2"
+                    (click)="getNextHint()">show more</button> -->
+                    </ul>
+                  </div>
+                  <div class="input-group-inside-append">
+                    <button class="btn btn-lg btn-trans" (click)="getUniversityByFilter();" type="button"
+                      name="btnfiltersearch" role="button" aria-label="btnfiltersearch">
+                      <i class="la la-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="input-group-prepend">
+                  <button type="button" data-toggle="collapse" href="#collapseFilter" aria-expanded="true"
+                    aria-controls="collapseFilter" class="btn btn-outline-primary btn-lg" name="closefilter"
+                    role="button" aria-label="closefilter"> <i
+                      class="align-bottom la la-1x la-filter pr-1"></i>Filter</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="mt-1 py-1 container-fluid bg-breadcrumb">
+    <div class="collapse" id="collapseFilter">
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="countryid_1" class="font-weight-500" for="exampleFormControlSelect1">Country</label>
+                <select aria-label="countryid" class="form-control border-secondary shadow"
+                  [(ngModel)]="universityfiltermodel.countryid" id="exampleFormControlSelect1" (change)="filterstate()">
+                  <option value="0">-- Choose Country --</option>
+                  <option *ngFor="let country of countrylist" [ngValue]="country.id">
+                    {{country.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="stateid_1" class="font-weight-500" for="exampleFormControlSelect1">State</label>
+                <select aria-label="stateid" class="form-control border-secondary shadow"
+                  [(ngModel)]="universityfiltermodel.stateid" id="exampleFormControlSelect1" (change)="filtercity()">
+                  <option value="0">-- Choose State --</option>
+                  <option *ngFor="let state of statelist" [ngValue]="state.id">
+                    {{state.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="cityid_1" class="font-weight-500" for="exampleFormControlSelect1">City</label>
+                <select aria-label="cityid" class="form-control border-secondary shadow" id="exampleFormControlSelect1"
+                  [(ngModel)]="universityfiltermodel.cityid">
+                  <option value="0">-- Choose City --</option>
+                  <option *ngFor="let city of citylist" [ngValue]="city.id">
+                    {{city.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+              <div class="form-group text-left">
+                <label aria-label="universitytypeid_1" class="font-weight-500">University Type</label>
+                <select aria-label="getUniversityListByType" class="form-control border-secondary shadow"
+                  [(ngModel)]="universityfiltermodel.universitytype">
+                  <option value="0">-- University type --</option>
+                  <option *ngFor="let type of institutetypelist" [ngValue]="type.id">
+                    {{type.univtype}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-auto col-md py-md-2 py-0 text-right">
+              <button role="button" aria-label="getCourseByFilter" type="button"
+                class="btn btn-outline-secondary btn-sm" (click)="getUniversityByFilter()">
+                <i class="pr-1 mr-1"></i>Apply Filter</button>&nbsp;
+              <button role="button" aria-label="clearFilter" type="button" data-toggle="collapse" href="#collapseFilter"
+                aria-expanded="true" aria-controls="collapseFilter" class="btn btn-outline-danger btn-sm"
+                (click)="clearFilter()"> <i class="pr-1 mr-1"></i>Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+      [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()"
+      (scrolledUp)="onUp()" *ngIf="universitylist.length>0">
+      <div class="row m-1">
+        <div class="col-md-3 mb-2 customdivV1" *ngFor="let university of universitylist">
+          <div class="card card-ctrl-outside h-100 shadow-sm">
+            <div class="card-header bg-transparent px-3 py-2">
+              <div class="form-row align-items-center gutter-y-5">
+                <div class="col font-size-10 font-weight-600" title="Branch">
+                  <div class="custom-control custom-checkbox align-middle custom-control-inline mb-1 mr-0">
+                    <input type="checkbox" class="custom-control-input" id="chk-1">
+                    <label class="custom-control-label" for="chk-1"></label>
+                  </div>
+                  <a data-toggle="modal" class="text-body"
+                    [routerLink]="['/program/univ-detail',university.universityid]">{{university.name | uppercase}}</a>
+                </div>
+                <div class="col-auto">
+                  <div class="card-ctrls border-left d-inline-flex align-items-center">
+                    <button class="card-ctrl-fullscreen btn btn-link btn-sm" type="button">
+                      <i class="fullscreen material-icons material-icons-18">
+                        fullscreen </i>
+                      <i class="fullscreen-exit material-icons material-icons-18">
+                        fullscreen_exit </i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-3 py-2">
+              <table class="table table-sm table-borderless table-doc">
+                <tbody>
+                  <tr>
+                    <td colspan="2" align="center">
+                      <a [routerLink]="['/program/univ-detail',university.universityid]">
+                        <!-- <img data-toggle=" modal" data-target="#course-details-Model"
+                          class="img-fluid count-img-redirect" style="max-height:80px;height: 80px; ;max-width: 200px;"
+                          [defaultImage]="'./assets/default.gif'"
+                          [lazyLoad]="environment.API_URL+'Document/images/'+university.logourl"> -->
+                        <img data-toggle="modal" data-target="#course-details-Model"
+                          class="img-fluid count-img-redirect" style="max-height:80px;" alt="university logo"
+                          [defaultImage]="'./assets/default.gif'" [lazyLoad]="'./assets/univlogo.png'">
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Campus:</th>
+                    <td>{{university.campus | uppercase}}</td>
+                  </tr>
+                  <tr>
+                    <th>Type:</th>
+                    <td>{{university.universitytype | uppercase}}</td>
+                  </tr>
+                  <tr>
+                    <th>Country:</th>
+                    <td>{{university.country | uppercase}}</td>
+                  </tr>
+                  <tr>
+                    <th>Google ratings:</th>
+                    <td><span><i class="fab fa-google"></i> {{university.overallrating}}</span></td>
+                  </tr>
+                  <tr>
+                    <th>Visitors</th>
+                    <td><span><i class="far fa-eye"></i> {{university.visitcount}}</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="ellipsis-3 full-card-break-ellipsis hover-ctrl mb-2">
+                {{university.about}}
+                <div class="lead font-weight-normal text-muted" *ngFor="let rankings of rankinglist| filterArrV2:{ universityid: university.id }
+                          ;index as index; last as last">
+                  <i class="la la-university pr-1"></i>University rank
+                  <span class="text-body">#{{rankings.name}} (</span>
+                  <span>{{rankings.levelname}}
+                    :
+                    {{rankings.value}} </span>)
+                </div>
+                <button
+                  class="hover-ctrl-right-bottom btn btn-sm btn-primary shadow full-card-d-none card-ctrl-fullscreen">Read
+                  More</button>
+              </div>
+            </div>
+            <div class="card-ctrl-outside-right">
+              <div class="btn-group btn-group-sm rounded-0 btn-group-vertical">
+                <button type="button" class="btn btn-warning-air" data-toggle="tooltip" data-placement="left" title=""
+                  data-original-title="Edit"><i class="fa fa-lg fa-pencil-alt"></i></button>
+                <button type="button" class="btn btn-primary-air" data-toggle="tooltip" data-placement="left" title=""
+                  data-original-title="call"><i class="fa fa-lg fa-phone"></i></button>
+                <button type="button" class="btn btn-success-air" data-toggle="tooltip" data-placement="left" title=""
+                  data-original-title="Chat"><i class="far fa-comments"></i></button>
+                <button type="button" class="btn btn-secondary-air" data-toggle="tooltip" data-placement="left" title=""
+                  data-original-title="Email"><i class="far fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-danger text-center" *ngIf="universitylist.length==0">
+      <strong>No data found</strong>
+    </div>
+  </div>
+
+  <div onclick="topFunction()" style="margin-right: 80px;" id="back-to-top" class="btn btn-outline-primary"><i
+      class="la la-arrow-up"></i>
+  </div>
+</body>

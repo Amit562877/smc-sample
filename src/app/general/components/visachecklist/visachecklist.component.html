@@ -1,0 +1,199 @@
+<div class="card mb-4 shadow" id="v-pills-visa-checklist">
+    <div id="collapse-services-7" class="collapse show" aria-hidden="true" aria-labelledby="heading-services-7">
+        <div class="card-body p-2 p-md-3">
+            <div class="card-body p-md-2 p-0">
+                <div class="card border-0">
+                    <div class="card-header p-2 py-md-2">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h5 class="font-size-11 m-0">Service Documents</h5>
+                            </div>
+                            <div class="col-auto my-2 my-md-0">
+                                <h5 class="font-size-11 m-0">Documents Type:</h5>
+
+                            </div>
+
+                            <div class="col-12 col-md py-2 py-md-0">
+                                <select aria-label="inputState1" id="inputState" class="form-control"
+                                    [(ngModel)]="documentid" (change)="getservicedocumentslist()">
+                                    <option value="">Select Service Type</option>
+                                    <option *ngFor="let doc of documentlist" [value]="doc.productid">{{doc.productname}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-auto" *ngIf="servicedocuments">
+                                <div class="text-right w-100">
+                                    <button appClearValidation [form]="documentemailForm" role="button"
+                                        aria-label="getCourseByFilter"
+                                        class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button"
+                                        (click)="documentEmail()" title="Send Mail" data-toggle="tooltip"
+                                        data-original-title="Send Mail">
+                                        <span *ngIf="loadService.sendmail"><i
+                                                class="fa fa-lg fa-sync fa-refresh"></i></span><span
+                                            *ngIf="!loadService.sendmail">
+                                            <i class="far fa-envelope"></i></span>
+
+                                    </button>
+                                    <button role="button" aria-label="getCourseByFilter"
+                                        class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button"
+                                        (click)="downloadVisaCheckListPdf(false,'','')" title="PDF"
+                                        data-toggle="tooltip" data-original-title="PDF"
+                                        [disabled]="loadService.downloadPDF"><span *ngIf="loadService.downloadPDF"><i
+                                                class="fa fa-lg fa-sync fa-refresh"></i></span><span
+                                            *ngIf="!loadService.downloadPDF">
+                                            <i class="fa fa-lg fa-download"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0" id="serviceDocument">
+                        <p class="badge-secondary font-weight-500 mb-0 px-3 py-1"> For Main
+                            Applicant </p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Document Name
+                                        </th>
+                                        <th>
+                                            Specification
+                                        </th>
+                                        <th>
+                                            category
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let doc of servicedocumentlist| filterArr:{ formainapplicant1: true }">
+                                        <td>{{doc.name}}</td>
+                                        <td [ngClass]="(doc.requiredrecommanded==1)?'text-danger':'text-success'">
+                                            {{(doc.requiredrecommanded==1)?'Required':'Recommended'}}
+                                        </td>
+                                        <td>{{(doc.doctypeid==1)?'Original':'Certified'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="badge-secondary font-weight-500 mb-0 px-3 py-1">For Secondary
+                            Applicant
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Document Name
+                                        </th>
+                                        <th>
+                                            Specification
+                                        </th>
+                                        <th>
+                                            category
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let doc of servicedocumentlist| filterArr:{ forsecondaryapplicant1: true }">
+                                        <td>{{doc.name}}</td>
+                                        <td [ngClass]="(doc.requiredrecommanded==1)?'text-danger':'text-success'">
+                                            {{(doc.requiredrecommanded==1)?'Required':'Recommended'}}
+                                        </td>
+                                        <td>{{(doc.doctypeid==1)?'Original':'Certified'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="badge-secondary font-weight-500 mb-0 px-3 py-1">For Child</p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Document Name
+                                        </th>
+                                        <th>
+                                            Specification
+                                        </th>
+                                        <th>
+                                            category
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let doc of servicedocumentlist| filterArr:{ forchild1: true }">
+                                        <td>{{doc.name}}</td>
+                                        <td [ngClass]="(doc.requiredrecommanded==1)?'text-danger':'text-success'">
+                                            {{(doc.requiredrecommanded==1)?'Required':'Recommended'}}
+                                        </td>
+                                        <td>{{(doc.doctypeid==1)?'Original':'Certified'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade ModalThirdParty" id="modalServicedocumentEmail" data-modal-width="100vw"
+    data-modal-offset-upto="992" tabindex="-1" role="dialog" aria-hidden="true">
+    <form #documentemailForm="ngForm" novalidate>
+        <div class="modal-dialog" role="document" style="max-width: 1000px;">
+            <div class="modal-content">
+                <button type="button" class="close close-point" data-dismiss="modal" aria-label="Close"
+                    appClearValidation [form]="documentemailForm" [resetform]="true">
+                    <i class="la la-close"></i>
+                </button>
+
+                <div class="modal-body p-3 p-md-5">
+                    <div class="px-2 text-center">
+                        <h5 class="modal-title text-center h1 text-primary-light">Service Documents</h5>
+                        <div
+                            class="d-inline-block arrow-right py-2 px-2  px-md-5 border border-dark mt-3 font-weight-bold position-relative">
+                            You have requested inquiry for {{documentname}}</div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <img src="assets/images/img-notification-modal.jpg" class="img-fluid"
+                                alt="download Visa Fees in Email">
+                        </div>
+                        <div class="col-lg-6 align-self-center">
+                            <div class="form-group">
+                                <input aria-label="txtname_1" type="text" class="modal-custom-form-control" id="txtname"
+                                    name="txtname" [required]="true" [(ngModel)]="txtname"
+                                    [ngClass]="(docemailSubmitted && documentemailForm.controls.txtname.invalid)?'invalid':''"
+                                    placeholder="Full Name*">
+                            </div>
+                            <div class="form-group">
+                                <input aria-label="txtemail_1" type="text" class="modal-custom-form-control"
+                                    id="txtemail" name="txtemail" [(ngModel)]="txtemail" [required]="true"
+                                    [ngClass]="(docemailSubmitted && documentemailForm.controls.txtemail.invalid)?'invalid':''"
+                                    placeholder="Email*">
+                            </div>
+                            <div class="form-group">
+                                <input aria-label="txtphone_1" type="text" class="modal-custom-form-control"
+                                    id="txtphone" name="txtphone" [(ngModel)]="txtphone" [required]="true"
+                                    [ngClass]="(docemailSubmitted && documentemailForm.controls.txtphone.invalid)?'invalid':''"
+                                    placeholder="Phone Number">
+                            </div>
+
+                            <div class="form-group text-center mt-4">
+                                <button role="button" aria-label="senddocemail" type="button"
+                                    class="btn btn-primary-light btn-lg font-weight-bold px-5 text-uppercase text-white"
+                                    (click)="sendMailVisaCheckList(documentemailForm)">Submit</button>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,76 @@
+.#{$style-prefix}{
+    /* theme color palette */
+    &theme-settings{position: fixed; width: $palette-width; max-width: 88%; z-index: $palette-zindex; top: 50%; right: 0; padding: 10px 15px; background: $white; border: 1px solid $border-color; border-right: 4px solid $theme-color; border-radius: 0 0 0 4px; @include transition(ease all 0.3s); @include transform(translate(100%, -50%));
+        &.#{$style-prefix}open{@include transform(translate(0, -50%)); @include box-shadow(0 0 20px 0 rgba($black, .5));}
+    }
+
+    &theme-settings-btn{font-size: 16px; color: color-from-bg($theme-color); position: absolute; right: 100%; top: 0; padding: 5px 10px; background: $theme-color; border: 1px solid $border-color; border-radius: 4px 0 0 4px; cursor: pointer;
+        i{animation: rotateInfinite 2s linear infinite;}
+        &:hover{background: darken($theme-color, 10%);}
+    }
+    @keyframes rotateInfinite {
+        from{@include transform(rotate(0));}
+        to{@include transform(rotate(360deg));}
+    }
+
+    &list-color-palette{display: flex; flex-wrap: wrap; align-items: center; margin: -10px -5px 0; list-style-type: none; padding: 0;
+        > li{margin: 10px 5px 0; cursor: pointer; @include transition(ease all 0.3s);
+            &:not(.default){display: flex; align-items: center; justify-content: center; width: 30px; height: 26px; border: 1px solid transparent; border-radius: 5px;
+                &:before{content: "\f00c"; @include fontawesome; display: none; font-size: 10px; color: #fff;}
+                &.active:before{display: block;}
+            }
+            &:hover, &.active{@include box-shadow(0 0 10px 0 rgba(#000, 0.2)); @include transform(scale(1.3));}
+            &.default{
+                &:hover, &.active{@include transform(scale(1.2));}
+            }
+        }
+    
+        $loop: 1;
+        @each $name, $color in $theme-colors-map {
+            [data-theme-ctrl="theme-ctrl-#{$loop}"]{background: $color;}
+            $loop: $loop + 1;
+        }
+    }
+    /* / theme color palette */
+    /* Alignment list */
+    &select-list{display: flex; flex-wrap: wrap; align-items: center; list-style-type: none; margin: -10px -8px; padding: 0;
+        > li{font-size: 14px; width: 30px; height: 26px; display: flex; justify-content: center; align-items: center; background: darken($color: $white, $amount: 12%); border-radius: 5px; padding: 2px; box-sizing: border-box; margin: 10px 8px; cursor: pointer; @include transition(ease all 0.3s);
+            img, svg{max-width: 14px; max-height: 14px;}
+            &:hover, &.active{background: $theme-color; color: $white; @include box-shadow(0 0 10px 0 rgba(#000, 0.2)); @include transform(scale(1.3));}
+        }
+        [data-theme-v-align="theme-v-align-top"]{align-items: flex-start;}
+        [data-theme-v-align="theme-v-align-bottom"]{align-items: flex-end;}
+    }
+    &select-list-wrap{display: inline-block; vertical-align: middle; border: 1px solid $border-color; padding: 10px;
+        .#{$style-prefix}select-list{display: inline-flex;}
+    }
+    /* / Alignment list */
+}
+
+/* Plugins settings */
+@mixin plugins-list($themeColor){ 
+    .#{$style-prefix}plugins-list{background: $themeColor;
+        .link{color: $themeColor;
+            .text{background: $themeColor;}
+        }
+    } 
+    .#{$style-prefix}select-list > li{
+        &:hover, &.active{background: $themeColor; color: color-from-bg($themeColor);}
+    }
+    .#{$style-prefix}modal-close-btn:hover{color: $themeColor;}
+    .#{$style-prefix}theme-settings{border-right-color: $themeColor;
+        .#{$style-prefix}theme-settings-btn{background: $themeColor; color: color-from-bg($themeColor);
+            &:hover{background: darken($themeColor, 10%);}
+        }
+    }
+    &.theme-align-right .#{$style-prefix}theme-settings{border-right-color: $border-color; border-left-color: $themeColor;}
+}
+
+$loop: 1;
+@each $name, $color in $theme-colors-map {
+    .theme-ctrl-#{$loop}{
+        @include plugins-list($color);
+    }
+    $loop: $loop + 1;
+}
+/* / Plugins settings */

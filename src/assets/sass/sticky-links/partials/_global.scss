@@ -1,0 +1,12 @@
+[class*="#{$style-prefix}"]{font-family: sans-serif; 
+    &, &:before, &:after{box-sizing: border-box;}
+    &[class*="-btn"]{
+        &:focus{outline: none;}
+    }
+}
+
+.#{$style-prefix}{
+    &img-fluid{max-width: 100%; height: auto;}
+}
+
+.#{$style-prefix}p-0{padding: 0 !important;}

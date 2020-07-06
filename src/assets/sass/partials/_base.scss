@@ -1,0 +1,53 @@
+$primary-color: #000;
+$white: #fff;
+$black: #000;
+
+/* Theme colors */
+$theme-1: #000;
+$theme-2: #7749b5;
+$theme-3: #00bcd4;
+$theme-4: #03a9f4;
+$theme-5: #007bff;
+
+// Default Active theme color
+$theme-color: $theme-5;
+
+$theme-colors-map: (
+    theme-1: $theme-1,
+    theme-2: $theme-2,
+    theme-3: $theme-3,
+    theme-4: $theme-4,
+    theme-5: $theme-5
+);
+/* / Theme colors */
+
+
+/* web colors for icons, buttons, background and text */
+$blue:    #007bff !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #28a745 !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+
+$web-colors-map: () !default;
+$web-colors-map: map-merge(
+  (
+    "blue":       $blue,
+    "indigo":     $indigo,
+    "purple":     $purple,
+    "pink":       $pink,
+    "red":        $red,
+    "orange":     $orange,
+    "yellow":     $yellow,
+    "green":      $green,
+    "teal":       $teal,
+    "cyan":       $cyan,
+  ),
+  $web-colors-map
+);
+/* / web colors for icons, buttons, background and text */

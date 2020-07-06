@@ -1,0 +1,128 @@
+<div class="d-flex flex-row">
+  <div class="col-md-12">
+    <div class="m-subheader">
+      <ul class="nav nav-pills justify-content-center t-nav-pills-1 mb-0" role="tablist" *ngIf="listSectionList">
+        <span *ngFor="let sec of listSectionList">
+          <li class="nav-item" *ngIf="sec.sectionparentidf == 0" role="tab">
+            <button role="button" aria-label="AsetPage" type="submit" class="nav-link" id="asec"
+              [ngClass]="{active: sec.rowNumber === acurrentPage}" href="#" (click)="AsetPage(sec.rowNumber)">
+              {{sec.sectionname}}
+            </button>
+          </li>
+        </span>
+      </ul>
+    </div>
+    <br />
+    <!-- Start One Form Section -->
+    <span
+      *ngFor="let ngSection of ApplicationpagedItems.slice(((acurrentPage-1)*aitemsPerPage), ((acurrentPage)*aitemsPerPage)) ; let ind = index">
+      <div class="m-portlet m-portlet--mobile" *ngIf="ngSection.sectionparentidf == 0">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">
+                {{ngSection.productname}} - {{ngSection.sectionname}}
+              </h3>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngFor="let subsec of listSectionList | optionalFiltersec: ngSection.sectionidf">
+          <div class="m-portlet__body" id="sec_{{subsec.sectionidf}}">
+            <div class="m-portlet__head">
+              <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    {{subsec.sectionname}}
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="m-portlet__body" style="flex: 1;">
+              <div id="divadd_{{subsec.sectionidf}}">
+                <span *ngFor="let ngControl of listQuestionList;let i=index">
+
+                  <div
+                    *ngIf="(ngControl.productidf == ngSection.productidf && ngControl.sectionidf == subsec.sectionidf && ngControl.isshowhide == 0) == true">
+                    <div class="form-group row">
+                      <span class="row" *ngIf="ngControl.ControlTypeName !='displayeditor'">
+                        <label tabindex="-1" for="inputEmail3" class="col-md-12 col-form-label" style="cursor:pointer;display: flex !important;"
+                          id="drag_{{i}}" attr.data-index="{{ngControl.formcontrolid}}">
+                          <input id="cntrl_{{ngControl.formcontrolid}}" type="checkbox"
+                            [(ngModel)]="ngControl.ischecked" value="{{ngControl.formcontrolid}}"
+                            name="cntrl_{{ngControl.formcontrolid}}" [checked]="ngControl.ischecked">
+                          <!-- (change)="saveMappingInfo(ngControl.formcontrolid,ngControl.ischecked)" -->
+
+                          <label style="margin-left: 5px;
+                          margin-top: -5px;" for="cntrl_{{ngControl.formcontrolid}}">
+                            {{ngControl.question}}</label>
+
+
+                        </label>
+                      </span>
+                      <span *ngIf="ngControl.ControlTypeName =='displayeditor'">
+                        <label style="display: flex !important;" tabindex="-1" for="inputEmail3" class="col-md-12 col-form-label" style="cursor:pointer;"
+                          id="drag_{{i}}" attr.data-index="{{ngControl.formcontrolid}}">
+                          <input id="cntrl_{{ngControl.formcontrolid}}" type="checkbox"
+                            [(ngModel)]="ngControl.ischecked" value="{{ngControl.formcontrolid}}"
+                            name="cntrl_{{ngControl.formcontrolid}}" [checked]="ngControl.ischecked">
+
+                          <label style="margin-left: 5px;
+                          margin-top: -5px;" for="cntrl_{{ngControl.formcontrolid}}" [innerHtml]="ngControl.question">
+                          </label>
+
+
+                        </label>
+                      </span>
+                      <span class="row col-md-4" style="display: none;">
+
+                        <select aria-label="pdfquestionid1" [(ngModel)]="ngControl.pdfquestionid"
+                          id="pdfquestionid_{{ind}}" name="pdfquestionid2" class="form-control">
+                          <option value="0">Please PDF Question</option>
+                          <option value="1">Family name</option>
+                          <option value="2">Middle name</option>
+                          <option value="3">First name</option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="m-portlet__foot">
+        <div class="row align-items-center text-center">
+          <div class="col-lg-12">
+            <button role="button" aria-label="SaveApplicationMainFormData" type="submit"
+              class="btn mb-1 btn-info float-right" id="btnsave" name="btnsave"
+              (click)="SaveApplicationMainFormData(ngSection.sectionidf)" *ngIf="acurrentPage == ApplicationtotalItems">
+              <i class="fa pr-2 fa-save" aria-hidden="true"></i>Save
+            </button>
+
+            <a aria-label="cancelbtn" class="btn btn-danger btn-dark mb-1" id="btncancel" name="btncancel"
+              [routerLink]="['/user/workspace/oneform/univ-one-form']">
+              <i class="fa pr-2 fa-window-close" aria-hidden="true"></i>Cancel
+            </a>
+
+            <button role="button" aria-label="PreviousPageMainForm" type="submit" class="btn mb-1 btn-dark float-left"
+              id="btnprevious" name="btnprevious" *ngIf="acurrentPage > 1"
+              (click)="PreviousPageMainForm(ngSection.sequence-1, ngSection.sectionidf)">
+              <i class="fa pr-2 fa-step-backward" aria-hidden="true"></i>Previous
+            </button>
+            <button role="button" aria-label="nextbutton" type="submit" class="btn mb-1 btn-info float-right"
+              id="btnnext" name="btnnext" *ngIf="!(acurrentPage == ApplicationtotalItems)"
+              (click)="NextPageMainForm(ngSection.sequence +1, ngSection.sectionidf)">
+              Next
+              <i class="fa fa-arrow-circle-right pl-2" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </span>
+    <!-- End One Form Section -->
+
+  </div>
+</div>

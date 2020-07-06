@@ -1,0 +1,47 @@
+<!-- <div class="col-md-12 col-md-offset-2 col-sm-12">
+    <div class="comment-wrapper">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Comment panel
+        </div>
+        <div class="panel-body">
+          <ul class="media-list">
+            <li class="media" *ngFor="let notes of securenotes">
+              <a href="#" class="pull-left">
+                <img src="https://bootdey.com/img/Content/user_1.jpg"
+                  alt="" class="img-circle">
+              </a>
+              <div class="media-body">
+                <span class="text-muted pull-right">
+                  <small
+                    class="text-muted">{{notes.createdon | date:'short'}}</small>
+                </span>
+                <strong class="text-success">{{notes.email}}</strong>
+                <p class="text-justify ml-2">
+                  {{notes.comment}}
+                </p>
+              </div>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+          <hr>
+          <form novalidate #commentForm="ngForm">
+            <textarea class="form-control" id="comment" autofocus
+              [(ngModel)]="note.comment" placeholder="write a comment..."
+              rows="3" type="text" name="comment" data-name="comment"
+              [required]="true" data-prefix="comment"
+              data-type="text"></textarea>
+            <br>
+            <button type="button" class="btn btn-info pull-right"
+              [disabled]="notsent" appValidation [form]="commentForm"
+              [validparent]="'form-group'"
+              (click)="manageSecureNotes(note,commentForm,quesid)">
+              <i class="fas fa-reply" *ngIf="!notsent"></i>
+              <i class="fa fa-sync fa-refresh" *ngIf="notsent"></i> Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div> -->

@@ -1,0 +1,270 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <h4>Place hear anything which you want</h4>
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Process Manage</h5>
+                        </div>
+                        <div class="col-auto" *ngIf="permissions.canAdd">
+                          <button role="button" aria-label="btnAddProcess" id="btnAddProcess" type="button"
+                            class="btn btn-primary" (click)="AddNewUnivCoursePref()">
+                            <i class="la la-plus"></i> Add University
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="card card-body px-3 pt-3 pb-1 mb-3" id="AddUniversityId">
+                        <form #addPrefForm="ngForm" novalidate>
+                          <div class="form-row align-items-center">
+                            <div class="form-group col-auto">
+                              <label>University Name</label>
+                            </div>
+                            <div class="form-group col">
+                              <select [disabled]="isedited" aria-label="univid1" class="form-control"
+                                [(ngModel)]="univid" name="univid" [required]="true"
+                                [ngClass]="{ 'is-invalid': submitted && addPrefForm.controls.univid.invalid }">
+                                <option value="">Select University</option>
+                                <option *ngFor="let list of universitylist" [ngValue]="list.id">{{list.name}}
+                                </option>
+                              </select>
+
+                            </div>
+                            <div class="form-group col-auto">
+                              <label>Study Level</label>
+                            </div>
+                            <div class="form-group col">
+                              <select [disabled]="isedited" aria-label="studylevelid1" class="form-control"
+                                [(ngModel)]="studylevelid" name="studylevelid" [required]="false"
+                                [ngClass]="{ 'is-invalid': submitted && addPrefForm.controls.studylevelid.invalid }">
+                                <option value="">Select Studylevel</option>
+                                <option *ngFor="let list of studylevellist" [ngValue]="list.id">{{list.studylevelname}}
+                                </option>
+                              </select>
+
+                            </div>
+                            <div class="form-group col-auto">
+                              <label>No of Preferences</label>
+                            </div>
+
+                            <div class="form-group col">
+                              <input type="text" class="form-control form-control-sm" name="prefLimit" id="txtUnivDesc"
+                                [(ngModel)]="prefLimit" [required]="true"
+                                [ngClass]="{ 'is-invalid': submitted && addPrefForm.controls.prefLimit.invalid }">
+                            </div>
+
+                            <!-- <div class="form-group col-auto">
+                              <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="isactive" [(ngModel)]="isactive"
+                                  name="isactive"
+                                  [ngClass]="{ 'is-invalid': submitted && addPrefForm.controls.isactive.invalid }">
+                                <label class="custom-control-label" for="isactive">Isactive</label>
+                              </div>
+
+                            </div> -->
+                            <div class="form-group col-auto">
+
+                              <button role="button" aria-label="SaveUnivCoursePref" type="submit"
+                                class="btn btn-success btn-w80 mr-1" (click)="SaveUnivCoursePref(addPrefForm)">
+                                <i class="fa fa-lg fa-save mr-2"></i>Save</button>
+                              <button role="button" aria-label="ClearField" class="btn btn-outline-danger btn-w80"
+                                (click)="ClearField()" name="cancelbutton">
+                                <i class="fa fa-lg fa-times mr-2"></i>Cancel</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th></th>
+                              <th>University</th>
+                              <th>Studylevel</th>
+                              <th>Limit</th>
+                              <!-- <th>Isactive</th> -->
+                              <th *ngIf="permissions.canEdit || permissions.canDelete">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="allpreflimit">
+                              <tr class="tr-action-outer" *ngFor="let list of allpreflimit | paginate: {itemsPerPage: pageSize,
+                                currentPage: pageIndex,
+                                totalItems: totalrecords};let index = index">
+                                <td>{{((pageIndex-1) * pageSize) + index+1}}</td>
+                                <td>{{list.univname}}</td>
+                                <td>{{list.studylevelname}}</td>
+                                <td>{{list.preflimit}}</td>
+                                <!-- <td>
+                                  <span class="badge badge-success" *ngIf="list.isactive==true">Active</span>
+                                  <span class="badge badge-danger" *ngIf="list.isactive==false">InActive</span>
+                                </td> -->
+                                <td *ngIf="permissions.canEdit || permissions.canDelete">
+                                  <a *ngIf="permissions.canEdit" aria-label="EditUniversityCoursePref"
+                                    href="javascript:void(0);" class="form-group col-auto"
+                                    (click)="EditUniversityCoursePref(list)">
+                                    <i class="fa fa-lg fa-pencil-alt"></i>
+                                  </a>
+                                  <a *ngIf="permissions.canDelete" aria-label="DeleteUniversityCoursePref"
+                                    href="javascript:void(0);" class="form-group col-auto"
+                                    (click)="DeleteUniversityCoursePref(list)">
+                                    <i class="fa fa-trash"></i>
+                                  </a>
+                                </td>
+
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="allpreflimit && allpreflimit.length==0">
+                              <tr class="text-center text-color-red">
+                                <td colspan="6">
+                                  No Data Found
+                                </td>
+                              </tr>
+                            </ng-container>
+
+                          </tbody>
+                        </table>
+
+                      </div>
+                      <div class="px-3" id="footerSection">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <select aria-label="changePageSize" style="width: 60px;"
+                              class="custom-select custom-select-sm mr-2" id="inputGroupSelect01" [(ngModel)]="pageSize"
+                              (change)="changePageSize()">
+                              <option selected value="1000000">All</option>
+                              <option value="5">5</option>
+                              <option value="10" selected>10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            <!-- pageIndex: {{pageIndex}}<br>
+                            pageSize: {{pageSize}}<br>
+                            ((pageIndex-1)*pageSize): {{((pageIndex-1)*pageSize)}}<br>
+                            pageIndex x pageSize plus pageSize: {{ConvertToInt(((pageIndex-1)*pageSize))+ConvertToInt(pageSize)}}<br>  -->
+
+                            <p class="d-inline-block" *ngIf="(pageIndex*pageSize)>totalrecords">Displaying
+                              {{((pageIndex-1)*pageSize) + 1}} - {{totalrecords}} of
+                              {{totalrecords}}
+                              records</p>
+                            <p class="d-inline-block" *ngIf="(pageIndex*pageSize)<totalrecords">Displaying
+                              {{((pageIndex-1)*pageSize) + 1}} -
+                              {{ConvertToInt(((pageIndex-1)*pageSize))+ConvertToInt(pageSize)}} of
+                              {{totalrecords}}
+                              records</p>
+                          </div>
+
+                          <div class="col-auto">
+                            <nav aria-label="Page navigation example">
+                              <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)">
+                              </pagination-controls>
+                              <!-- <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item" *ngIf="pageIndex!=1">
+                                  <a  aria-label="getNextHint" class="page-link" href="#">Previous</a>
+                                </li>
+                                <li class="page-item disabled" *ngIf="pageIndex==1">
+                                  <a  aria-label="getNextHint" class="page-link" href="#">Previous</a>
+                                </li>
+                                <li class="page-item">
+                                  <a  aria-label="getNextHint" class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                  <a  aria-label="getNextHint" class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                  <a  aria-label="getNextHint" class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item disabled" *ngIf="(totalrecords/pageSize)==pageIndex">
+                                  <a  aria-label="getNextHint" class="page-link" href="#">Next</a>
+                                </li>
+                                <li class="page-item" *ngIf="(totalrecords/pageSize)!=pageIndex">
+                                    <a  aria-label="getNextHint" class="page-link" href="#">Next</a>
+                                  </li>
+                              </ul> -->
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="px-2 row" id="cardsSectionId">
+                        <ng-container *ngFor="let box of displayboxes">
+                          <div class="col-md-3 m-0 mb-3 px-2" *ngIf="box.subsectionparentidf ==0">
+                            <div class="register-client-detail card shadow-sm text-secondary">
+                              <div class="card-header p-2 text-dark">{{box.name}}
+                                <span class="float-right">
+                                  <span class="but-edit-groop">
+                                    <a aria-label="ShowStageRules" class="text-secondary" href="javascript:void(0);"
+                                      (click)="ShowStageRules('editsection',box)">
+                                      <i class="la la-edit"></i>
+                                    </a>
+                                    <a aria-label="pulsadditional" class="text-secondary" href="#">
+                                      <i class="la la-plus"></i>
+                                    </a>
+                                  </span>
+                                </span>
+                              </div>
+                              <div class="card-over overflow-auto" style="height: 98px">
+                                <div class="align-items-center d-flex justify-content-center p-2 small">
+                                  <table border="0" class="mb-0 table table-borderless table-sm">
+                                    <tbody>
+                                      <tr>
+                                        <td colspan="3" class="p-0 text-right" width="40%">
+                                          <a aria-label="ShowStageRules1" href="javascript:void(0);" id="addSection"
+                                            (click)="ShowStageRules('addsubsection',box)" class="btn-sm step-3"
+                                            title="Edit details">
+                                            Add Sections
+                                          </a>
+                                        </td>
+                                      </tr>
+                                      <ng-container *ngFor="let subsection of displayboxes">
+                                        <tr *ngIf="subsection.subsectionparentidf == box.id">
+                                          <th class="p-0">
+                                            <a aria-label="editsubsection"
+                                              class="font-size-11 align-top text-decoration-none"
+                                              href="javascript:void(0)" id="addSection"
+                                              (click)="ShowStageRules('editsubsection',subsection)">
+                                              <i class="la la-edit"></i>
+                                            </a>
+                                          </th>
+                                          <th class="p-0">
+                                            {{subsection.name}}
+                                          </th>
+                                          <td class="p-0" width="40%">
+                                            <a aria-label="subsection" href="javascript:void(0)"
+                                              (click)="ManageControls(subsection,true)">Manage
+                                              Controls</a>
+                                          </td>
+                                        </tr>
+                                      </ng-container>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,167 @@
+[
+  {
+    "shortname": "CAD",
+    "fullname": "Canadian dollar",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "HKD",
+    "fullname": "Hong Kong dollar",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "ISK",
+    "fullname": "Icelandic krona",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "PHP",
+    "fullname": "Philippine peso",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "DKK",
+    "fullname": "Danish krone",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "HUF",
+    "fullname": "Hungarian forint",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "CZK",
+    "fullname": "Czech koruna",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "GBP",
+    "fullname": "Pound sterling",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "RON",
+    "fullname": "Romanian leu",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "SEK",
+    "fullname": "Swedish krona",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "IDR",
+    "fullname": "Indonesian rupiah",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "INR",
+    "fullname": "Indian rupee",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "BRL",
+    "fullname": "Brazilian real",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "RUB",
+    "fullname": "Russian ruble",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "HRK",
+    "fullname": "Croatian kuna",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "JPY",
+    "fullname": "Japanese yen",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "THB",
+    "fullname": "Thai baht",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "CHF",
+    "fullname": "Swiss franc",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "EUR",
+    "fullname": "European euro",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "MYR",
+    "fullname": "Malaysian ringgit",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "BGN",
+    "fullname": "Bulgarian lev",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "TRY",
+    "fullname": "Turkish lira",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "CNY",
+    "fullname": "Chinese Yuan Renminbi",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "NOK",
+    "fullname": "Norwegian krone",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "NZD",
+    "fullname": "New Zealand dollar",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "ZAR",
+    "fullname": "South African rand",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "USD",
+    "fullname": "United States dollar",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "MXN",
+    "fullname": "Mexican peso",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "SGD",
+    "fullname": "Singapore dollar",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "AUD",
+    "fullname": "Australian dollar",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "ILS",
+    "fullname": "Israeli new shekel",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "KRW",
+    "fullname": "South Korean won",
+    "exchangerate": ""
+  },
+  {
+    "shortname": "PLN",
+    "fullname": "Polish zloty",
+    "exchangerate": ""
+  }
+]

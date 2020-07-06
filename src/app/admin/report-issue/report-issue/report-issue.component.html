@@ -1,0 +1,79 @@
+<div class="main-content col-12 px-4">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4" id="ShowProcessesId">
+                <div class="card-header py-2">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="m-0">Manage Course</h5>
+                        </div>
+                        <div class="table-responsive" id="displayUniversityRecords">
+                            <table class="table table-striped">
+                                <thead class="text-uppercase">
+                                    <tr>
+                                        <th>Sequence</th>
+                                        <th>Description</th>
+                                        <th>Course URL</th>
+                                        <th>ImageUrl</th>
+                                        <!-- <th *ngIf="permissions.canEdit">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <ng-container *ngIf="issuelist.length>0">
+
+                                        <tr class="tr-action-outer" *ngFor="let issue of issuelist  | paginate: {itemsPerPage: pageSize,
+              currentPage: pageIndex,
+              totalItems: issuecount};let index = index">
+                                            <td>{{issue.id}}</td>
+                                            <td>{{issue.description}}</td>
+                                            <td><a href="{{issue.courseurl}}">{{issue.courseurl}}</a></td>
+                                            <td><a href="{{issue.imagepath}}">{{issue.imagepath}}</a></td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container *ngIf="issuelist.length==0">
+                                        <tr class="text-center text-color-red">
+                                            <td colspan="4">
+                                                No Data Found
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="px-3">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <select style="width: 60px;" class="custom-select custom-select-sm mr-2"
+                                        id="inputGroupSelect01" [(ngModel)]="pageSize" (change)="getissue()"
+                                        aria-label="viewcnt">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    <p class="d-inline-block" *ngIf="(pageIndex*pageSize)>issuecount">Displaying
+                                        {{(criteriacount==0)?0:((pageIndex-1)*pageSize) + 1}} - {{issuecount}} of
+                                        {{issuecount}}
+                                        records</p>
+                                    <p class="d-inline-block" *ngIf="(pageIndex*pageSize)<issuecount">Displaying
+                                        {{((pageIndex-1)*pageSize) + 1}} -
+                                        {{(((pageIndex-1)*pageSize) + pageSize)}} of
+                                        {{issuecount}}
+                                        records</p>
+                                </div>
+
+                                <div class="col-auto">
+                                    <nav aria-label="Page navigation example" style="margin-left: 40rem;">
+                                        <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)">
+                                        </pagination-controls>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

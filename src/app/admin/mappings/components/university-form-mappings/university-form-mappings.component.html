@@ -1,0 +1,209 @@
+<!-- <ul *ngFor="let d of questionslist">
+  <li>{{d.question}}</li>
+</ul> -->
+<!-- <style>
+  .ui-wrapper {
+    padding: 0 !important;
+  }
+</style> -->
+<div class="row">
+  <div class="col-md-10 droppable" #masterDroppable (controlAdded)="newControlDroped($event)" appDrop>
+    <div *ngFor="let image of imagelist;trackBy: trackByIndex; index as mainindex;" class="divpdf"
+      id="div{{mainindex}}">
+      <img alt="mainimg" appDrag [src]="apiurl+image.rootpath+'/'+image.filename" id="mainimg{{mainindex}}"
+        style="width: 900px;">
+      <hr>
+    </div>
+  </div>
+  <div class="col-md-2" style="position: fixed;top: 0;right: 0;width: 220px;">
+    <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+      <button role="button" aria-label="getNextHint1" type="button" class="btn btn-sm btn-outline-secondary"
+        [ngClass]="(ispages)?'active':''" (click)="ispages=true;isconrolsize=iscontrols=isproperties=false;">
+        pages
+      </button>
+      <button role="button" aria-label="getNextHint2" type="button" class="btn btn-sm btn-outline-secondary"
+        [ngClass]="(iscontrols)?'active':''" (click)="iscontrols=true;isconrolsize=ispages=isproperties=false;">
+        Controls
+      </button>
+      <button role="button" aria-label="getNextHint3" type="button" class="btn btn-sm btn-outline-secondary"
+        [ngClass]="(isproperties)?'active':''">
+        Proprties
+      </button>
+      <!-- <button role="button" aria-label="getNextHint4" (click)="isconrolsize=true;ispages=iscontrols=isproperties=false;"
+        type="button" class="btn btn-sm btn-outline-secondary" [ngClass]="(isconrolsize)?'active':''">
+        Control size
+      </button> -->
+    </div>
+    <div style="border: 1;margin-top: 10px;">
+      <div *ngIf="ispages" style="height: 800px;overflow-y:scroll;">
+        <div *ngFor="let image of imagelist;trackBy: trackByIndex; index as subindex;">
+          <div>
+            <span class="badge badge-pill badge-secondary">Page no <span
+                class="badge badge-light">{{subindex+1}}</span></span>
+            <img alt="subimg" appScollfocus [index]="subindex" [prefix]="'mainimg'"
+              [src]="apiurl+image.rootpath+'/'+image.filename" id="subimg{{subindex}}" style="width: 160px;">
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="iscontrols">
+        <app-controlbar></app-controlbar>
+      </div>
+      <div *ngIf="isproperties" style="height: 800px;overflow-y:scroll;">
+        <app-propertybar [property]="currentProperty" [questionslist]="questionslist"
+          (deleteprop)="deleteCurrentProperty()"></app-propertybar>
+      </div>
+      <!-- <div *ngIf="isconrolsize" style="height: 800px;overflow-y:scroll;">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group text-left">
+              <label class="font-weight-500" for="csize" aria-label="csize">Control</label>
+              <select [(ngModel)]="controlname" class="form-control" aria-label="whattotake">
+                <option value="">Choose...</option>
+                <option>Radio Button</option>
+                <option>CheckBox</option>
+                <option>TextBox</option>
+                <option>DateBox</option>
+                <option>Label</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group text-left">
+              <label class="font-weight-500" for="csize" aria-label="csize">Width</label>
+              <input type="text" [(ngModel)]="controlW" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group text-left">
+              <label class="font-weight-500" for="csize" aria-label="csize">Height</label>
+              <input type="text" [(ngModel)]="controlH" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group text-left">
+              <button role="button" aria-label="getNextHint5" type="button" class="btn btn-sm btn-secondary" (click)="setProps()">
+                Set Property
+              </button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+<div class="row mb-2">
+  <div class="col">
+    <button role="button" aria-label="getNextHint4" class="btn btn-sm btn-outline-primary btn-sm"
+      (click)="saveSettings()" data-toggle="tooltip" title="" data-original-title="Save changes"
+      [disabled]="submitted"><span *ngIf="submitted"><i class="fa fa-lg fa-sync fa-refresh"></i></span>
+      <span *ngIf="!submitted"><i class="fa fa-check-circle" aria-hidden="true"></i></span>
+      Save changes</button>&nbsp;
+    <a aria-hidden="true" aria-label="collapseFilter1"
+      [routerLink]="['/user/workspace/mapping/university-form-mapping']" aria-controls="collapseFilter"
+      data-toggle="tooltip" title="" data-original-title="Back to list" class="btn btn-sm btn-outline-danger btn-sm">
+      <i class="fa fa-trash" aria-hidden="true"></i>
+      Discard changes</a>&nbsp;
+    <a aria-label="collapseFilter2" target="_blank"
+      [routerLink]=" ['/user/workspace/mapping/pdf-university-form-mapping-preview',masterid] "
+      aria-controls="collapseFilter" data-toggle="tooltip" title="" data-original-title="Preview"
+      class="btn btn-sm btn-outline-secondary btn-sm">
+      <i class="fa fa-eye" aria-hidden="true"></i>
+      Preview changes</a>&nbsp;
+    <button role="button" aria-label="getNextHint4" class="btn btn-sm btn-outline-primary btn-sm"
+      (click)="editMatserPDF()" data-toggle="tooltip" title="" data-original-title="Save changes"
+      [disabled]="ispublishclicked"><span *ngIf="ispublishclicked"><i class="fa fa-lg fa-sync fa-refresh"></i></span>
+      <span *ngIf="!ispublishclicked"><i class="fa fa-lg fa-globe"></i></span>
+      {{(ispublished)?'Unpublish':'Publish'}}</button>
+  </div>
+</div>
+
+<div *ngFor="let prop of controllist;trackBy: trackByIndex; index as cindex;">
+  <!-- <div class="droped" *ngIf="prop.type=='textbox'" [style.position]="prop.position"
+    [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'" [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <input id="{{prop.id}}" (focus)="assignCurrentProperty(prop)" class="resize" style="height: 50px;" type="text"
+      appDrag>
+  </div> -->
+  <div class="droped" id="{{prop.id}}" *ngIf="prop.type=='textbox'" [style.position]="prop.position"
+    (click)="assignCurrentProperty(prop)" [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+    [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'" class="resize"
+      [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'" appDrag>
+      <input type="text" [style.text-align]="prop.textalign" [ngStyle]="box.style" *ngFor="let box of prop.boxes"
+        [ngClass]="(prop.iscapital=='true')?'capital':''">
+    </div>
+  </div>
+  <div class="droped" id="{{prop.id}}" *ngIf="prop.type=='label'" [style.position]="prop.position"
+    (click)="assignCurrentProperty(prop)" [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+    [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'" class="resize"
+      [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'">
+      <label aria-label="label1" [style.text-align]="prop.textalign" [style.font-size]="prop.fontsize"
+        [ngStyle]="box.style" *ngFor="let box of prop.boxes" [ngClass]="(prop.iscapital=='true')?'capital':''"
+        appDrag>Label</label>
+    </div>
+  </div>
+  <div class="droped" id="{{prop.id}}" *ngIf="prop.type=='date'" [style.position]="prop.position"
+    (click)="assignCurrentProperty(prop)" [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+    [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <div class="resize" [style.width]="prop.width+'px'" [style.height]="prop.height+'px'"
+      [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'" appDrag>
+      <input type="text" [style.text-align]="prop.textalign" [ngStyle]="box.style" *ngFor="let box of prop.boxes"
+        [ngClass]="(prop.iscapital==true)?'capital':''">
+    </div>
+  </div>
+  <div class="droped" id="{{prop.id}}" *ngIf="prop.type=='radiobutton'" [style.position]="prop.position"
+    (click)="assignCurrentProperty(prop)" [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+    [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'" class="resize check"
+      [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'" appDrag>
+      <label aria-label="label2" [ngStyle]="box.style" type="checkbox" *ngFor="let box of prop.boxes">
+        <!-- <span><i class="fa fa-lg fa-dot-circle"></i></span> -->
+        <span *ngIf="prop.filltype=='fill' || !prop.filltype"><img src="../../../../../assets/images/radio.png"
+            height="100%" width="100%"></span>
+        <span *ngIf="prop.filltype=='unfill'"><img src="../../../../../assets/images/unradio.png" height="100%"
+            width="100%"></span>
+      </label>
+    </div>
+  </div>
+  <div class="droped" id="{{prop.id}}" *ngIf="prop.type=='checkbox'" [style.position]="prop.position"
+    (click)="assignCurrentProperty(prop)" [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+    [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'" class="resize check"
+      [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'" appDrag>
+      <label aria-label="label3" [ngStyle]="box.style" type="checkbox" *ngFor="let box of prop.boxes">
+        <!-- <span><i class="fa fa-lg fa-check"></i></span> -->
+        <span><img src="../../../../../assets/images/check.png" height="100%" width="100%"></span>
+      </label>
+    </div>
+  </div>
+  <!-- <div class="droped" id="{{prop.id}}" *ngIf="prop.type=='table'" [style.position]="prop.position"
+    (click)="assignCurrentProperty(prop)" [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'"
+    [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <div [style.width]="prop.width+'px'" [style.height]="prop.height+'px'" class="resize"
+      [ngClass]="(prop.direction=='h')?'flex-containerh':'flex-containerv'" appDrag>
+      <table style="width: 100%;border: 1;">
+        <tr *ngFor="let box of prop.Row | range">
+          <td *ngFor="let box of prop.Column | range">
+            <label aria-label="label2" [ngStyle]="box.style">Label</label>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div> -->
+  <!-- <div class="droped" *ngIf="prop.type=='date'" [style.position]="prop.position"
+    [style.left]="(masterDroppable.offsetLeft+prop.xPos)+'px'" [style.top]="(masterDroppable.offsetTop+prop.yPos)+'px'">
+    <input class="resize" (focus)="assignCurrentProperty(prop)" id="{{prop.id}}" type="text" style="height: 50px;"
+      name="" appDrag>  
+  </div> -->
+</div>
+
+<input id="currentprp" type="hidden" (change)="change($event)">

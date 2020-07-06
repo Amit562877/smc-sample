@@ -1,0 +1,146 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Manage Study Level</h5>
+                        </div>
+                        <div class="col-auto">
+                          <!-- <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                            <button id="btnAddProcess" type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target="#media">
+                              <i class="la la-plus"></i> Add new
+                            </button>
+                          </div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <form #mainform="ngForm" autocomplete="off" novalidate *ngIf="permissions.canAdd">
+                            <div class="form-group text-left">
+                              <label class="font-weight-500" for="slevel" aria-label="slevel">Study Level</label> (Add new study level)
+                              <div class="input-group">
+                             
+                                <input type="text" name="mdname" data-name="mdname" [required]="true"
+                                  data-prefix="Study Level" data-type="text" placeholder="Study Level"
+                                  class="form-control border-secondary shadow" [(ngModel)]="levelname" aria-label="slevel">
+                                <div class="input-group-append">
+                                  <button class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title=""
+                                    data-original-title="Add" appValidation [form]="mainform"
+                                    [validparent]="'form-group'" (click)="addStudyLevel(mainform)" role="button" aria-label="addslevel"><i class="fa fa-save"
+                                      aria-hidden="true"></i></button>
+                                  <button class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title=""
+                                    data-original-title="Cancel" appClearValidation [form]="mainform"
+                                    [resetform]="true" role="button" aria-label="cancelslevel"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-5">
+                              <div class="form-group text-left">
+                                <label class="font-weight-500">Show me</label>
+                                <div class="input-group">
+                                  <select class="form-control border-secondary shadow" id="inputGroupSelect01" [(ngModel)]="showme"
+                                    (change)="getAllSubLevels()" aria-label="getsublevel">
+                                    <option value="1">Only blank</option>
+                                    <option value="2">Only filled</option>
+                                    <option value="0">All</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-5">
+                              <div class="form-group text-left">
+                                <label class="font-weight-500">Records</label>
+                                <div class="input-group">
+                                  <select class="form-control border-secondary shadow" id="inputGroupSelect01" [(ngModel)]="records"
+                                    (change)="getAllSubLevels()"  aria-label="pagesize">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="0">All</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <div class="form-group text-left">
+                                <button class="btn btn-outline-secondary rounded-circle" style="margin-top: 27px;"
+                                  (click)="getAllSubLevels()" role="button" aria-label="sublevel"><i class="fa fa-retweet" aria-hidden="true"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th>
+                                Sub level
+                              </th>
+                              <th>
+                                Study level
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="substudylevellist.length>0">
+                            <tr *ngFor="let sublevel of substudylevellist;let ind=index">
+                              <td>{{sublevel.sublevel}}</td>
+                              <td>
+                                <select class="form-control" attr.data-name="mdid{{ind}}" [disabled]="!permissions.canEdit" data-type="select"
+                                  name="mdid{{ind}}" data-prefix="Study level" [(ngModel)]="sublevel.studylevelid"  aria-label="slevellist">
+                                  <option *ngFor="let level of studylevellist" [ngValue]="level.id">
+                                    {{level.name}}</option>
+                                </select>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tbody *ngIf="substudylevellist.length==0">
+                            <tr>
+                              <td colspan="2" class="text-center text-danger">
+                                No data found
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot *ngIf="permissions.canEdit">
+                            <tr>
+                              <td colspan="2">
+                                <button class="btn btn-outline-primary" data-toggle="tooltip" title=""
+                                  data-original-title="Save changes" (click)="addStudyLevelMappings()" role="button" aria-label="savechanges">
+                                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                  Save Changes</button>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

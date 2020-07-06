@@ -1,0 +1,162 @@
+<div class="card shadow mb-4" id="ShowProcessesId">
+    <div class="card-header py-2">
+        <div class="row align-items-center">
+            <div class="col">
+                <h5 class="m-0">Manage University Details</h5>
+            </div>
+            <div class="col-auto">
+                <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                    <button type="button" class="btn btn-secondary" data-toggle="tooltip"
+                        data-original-title="Download excel" (click)="generateExcelForUnivSample()">
+                        Export Sample <i class="fas fa-download"></i>
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-secondary" data-toggle="tooltip"
+                        data-original-title="Download excel" (click)="generateExcel()">
+                        Export <i class="fas fa-download"></i>
+                    </button>&nbsp;
+                    <label for="upload-photo" id='upload-photolbl' class="btn btn-secondary" data-toggle="tooltip"
+                        data-original-title="Upload excel">
+                        Import <i class="fas fa-upload"></i>
+                    </label>
+                    <input type="file" name="photo" (change)="importExcel($event)" accept=".xls,.xlsx"
+                        id="upload-photo" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group text-left">
+                    <label class="font-weight-500">Country</label>
+                    <div class="input-group">
+                        <select class="form-control" [(ngModel)]="countryid" (change)="getUniversityDetailByProps()"
+                            aria-label="uid">
+                            <option value="0">Choose</option>
+                            <option *ngFor="let country of countrylist" [value]="country.id">
+                                {{country.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group text-left">
+                    <label class="font-weight-500">University</label>
+                    <div class="input-group">
+                        <select class="form-control" [(ngModel)]="universitytypeid" (change)="getUniversityListByType()"
+                            aria-label="uid">
+                            <option value="0">Choose</option>
+                            <option *ngFor="let type of universitytypelist" [value]="type.id">
+                                {{type.univtype}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group text-left">
+                    <label class="font-weight-500">University</label>
+                    <div class="input-group">
+                        <select class="form-control" [(ngModel)]="universityid" (change)="getUniversityDetailByProps()"
+                            aria-label="slevelid">
+                            <option value="0">Choose</option>
+                            <option *ngFor="let list of universitylist" [value]="list.id">
+                                {{list.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive" id="displayUniversityRecords">
+            <table class="table table-striped">
+                <thead class="text-uppercase">
+                    <tr>
+                        <th>Sequence</th>
+                        <th>University name</th>
+                        <th>Course name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="universitydata && universitydata.length>0">
+                        <tr class="tr-action-outer" *ngFor="let univ of universitydata  | paginate: {itemsPerPage: pageSize,
+                    currentPage: pageIndex,
+                    totalItems: univcount};let index = index">
+                            <td>{{univ.SRNO}}</td>
+                            <td>{{univ.name}}</td>
+                            <td>{{univ.universitytype}}</td>
+
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="universitydata.length==0">
+                        <tr class="text-center text-color-red">
+                            <td colspan="4">
+                                No Data Found
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+
+        </div>
+        <div class="px-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <select style="width: 60px;" class="custom-select custom-select-sm mr-2" id="inputGroupSelect01"
+                        [(ngModel)]="pageSize" (change)="getUniversityDetailByProps()" aria-label="viewcnt">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <p class="d-inline-block" *ngIf="(pageIndex*pageSize)>univcount">Displaying
+                        {{(univcount==0)?0:((pageIndex-1)*pageSize) + 1}} - {{univcount}} of
+                        {{univcount}}
+                        records</p>
+                    <p class="d-inline-block" *ngIf="(pageIndex*pageSize)<univcount">Displaying
+                        {{((pageIndex-1)*pageSize) + 1}} -
+                        {{(((pageIndex-1)*pageSize) + pageSize)}} of
+                        {{univcount}}
+                        records</p>
+                </div>
+
+                <div class="col-auto">
+                    <nav aria-label="Page navigation example">
+                        <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="progress" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body"
+                style="height: 100%;width: 100%;padding:100px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <h3 *ngIf="prepare">Preparing your excel please wait..... <i class="fas fa-sync fa-refresh"></i>
+                </h3>
+                <span *ngIf="download">
+                    <h3>Downloading in progress </h3>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{downloadpr}}"
+                            attr.aria-valuemin="0" attr.aria-valuemax="100" [ngStyle]="{width: downloadpr+'%'}">
+                            <span>{{downloadpr}}% Complete</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="font-size: medium;padding: 5px;">
+                            <strong>File size:</strong> {{(totalsize/1048576) | number : '1.2-2'}} in MB
+                            <!-- <strong>File size:</strong> Unknown -->
+                        </div>
+                        <div class="col-md-12" style="font-size: medium;padding: 5px;">
+                            <strong>Total download:</strong> {{(downloadedsize/1048576) | number : '1.2-2'}} in MB
+                        </div>
+                        <div class="col-md-12" style="font-size: medium;padding: 5px;">
+                            <strong>Network speed:</strong> {{speed}}
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

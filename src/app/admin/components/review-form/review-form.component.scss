@@ -1,0 +1,362 @@
+// table {
+//   width: 100%;
+// }
+// thead {
+//   background: linear-gradient(135deg, #fff 0%, #a00614 100%);
+// }
+// .landing-header {
+//   background: linear-gradient(135deg, #fff 0%, #a00614 100%);
+// }
+// .bg-white {
+//   height: 100%;
+//   background-color: #fff !important;
+// }
+// .font-text {
+//   font-family: Georgia, "Times New Roman", Times, serif;
+//   font-size: large;
+// }
+// body {
+//   overflow-x: unset;
+// }
+td {
+  page-break-inside: avoid;
+}
+tr {
+  page-break-inside: avoid;
+}
+th {
+  page-break-inside: avoid;
+}
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: fixed;
+  right: 0;
+  top: 10;
+}
+.flex-containerv {
+  display: flex;
+  flex-direction: column;
+}
+table {
+  page-break-inside: auto;
+}
+tr {
+  page-break-inside: avoid;
+  page-break-after: auto;
+}
+.main {
+  // margin: 0px auto;
+  position: relative;
+  //  background-image: url(images/background.jpg);
+  background-size: contain;
+  box-shadow: 0 0 6px #a4a4a4;
+  z-index: 1;
+  background-color: #fff;
+}
+body {
+  // overflow-x: unset;
+  background: #eeeeee !important;
+}
+
+body,
+table,
+td {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-family: "Roboto", sans-serif;
+  color: #2b2a29;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+table,
+td {
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+  vertical-align: middle;
+}
+
+body {
+  margin: 15px 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  color: #2b2a29;
+  background-color: #eeeeee;
+}
+
+img {
+  display: block;
+}
+
+.font-10 {
+  font-size: 10px;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+
+.font-15 {
+  font-size: 15px;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+
+.font-17 {
+  font-size: 17px;
+}
+
+.font-18 {
+  font-size: 18px;
+}
+
+.font-19 {
+  font-size: 19px;
+}
+
+.font-20 {
+  font-size: 20px;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.pb-3 {
+  padding-bottom: 1rem;
+}
+
+.pt-3 {
+  padding-top: 1rem;
+}
+
+.px-30 {
+  padding: 0 30px;
+}
+
+.px-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.py-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.py-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.py-15 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.pb-30 {
+  padding-bottom: 30px;
+}
+
+.border {
+  border: 1px solid #dcdcdc;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.border-right {
+  border-right: 1px solid #dcdcdc;
+}
+
+.border-radius-top {
+  border-radius: 5px 5px 0 0;
+}
+
+.border-radius-bottom {
+  border-radius: 0 0 5px 5px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.m-0 {
+  margin: 0px;
+}
+
+.mt-0 {
+  margin-top: 0px;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}
+
+.white {
+  color: #fff;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: #c50202;
+}
+
+.bg-dark {
+  background-color: #343a40;
+}
+
+.text-blue {
+  color: #003379;
+}
+
+.bg-light {
+  background-color: #fafafa;
+}
+
+.bg-light-1 {
+  background-color: #ddd;
+}
+
+.line-height0 {
+  line-height: 0;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-primary {
+  background-color: #007bff;
+}
+
+.bg-success {
+  background-color: #28a745;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.d-block {
+  display: block;
+}
+
+.fixed-td {
+  position: absolute;
+  right: 30px;
+}
+
+.foot-link {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 6px;
+}
+
+.titles {
+  display: block;
+  padding-bottom: 5px;
+}
+
+.td-title {
+  line-height: 18px;
+  font-size: 14px;
+}
+
+.Checklist-icon {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Checklist-icon li {
+  //  background: url(images/arrow-right-icon.png) no-repeat left center;
+  padding-left: 20px;
+  background-size: auto 60%;
+  margin-bottom: 5px;
+}
+
+.Checklist-icon li sup {
+  color: red;
+}
+
+td,
+tr {
+  font-size: 14px;
+}
+
+ol {
+  font-size: 9px;
+  margin-top: 0;
+  padding-left: 10px;
+}
+
+ol.lower-alpha {
+  list-style-type: lower-alpha;
+}
+
+.content-block {
+  page-break-inside: avoid;
+}
+
+.bg-red {
+  background-color: #e3000f;
+}
+
+@page {
+  size: A4;
+}
+
+@media print {
+  body {
+    margin: 0;
+    background-color: #efefef;
+  }
+
+  .main {
+    background-size: contain;
+    box-shadow: 0 0 0 #a4a4a4;
+  }
+
+  #printlogo {
+    margin-top: 0px;
+  }
+}

@@ -1,0 +1,88 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Map Country Currency</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th>Country</th>
+                              <!-- <th>Currency</th> -->
+                              <th>Isactive</th>
+                              <th>Isdeleted</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="countrylist.length>0">
+                              <tr class="tr-action-outer" *ngFor="let country of countrylist">
+                                <td>{{country.name}}</td>
+                                <!-- <td>
+                                  <select [(ngModel)]="country.currencyid" [disabled]="!permissions.canEdit"
+                                    class="form-control" aria-label="currency">
+                                    <option *ngFor="let c of currencylist" [value]="c.id">{{c.name}}</option>
+                                  </select>
+                                </td> -->
+                                <td>
+                                  <input type="checkbox" [disabled]="!permissions.canEdit" class="custom-control-input"
+                                    id="active{{country.id}}" [checked]="country.isactive"
+                                    [(ngModel)]="country.isactive">
+                                  <label class="custom-control-label" for="active{{country.id}}"
+                                    aria-label="isactive">Isacive</label>
+                                </td>
+                                <td> <input type="checkbox" [disabled]="!permissions.canEdit"
+                                    class="custom-control-input" id="delete{{country.id}}" [checked]="country.isdeleted"
+                                    [(ngModel)]="country.isdeleted">
+                                  <label class="custom-control-label" for="delete{{country.id}}"
+                                    aria-label="isdeleted">Isdeleted</label></td>
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="countrylist.length==0">
+                              <tr class="text-center text-color-red">
+                                <td colspan="3">
+                                  No Data Found
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                          <tfoot *ngIf="permissions.canEdit">
+                            <tr>
+                              <td colspan="2">
+                                <button class="btn btn-outline-primary" data-toggle="tooltip" title="" role="button"
+                                  aria-label="save changes" data-original-title="Save changes" (click)="saveCountry()"
+                                  role="button" aria-label="save">
+                                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                  Save Changes</button>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

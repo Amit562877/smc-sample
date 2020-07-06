@@ -1,0 +1,52 @@
+.btn{ $primary-color: #007bff; $secondary-color: #6c757d; $success-color: #28a745; $danger-color: #c82333; $warning-color: #ffc107;
+    &.btn-primary-air{color: $primary-color; background: rgba($primary-color, 0.1); border-color: transparent;
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $primary-color; box-shadow: 0 4px 17px rgba($primary-color, 0.35);}
+    }
+    &.btn-primary-air-reverse{color: #fff; background: $primary-color; box-shadow: 0 4px 17px rgba($primary-color, 0.35);
+        &:hover, &:active, &.active{
+            &:not(:disabled):not(.disabled){color: $primary-color; background: rgba($primary-color, 0.1); border-color: transparent;}
+        }
+    }
+    &.btn-secondary-air{color: $secondary-color; background: rgba($secondary-color, 0.1); border-color: transparent;
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $secondary-color; box-shadow: 0 4px 17px rgba($secondary-color, 0.35);}
+    }
+    &.btn-success-air{color: $success-color; background: rgba($success-color, 0.1); border-color: transparent;
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $success-color; box-shadow: 0 4px 17px rgba($success-color, 0.35);}
+    }
+    &.btn-danger-air{color: $danger-color; background: rgba($danger-color, 0.1); border-color: transparent;
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $danger-color; box-shadow: 0 4px 17px rgba($danger-color, 0.35);}
+    }
+    &.btn-warning-air{color: #212529; background: rgba($warning-color, 0.3); border-color: transparent;
+        &:hover, &:focus, &:active, &.active{color: #212529; background: $warning-color; box-shadow: 0 4px 17px rgba($warning-color, 0.5);}
+    }
+    &.btn-bg-transparent{background: transparent;}
+}
+
+.btn{ $primary-color: #007bff; $secondary-color: #6c757d; $success-color: #28a745; $danger-color: #c82333; $warning-color: #ffc107;
+    &.btn-primary-air-border{color: $primary-color; background: rgba($primary-color, 0.1); border-color: rgba($primary-color, 0.6);
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $primary-color; box-shadow: 0 4px 17px rgba($primary-color, 0.35);}
+    }
+    &.btn-primary-air-border-reverse{color: #fff; background: $primary-color; box-shadow: 0 4px 17px rgba($primary-color, 0.35);
+        &:hover, &:active, &.active{
+            &:not(:disabled):not(.disabled){color: $primary-color; background: rgba($primary-color, 0.1); border-color: transparent;}
+        }
+    }
+    &.btn-secondary-air-border{color: $secondary-color; background: rgba($secondary-color, 0.1); border-color: rgba($secondary-color, 0.6);
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $secondary-color; box-shadow: 0 4px 17px rgba($secondary-color, 0.35);}
+    }
+    &.btn-success-air-border{color: $success-color; background: rgba($success-color, 0.1); border-color: rgba($success-color, 0.6);
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $success-color; box-shadow: 0 4px 17px rgba($success-color, 0.35);}
+    }
+    &.btn-danger-air-border{color: $danger-color; background: rgba($danger-color, 0.1); border-color: rgba($danger-color, 0.6);
+        &:hover, &:focus, &:active, &.active{color: #fff; background: $danger-color; box-shadow: 0 4px 17px rgba($danger-color, 0.35);}
+    }
+    &.btn-warning-air-border{color: #212529; background: rgba($warning-color, 0.3); border-color: rgba($warning-color, 0.9);
+        &:hover, &:focus, &:active, &.active{color: #212529; background: $warning-color; box-shadow: 0 4px 17px rgba($warning-color, 0.5);}
+    }    
+}
+
+.btn{
+    &.btn-rounded{
+        border-radius:30px;
+    }
+}

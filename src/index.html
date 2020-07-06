@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Searchmycourse">
+  <meta name="author" content="Searchmycourse">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+  <title>Searchmycourse</title>
+
+  <style>
+    html {
+      -webkit-scroll-behavior: smooth;
+      -moz-scroll-behavior: smooth;
+      -ms-scroll-behavior: smooth;
+      scroll-behavior: smooth;
+    }
+
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .border-radius-100 {
+      border-radius: 100px !important;
+    }
+
+    .la-1x {
+      font-size: 1.5em;
+    }
+
+    .border-bottom-right-radius-8 {
+      border-bottom-right-radius: 8px;
+    }
+
+    .border-bottom-left-radius-8 {
+      border-bottom-left-radius: 8px;
+    }
+
+    .border-top-left-radius-8 {
+      border-top-left-radius: 8px;
+    }
+
+    #FillFormBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 50%;
+      z-index: 9999;
+
+    }
+
+    #AddMoreCoursesBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 50%;
+      z-index: 9999;
+
+    }
+
+    ins {
+      background: #599b59;
+    }
+
+    del {
+      background: #f05050;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" async="" defer=""></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" async="" defer=""></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous" async=""
+    defer=""></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" async=""
+    defer=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.min.js" async=""
+    defer=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js" async=""
+    defer=""></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" async=""
+    defer=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js" async=""
+    defer=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sidebar/3.3.2/jquery.sidebar.min.js" async=""
+    defer=""></script>
+  <script src="assets/vendor/datepicker/js/bootstrap-datepicker.min.js" async="" defer=""></script>
+  <script src="assets/js/jquery.magicsearch.min.js"></script>
+  <script src="assets/vendor/OwlCarousel/js/owl.carousel.min.js"></script>
+
+  <!-- <script id="smckonze-snippet"
+    src="https://searchmycourse.konze.com/assets/widget/js/smc_widget.js?key=qeS4oNE7-PY="></script> -->
+
+
+
+  <!-- START -->
+  <!-- <link href="https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.css" type="text/css"
+    rel="stylesheet" /> -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link href="assets/css/jquery.magicsearch.css" rel="stylesheet">
+  <!-- END -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="assets/vendor/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" async=""
+    defer="">
+
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+    rel="stylesheet" async="" defer="">
+
+  <!-- Please don't remove summernote from here (start) -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" async=""
+    defer="">
+  <!-- Please don't remove summernote from here (end) -->
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.11/css/bootstrap-select.min.css" async=""
+    defer="">
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    async="" defer="" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" async=""
+    defer=""> -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <!-- <script id="smckonze-snippet"
+    src="https://searchmycourse.konze.com/assets/widget/js/smc_widget.js?key=qeS4oNE7-PY="></script>
+  <meta name="theme-color" content="#1976d2"> -->
+  <!-- Owl Carousel -->
+  <link href="assets/vendor/OwlCarousel/css/owl.carousel.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <app-root></app-root>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCkQ0pVMQyDUzOw0G5OUS71FpqrpbseX6Q"
+    async="" defer=""></script>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+
+</html>

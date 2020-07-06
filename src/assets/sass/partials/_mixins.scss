@@ -1,0 +1,103 @@
+@mixin fontawesome{font-weight: 900; font-family: Font Awesome\ 5 Free; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; display: inline-block; font-style: normal; font-variant: normal; text-rendering: auto; line-height: 1;}
+@mixin lineawesome{ font: normal normal normal 16px/1 LineAwesome; font-size: inherit; text-decoration: inherit; text-rendering: optimizeLegibility; text-transform: none; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; font-smoothing: antialiased; } 
+@mixin ellipsis{ 
+	display: block;
+	display: -webkit-box;
+    height: 75px;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin transform($args){
+	-webkit-transform: $args;
+	-moz-transform: $args;
+	-ms-transform: $args;
+	transform: $args;
+}
+
+@mixin transition($args){
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-ms-transition: $args;
+	transition: $args;
+}
+
+@mixin box-shadow($args){
+	-webkit-box-shadow: $args;
+	-moz-box-shadow: $args;
+	-ms-box-shadow: $args;
+	box-shadow: $args;
+}
+
+@mixin box-shadow-two($arg, $args){
+	-webkit-box-shadow: $arg, $args;
+	-moz-box-shadow: $arg, $args;
+	-ms-box-shadow: $arg, $args;
+	box-shadow: $arg, $args;
+}
+
+@mixin placeholder($color){
+	&::-webkit-input-placeholder {color: $color; opacity: 1;}
+	&::-moz-placeholder {color: $color; opacity: 1;}
+	&:-ms-input-placeholder {color: $color; opacity: 1;}
+	&:-moz-placeholder {color: $color; opacity: 1;}	
+}
+
+@mixin appearance-none{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none; 
+	-o-appearance: none; 
+	appearance: none;
+	&::-ms-expand{display: none;}
+}
+
+@mixin transform-origin($origin){
+	-webkit-transform-origin: $origin;
+	-moz-transform-origin: $origin;
+	-ms-transform-origin: $origin; 
+	-o-transform-origin: $origin; 
+	transform-origin: $origin;
+}
+
+@mixin user-select($args){
+	-webkit-user-select: $args;
+	-moz-user-select: $args;
+	-ms-user-select: $args;
+	user-select: $args;
+}
+
+@mixin bg-layer($color){
+	&:before{content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: $color;}
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+@function color-from-bg($color) {
+	@if (lightness($color) > 70) {
+		@return #000000; 
+	} @else {
+		@return #ffffff; 
+	}
+}
+
+@mixin gradient-horizontal{
+	background: rgb(11,40,74);
+	background: -moz-linear-gradient(left, rgb(11,40,74) 1%, rgb(0,0,0) 50%, rgb(0,0,0) 100%);
+	background: -webkit-linear-gradient(left, rgb(11,40,74) 1%,rgb(0,0,0) 50%,rgb(0,0,0) 100%);
+	background: linear-gradient(to right, rgb(11,40,74) 1%,rgb(0,0,0) 50%,rgb(0,0,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b284a', endColorstr='#000000',GradientType=1 );
+}
+	

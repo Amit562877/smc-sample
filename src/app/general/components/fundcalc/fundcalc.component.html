@@ -1,0 +1,217 @@
+<div class="card mb-4 shadow" id="v-pills-fund-calculator">
+  <div id="collapse-services-8" class="collapse show" aria-hidden="true" aria-labelledby="heading-services-8">
+    <div class="card-body">
+      <div class="card shadow mt-3">
+        <div class="card-header p-2 py-md-2">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="font-size-11 m-0">Main Applicant</h5>
+            </div>
+            <div class="col-auto my-2 my-md-0">
+              <h5 class="font-size-11 m-0"> Country of lodgement:</h5>
+            </div>
+            <div class="col-12 col-md py-2 py-md-0">
+              <select aria-label="doccountryid1" class="form-control" [(ngModel)]="doccountryid"
+                (change)="getDataOnCountryChange()">
+                <option value="">Select Country</option>
+                <option *ngFor="let country of documentcountrylist" [value]="country.countryid">
+                  {{country.countryname}}</option>
+              </select>
+            </div>
+            <div class="col-auto" *ngIf="lodgement">
+              <div class="text-right w-100">
+                <!-- <button role="button" aria-label="getCourseByFilter"
+                  class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button" (click)="sendfuncdEmail()"
+                  title="Send Mail" data-toggle="tooltip" data-original-title="Send Mail">
+                  <i class="far fa-envelope"></i>
+                </button> -->
+                <button role="button" aria-label="getCourseByFilter"
+                  class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button" (click)="gotofc(false,'','')"
+                  title="PDF" data-toggle="tooltip" data-original-title="PDF" [disabled]="loadService.downloadPDF"><span
+                    *ngIf="loadService.downloadPDF"><i class="fa fa-lg fa-sync fa-refresh"></i></span><span
+                    *ngIf="!loadService.downloadPDF">
+                    <i class="fa fa-lg fa-download"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-2 p-md-3" id="fundcalculator">
+          <!-- <div class="form-group">
+              <div class="custom-control custom-checkbox">
+                <input  aria-label="getNextHint" type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label font-weight-500" for="customCheck1">Add
+                  Spouse</label>
+              </div>
+            </div> -->
+          <div class="form-row align-items-center bg-hover">
+            <div class="col-12 col-md-4 my-1">
+              <div class="form-group mb-0">
+                <label>Tuition Fee</label>
+                <input aria-label="tuitionfees_1" type="text" [(ngModel)]="tuitionfees" (change)="getTotalAmount()"
+                  class="form-control">
+              </div>
+            </div>
+            <div class="col-12 col-md-4 my-1">
+              <div class="form-group mb-0">
+                <label>Living Cost</label>
+                <input aria-label="livingcost_1" type="text" [(ngModel)]="livingcost" (change)="getTotalAmount()"
+                  class="form-control">
+              </div>
+            </div>
+            <div class="col-12 col-md-4 my-1">
+              <div class="form-group mb-0">
+                <label>Travel Cost</label>
+                <input aria-label="travelcoast_1" type="text" [(ngModel)]="travelcoast" (change)="getTotalAmount()"
+                  class="form-control">
+              </div>
+            </div>
+          </div>
+          <div [hidden]="doccountryid == 0">
+            <div class="form-group border-bottom mb-2 mt-2 pb-1">
+              <div class="custom-control custom-checkbox">
+                <input aria-label="createDummyData" type="checkbox" (change)="createDummyData()"
+                  class="custom-control-input" [(ngModel)]="isotherapplicant" id="customCheck1">
+                <label class="custom-control-label font-weight-500" for="customCheck1">Add other
+                  Dependent</label>
+              </div>
+            </div>
+            <div class="form-row align-items-center bg-hover mb-2" [hidden]="!isotherapplicant">
+              <div class="col">
+                <div class="form-row align-items-center">
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <label>Relationship</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <label>Date of Birth</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <label>Schooling Fee</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <label>Living Cost</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <label>Travel Cost</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row align-items-center"
+                  *ngFor="let fund of funddata;trackBy: trackByIndex; index as tindex;">
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <select aria-label="doccountryid2" class="form-control" [(ngModel)]="fund.relationid"
+                        (change)="dobChange(fund,tindex)">
+                        <option value="">Relationship</option>
+                        <option *ngFor="let rel of documentrelationshiplist" [value]="rel.id">
+                          {{rel.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <div class="input-group">
+                        <input aria-label="dobChange" [(ngModel)]="fund.dateofb" id="dob{{tindex}}" type="text"
+                          (input)="dobChange(fund,tindex)" placeholder="Date of Birth" class="form-control datepicker"
+                          appDatepicker>
+                        <div class="input-group-append">
+                          <button role="button" aria-label="openDOB" (click)="openDOB(tindex)"
+                            class="btn btn-outline-secondary mb-0">
+                            <i class="far fa-calendar-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <input aria-label="schoolcoast" type="text" [(ngModel)]="fund.schoolcoast"
+                        (change)="getTotalAmount()" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <input aria-label="lcoast" type="text" [(ngModel)]="fund.lcoast" (change)="getTotalAmount()"
+                        class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <div class="form-group mb-0">
+                      <input aria-label="tracoast" type="text" [(ngModel)]="fund.tracoast" (change)="getTotalAmount()"
+                        class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 my-1">
+                    <button role="button" aria-label="addFundData" class="btn btn-icon btn-icon-sm btn-primary-air"
+                      (click)="addFundData()" data-toggle="tooltip" title="" data-original-title="Add new">
+                      <i class="material-icons"> add </i>
+                    </button>
+                    <button role="button" aria-label="removeFundData" class="btn btn-icon btn-icon-sm btn-danger-air"
+                      *ngIf="tindex!=0" (click)="removeFundData(tindex)" data-toggle="tooltip" title=""
+                      data-original-title="Delete">
+                      <i class="material-icons"> delete_forever </i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-row align-items-center bg-hover">
+              <div class="col-12 col-md-2 my-1">
+                <div class="form-group mb-0">
+                  <label>Tuition Fee</label>
+                  <input aria-label="totaltuitionfees_1" type="text" [disabled]="true" [(ngModel)]="totaltuitionfees"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-12 col-md-2 my-1">
+                <div class="form-group mb-0">
+                  <label>Schooling Cost</label>
+                  <input aria-label="totalschoolfees_1" type="text" [disabled]="true" [(ngModel)]="totalschoolfees"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-12 col-md-2 my-1">
+                <div class="form-group mb-0">
+                  <label>Living Cost</label>
+                  <input aria-label="totallivingcost_1" type="text" [disabled]="true" [(ngModel)]="totallivingcost"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-12 col-md-2 my-1">
+                <div class="form-group mb-0">
+                  <label>Travel Cost</label>
+                  <input aria-label="totaltravelcoast_1" type="text" [disabled]="true" [(ngModel)]="totaltravelcoast"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-12 col-md-2 my-1">
+                <div class="form-group mb-0">
+                  <label>Grace Amount</label>
+                  <input aria-label="graceamount_1" type="text" [(ngModel)]="graceamount" (change)="getTotalAmount()"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-12 col-md-2 my-1">
+                <div class="form-group mb-0">
+                  <label><strong>Net Total</strong></label>
+                  <input aria-label="nettotal_1" type="text" [disabled]="true" [(ngModel)]="nettotal"
+                    class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

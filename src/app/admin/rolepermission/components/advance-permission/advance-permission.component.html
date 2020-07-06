@@ -1,0 +1,84 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Advance Permissions of <strong>{{user}}</strong> (ROLES: <span
+                              *ngFor="let role of rolelist;trackBy: trackByIndex; index as index">{{(index>0?',':'')}}
+                              {{role.name | uppercase}}</span>)
+                          </h5>
+                        </div>
+                        <!-- <div class="col-auto">
+                          <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                            <button id="btnAddProcess" type="button" class="btn btn-sm btn-secondary"
+                              data-toggle="modal" data-target="#media">
+                              <i class="la la-plus"></i> Add new
+                            </button>
+                          </div>
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th>Task</th>
+                              <th *ngFor="let p of permissionlist">{{p.name}}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="menupermissionlist.length>0">
+                              <tr class="tr-action-outer" *ngFor="let menup of menupermissionlist">
+                                <td>{{menup.name}}</td>
+                                <th
+                                  *ngFor="let p of permissionlist | advancepermissionobj :menup : rolepermissionlist : advancepermissionlist">
+                                  <label for="pselect" aria-label="pselect" class="visuallyhidden">select</label>
+                                  <input type="checkbox" name="crs" [(ngModel)]="p.isselected"
+                                    id="{{menup.id}}_{{p.permissionid}}" [disabled]="p.isdisabled" aria-label="pselect">
+                                </th>
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="menupermissionlist.length==0">
+                              <tr class="text-center text-color-red">
+                                <td colspan="100">
+                                  No Data Found
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td colspan="100">
+                                <button class="btn btn-outline-primary" (click)="saveChanges()" data-toggle="tooltip"
+                                  title="" data-original-title="Save changes" role="button" aria-label="save">
+                                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                  Save Changes</button>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

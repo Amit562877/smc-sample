@@ -1,0 +1,694 @@
+<div class="card shadow mb-4" id="ShowProcessesId">
+  <div class="card-header py-2">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="m-0">Edit Course Details</h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="coursedata">
+    <div class="divbrd p-2 mt-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group text-left">
+            <label for="overview" aria-label="overview">Course Overview</label>
+            <textarea class="form-control" [(ngModel)]="coursedata.course_overview" aria-label="overview"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="uid" aria-label="uid">University ID</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.univ_id" aria-label="uid">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="cid" aria-label="cid">Course ID</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_id" aria-label="cid">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="ctitle" aria-label="ctitle">Course Title</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_title" aria-label="ctitle">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="pcode" aria-label="pcode">Program Code</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.program_code" aria-label="pcode">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="smode" aria-label="smode">Study Mode</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_study_mode" aria-label="smode">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="slevel" aria-label="slevel">Study Level</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_study_level" aria-label="slevel">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="country" aria-label="country">Course Country</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_country" aria-label="country">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group text-left">
+            <label for="curl" aria-label="curl">Course URL</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_url" aria-label="curl">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Discipline</strong>&nbsp;<button role="button" aria-label="addDiscipline"
+        *ngIf="coursedata.course_discipline.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+        (click)="addDiscipline()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+          aria-hidden="true"></i></button>
+      <div class="row" *ngFor="let discipline of  coursedata.course_discipline;trackBy: trackByIndex; index as index;">
+        <div class="col-md-11">
+          <div class="form-group text-left">
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_discipline[index]"
+              aria-label="course_discipline">
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addDiscipline_1" class="btn btn-sm btn-outline-primary rounded-circle"
+            (click)="addDiscipline()" data-toggle="tooltip" title="" data-original-title="Add more"><i
+              class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeDiscipline_2" *ngIf="index!=0" (click)="removeDiscipline(index)"
+            style="margin-left: 3px;" class="btn btn-sm btn-outline-danger rounded-circle" data-toggle="tooltip"
+            title="" data-original-title="Remove"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Outlines</strong>&nbsp;
+      <div class="row">
+        <div class="divbrd p-2 mt-2" style="width: 100%;margin-left: 15px;margin-right: 15px;">
+          <strong>Majors</strong>&nbsp;<button role="button" aria-label="addDiscipline"
+            *ngIf="coursedata.course_outline.majors.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+            (click)="addMajors()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+              aria-hidden="true"></i></button>
+          <div class="row"
+            *ngFor="let majors of  coursedata.course_outline.majors;trackBy: trackByIndex; index as index;">
+            <div class="col-md-11">
+              <div class="form-group text-left">
+                <input type="text" class="form-control" [(ngModel)]="coursedata.course_outline.majors[index]"
+                  aria-label="course_discipline">
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button role="button" aria-label="addDiscipline_1" class="btn btn-sm btn-outline-primary rounded-circle"
+                (click)="addMajors()" data-toggle="tooltip" title="" data-original-title="Add more"><i
+                  class="fa fa-plus" aria-hidden="true"></i></button>
+              <button role="button" aria-label="removeDiscipline_2" *ngIf="index!=0" (click)="removeMajors(index)"
+                style="margin-left: 3px;" class="btn btn-sm btn-outline-danger rounded-circle" data-toggle="tooltip"
+                title="" data-original-title="Remove"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="divbrd p-2 mt-2" style="width: 100%;margin-left: 15px;margin-right: 15px;">
+          <strong>Minors</strong>&nbsp;<button role="button" aria-label="addDiscipline"
+            *ngIf="coursedata.course_outline.minors.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+            (click)="addMinors()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+              aria-hidden="true"></i></button>
+          <div class="row"
+            *ngFor="let minors of  coursedata.course_outline.minors;trackBy: trackByIndex; index as index;">
+            <div class="col-md-11">
+              <div class="form-group text-left">
+                <input type="text" class="form-control" [(ngModel)]="coursedata.course_outline.minors[index]"
+                  aria-label="course_discipline">
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button role="button" aria-label="addDiscipline_1" class="btn btn-sm btn-outline-primary rounded-circle"
+                (click)="addMinors()" data-toggle="tooltip" title="" data-original-title="Add more"><i
+                  class="fa fa-plus" aria-hidden="true"></i></button>
+              <button role="button" aria-label="removeDiscipline_2" *ngIf="index!=0" (click)="removeMinors(index)"
+                style="margin-left: 3px;" class="btn btn-sm btn-outline-danger rounded-circle" data-toggle="tooltip"
+                title="" data-original-title="Remove"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group text-left" style="width: 100%;margin-left: 15px;margin-right: 15px;">
+          <label for="year" aria-label="year">More details</label>
+          <input type="text" class="form-control" [(ngModel)]="coursedata.course_outline.more_details"
+            aria-label="year">
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Outcome</strong>&nbsp;<button role="button" aria-label="addOutcome"
+        *ngIf="coursedata.course_career_outcome.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+        (click)="addOutcome()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+          aria-hidden="true"></i></button>
+      <div class="row"
+        *ngFor="let outcome of coursedata.course_career_outcome;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="form-group text-left">
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_career_outcome[index]"
+              aria-label="coutcome">
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addOutcome_2" (click)="addOutcome()"
+            class="btn btn-sm btn-outline-primary rounded-circle" data-toggle="tooltip" title=""
+            data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeOutcome_1" (click)="removeOutcome(index)" *ngIf="index!=0"
+            style="margin-left: 3px;" class="btn btn-sm btn-outline-danger rounded-circle" data-toggle="tooltip"
+            title="" data-original-title="Remove"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Duration</strong>&nbsp;<button role="button" aria-label="addDuration"
+        *ngIf="coursedata.course_duration_display.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+        (click)="addDuration()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+          aria-hidden="true"></i></button>
+      <div class="row"
+        *ngFor="let duration of  coursedata.course_duration_display;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="unit" aria-label="unit">Unit</label>
+                <input type="text" class="form-control" [(ngModel)]="duration.unit" aria-label="unit">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="duration" aria-label="duration">Duration</label>
+                <input type="text" class="form-control" [(ngModel)]="duration.duration" aria-label="duration">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="duration" aria-label="F/P">F/P</label>
+                <select class="form-control" [(ngModel)]="duration.display" aria-label="duration" aria-label="duration">
+                  <option value="">Choose</option>
+                  <option value="Full-Time">Full-Time</option>
+                  <option value="Part-Time">Part-Time</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="year" aria-label="year">Duration in years</label>
+                <input type="text" class="form-control" [(ngModel)]="duration.filterduration" aria-label="year">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addDuration_3" (click)="addDuration()"
+            class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;" data-toggle="tooltip"
+            title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeDuration_3" (click)="removeDuration(index)" *ngIf="index!=0"
+            class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;margin-top: 27px;"
+            data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+              aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group text-left">
+            <label for="cduration" aria-label="cduration">Course Duration</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_duration" aria-label="cduration">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group text-left">
+            <label for="fulltime" aria-label="fulltime">Is Full-Time</label>
+            <select class="form-control" [(ngModel)]="coursedata.isfulltime" aria-label="duration_fulltime">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group text-left">
+            <label for="parttime" aria-label="parttime">Is Part-Time</label>
+            <select class="form-control" [(ngModel)]="coursedata.isparttime" aria-label="duration_parttime">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Campus</strong>&nbsp;<button role="button" aria-label="addCampus"
+        *ngIf="coursedata.course_campus_location.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+        (click)="addCampus()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+          aria-hidden="true"></i></button>
+      <div class="row"
+        *ngFor="let campous of  coursedata.course_campus_location;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="cname" aria-label="cname">Name</label>
+                <input type="text" class="form-control" [(ngModel)]="campous.name" aria-label="cname">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="cname" aria-label="ccode">Cricos</label>
+                <input type="text" class="form-control" [(ngModel)]="campous.code" aria-label="ccode">
+              </div>
+            </div>
+            <!-- <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="campuscountry" aria-label="campuscountry">Country</label>
+                <input type="text" class="form-control" [(ngModel)]="campous.country" aria-label="campuscountry">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="cstate" aria-label="cstate">State</label>
+                <input type="text" class="form-control" [(ngModel)]="campous.state" aria-label="cstate">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="ccity" aria-label="ccity">City</label>
+                <input type="text" class="form-control" [(ngModel)]="campous.city" aria-label="ccity">
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addCampus_1" (click)="addCampus()"
+            class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;" data-toggle="tooltip"
+            title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeCampus_1" (click)="removeCampus(index)" *ngIf="index!=0"
+            class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;margin-top: 27px;"
+            data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+              aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="divbrd p-2 mt-2">
+      <strong>Course Cricos Code</strong>&nbsp;<button role="button" aria-label="Add more_1"
+        *ngIf="coursedata.course_cricos_code.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+        (click)="addCricos()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+          aria-hidden="true"></i></button>
+      <div class="row"
+        *ngFor="let cricos of  coursedata.course_cricos_code;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group text-left">
+                <label for="clocation" aria-label="clocation">Location</label>
+                <input type="text" class="form-control" [(ngModel)]="cricos.location" aria-label="clocation">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group text-left">
+                <label for="ccode" aria-label="ccode">Code</label>
+                <input type="text" class="form-control" [(ngModel)]="cricos.code" aria-label="ccode">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addCricos_1" (click)="addCricos()"
+            class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;" data-toggle="tooltip"
+            title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeCricos_1" (click)="removeCricos(index)" *ngIf="index!=0"
+            class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;margin-top: 27px;"
+            data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+              aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div> -->
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Tuition Fees</strong>&nbsp;<button role="button" aria-label="addFees_1"
+        *ngIf="coursedata.course_tuition_fee.fees.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+        (click)="addFees()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+          aria-hidden="true"></i></button>
+      <div class="row mt-2"
+        *ngFor="let fees of  coursedata.course_tuition_fee.fees;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group text-left">
+                <label for="flocation" aria-label="flocation">Location</label>
+                <input type="text" class="form-control" [(ngModel)]="fees.name" aria-label="flocation">
+              </div>
+              <div class="form-group text-left">
+                <label for="fduration" aria-label="fduration">Fee Duration(in years)</label>
+                <input type="text" class="form-control" [(ngModel)]="fees.value.fee_duration_years"
+                  aria-label="fduration">
+              </div>
+              <div class="form-group text-left">
+                <label for="fduration" aria-label="fduration">Currency</label>
+                <input type="text" class="form-control" [(ngModel)]="fees.value.currency" aria-label="fduration">
+              </div>
+            </div>
+            <div class="col-md-10 divbrd">
+              <strong>Fees</strong> &nbsp;<button role="button" aria-label="addSubFees_1"
+                *ngIf="fees.value.international_student.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+                (click)="addSubFees(index)" data-toggle="tooltip" title="" data-original-title="Add more"><i
+                  class="fa fa-plus" aria-hidden="true"></i></button>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group text-left">
+                    <label for="amount" aria-label="amount">Amount</label>
+                    <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.amount"
+                      aria-label="amount">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group text-left">
+                    <label for="funit" aria-label="funit">Unit</label>
+                    <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.unit"
+                      aria-label="funit">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group text-left">
+                    <label for="fdurations" aria-label="fdurations">Duration</label>
+                    <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.duration"
+                      aria-label="fduration">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group text-left">
+                    <label for="desc" aria-label="desc">Description</label>
+                    <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.description"
+                      aria-label="desc">
+                  </div>
+                </div>
+                <!-- <div class="col-md-2">
+                  <button role="button" aria-label="addSubFees_2" (click)="addSubFees(index)"
+                    class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;"
+                    data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+                      aria-hidden="true"></i></button>
+                  <button role="button" aria-label="removeSubFees_2" (click)="removeSubFees(index,iindex)"
+                    *ngIf="iindex!=0" class="btn btn-sm btn-outline-danger rounded-circle"
+                    style="margin-left: 3px;margin-top: 27px;" data-toggle="tooltip" title=""
+                    data-original-title="Remove"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                </div> -->
+              </div>
+              <!-- <strong>Extra Fees</strong> &nbsp;<button role="button" aria-label="addExtraFee_1"
+                *ngIf="fees.value.international_student_all_fees.length==0"
+                class="btn btn-sm btn-outline-primary rounded-circle" (click)="addExtraFee(index)" data-toggle="tooltip"
+                title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+              <div class="row"
+                *ngFor="let extra of  fees.value.international_student_all_fees;trackBy: trackByIndex; index as eindex; last as last">
+                <div class="col-md-10">
+                  <div class="form-group text-left">
+                    <input type="text" class="form-control" [(ngModel)]="extra" aria-label="extra">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <button role="button" aria-label="addExtraFee_2" (click)="addExtraFee(index)"
+                    class="btn btn-sm btn-outline-primary rounded-circle" data-toggle="tooltip" title=""
+                    data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                  <button role="button" aria-label="removeExtraFee_2" (click)="removeExtraFee(index,eindex)"
+                    *ngIf="eindex!=0" style="margin-left: 3px;" class="btn btn-sm btn-outline-danger rounded-circle"
+                    data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+                      aria-hidden="true"></i></button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addFees_3" (click)="addFees()"
+            class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;" data-toggle="tooltip"
+            title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeFees_3" (click)="removeFees(index)" *ngIf="index!=0"
+            class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;margin-top: 27px;"
+            data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+              aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Intakes</strong>&nbsp;<button role="button" aria-label="addIntake_1"
+        *ngIf="coursedata.course_intake.intake.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+        (click)="addIntake()" data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+          aria-hidden="true"></i></button>
+      <div class="row"
+        *ngFor="let intake of  coursedata.course_intake.intake;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group text-left">
+                <label for="ilocation" aria-label="ilocation">Location</label>
+                <input type="text" class="form-control" [(ngModel)]="intake.name" aria-label="ilocation">
+              </div>
+            </div>
+            <div class="col-md-10 divbrd mt-2">
+              <strong>Intakes</strong>&nbsp;<button role="button" aria-label="addSubIntake_1"
+                *ngIf="intake.value.length==0" class="btn btn-sm btn-outline-primary rounded-circle"
+                (click)="addSubIntake(index)" data-toggle="tooltip" title="" data-original-title="Add more"><i
+                  class="fa fa-plus" aria-hidden="true"></i></button>
+              <div class="row" *ngFor="let value of intake.value;trackBy: trackByIndex; index as iindex; last as last">
+                <div class="col-md-2">
+                  <div class="form-group text-left">
+                    <label for="actualdate" aria-label="actualdate">Actual Date</label>
+                    <input type="text" class="form-control" [(ngModel)]="value.actualdate" aria-label="actualdate">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group text-left">
+                    <label for="month" aria-label="month">Month</label>
+                    <select class="form-control" [(ngModel)]="value.month" aria-label="month">
+                      <option value="">Choose</option>
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- <div class="col-md-2">
+                  <div class="form-group text-left">
+                    <label for="intake" aria-label="intake">Intake</label>
+                    <select class="form-control" [(ngModel)]="value.intake" aria-label="intakevalue">
+                      <option value="">Choose</option>
+                      <option value="Spring">Spring</option>
+                      <option value="Winter">Winter</option>
+                      <option value="Summer">Summer</option>
+                      <option value="Autumn">Autumn</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group text-left">
+                    <label for="fdate" aria-label="fdate">Filter Date (yyyy-mm-dd)</label>
+                    <input type="text" class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="value.filterdate"
+                      aria-label="fdate">
+                  </div>
+                </div> -->
+                <div class="col-md-2">
+                  <button role="button" aria-label="addSubIntake_2" (click)="addSubIntake(index)"
+                    class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;"
+                    data-toggle="tooltip" title="" data-original-title="Add more"><i class="fa fa-plus"
+                      aria-hidden="true"></i></button>
+                  <button role="button" aria-label="removeSubIntake_2" (click)="removeSubIntake(index,iindex)"
+                    *ngIf="iindex!=0" class="btn btn-sm btn-outline-danger rounded-circle"
+                    style="margin-left: 3px;margin-top: 27px;" data-toggle="tooltip" title=""
+                    data-original-title="Remove"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addIntake_4" (click)="addIntake()"
+            class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;" data-toggle="tooltip"
+            title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeIntake_3" (click)="removeIntake(index)" *ngIf="index!=0"
+            class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;margin-top: 27px;"
+            data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+              aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group text-left">
+            <label for="mdetails" aria-label="mdetails">More Details URL</label>
+            <input type="text" class="form-control" [(ngModel)]="coursedata.course_intake.more_details"
+              aria-label="mdetails">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Requirements</strong>&nbsp;<button role="button" aria-label="addEnglish"
+        *ngIf="coursedata.course_admission_requirement.english.length==0"
+        class="btn btn-sm btn-outline-primary rounded-circle" (click)="addEnglish()" data-toggle="tooltip" title=""
+        data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+      <div class="row"
+        *ngFor="let english of  coursedata.course_admission_requirement.english;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="row m-2 divbrd">
+            <div class="col-md-6">
+              <div class="form-group text-left">
+                <label for="ename" aria-label="ename">Name</label>
+                <select class="form-control" [(ngModel)]="english.name" aria-label="ename">
+                  <option value="">Choose</option>
+                  <option value="ielts academic">IELTS Academic</option>
+                  <option value="pte academic">PTE Academic</option>
+                  <option value="toefl pbt">Toefl pbt</option>
+                  <option value="toefl ibt">Toefl ibt</option>
+                  <option value="cae">Cae</option>
+                  <option value="cpe">Cpe</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group text-left">
+                <label for="edesc" aria-label="edesc">Description</label>
+                <input type="text" class="form-control" [(ngModel)]="english.description" aria-label="edesc">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="emin" aria-label="emin">Min</label>
+                <input type="text" class="form-control" [(ngModel)]="english.min" aria-label="emin">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="emax" aria-label="emax">Max</label>
+                <input type="text" class="form-control" [(ngModel)]="english.max" aria-label="emax">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="erequire" aria-label="erequire">Require</label>
+                <input type="text" class="form-control" [(ngModel)]="english.require" aria-label="erequire">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="eoverall" aria-label="eoverall">Overall</label>
+                <input type="text" class="form-control" [(ngModel)]="english.O" aria-label="eoverall">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="ereading" aria-label="ereading">Reading</label>
+                <input type="text" class="form-control" [(ngModel)]="english.R" aria-label="ereading">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="ewriting" aria-label="ewriting">Writing</label>
+                <input type="text" class="form-control" [(ngModel)]="english.W" aria-label="ewriting">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="espeaking" aria-label="espeaking">Speaking</label>
+                <input type="text" class="form-control" [(ngModel)]="english.S" aria-label="espeaking">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group text-left">
+                <label for="elistening" aria-label="elistening">Listening</label>
+                <input type="text" class="form-control" [(ngModel)]="english.L" aria-label="flistening">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addEnglish_4" (click)="addEnglish()"
+            class="btn btn-sm btn-outline-primary rounded-circle" style="margin-top: 27px;" data-toggle="tooltip"
+            title="" data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeEnglish_4" (click)="removeEnglish(index)" *ngIf="index!=0"
+            class="btn btn-sm btn-outline-danger rounded-circle" style="margin-left: 3px;margin-top: 27px;"
+            data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times-circle"
+              aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="divbrd p-2 mt-2">
+      <strong>Course Academic Requirements</strong>&nbsp;<button role="button" aria-label="addAcademic_5"
+        *ngIf="coursedata.course_admission_requirement.academic.length==0"
+        class="btn btn-sm btn-outline-primary rounded-circle" (click)="addAcademic()" data-toggle="tooltip" title=""
+        data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+      <div class="row"
+        *ngFor="let academic of  coursedata.course_admission_requirement.academic;trackBy: trackByIndex; index as index; last as last">
+        <div class="col-md-11">
+          <div class="form-group text-left">
+            <input type="text" class="form-control"
+              [(ngModel)]="coursedata.course_admission_requirement.academic[index]" aria-label="arequirement">
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button role="button" aria-label="addAcademic_6" (click)="addAcademic()"
+            class="btn btn-sm btn-outline-primary rounded-circle" data-toggle="tooltip" title=""
+            data-original-title="Add more"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button role="button" aria-label="removeAcademic_6" (click)="removeAcademic(index)" *ngIf="index!=0"
+            style="margin-left: 3px;" class="btn btn-sm btn-outline-danger rounded-circle" data-toggle="tooltip"
+            title="" data-original-title="Remove"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group text-left">
+            <label for="aurl" aria-label="aurl">Academic Requirements URL</label>
+            <input type="text" class="form-control"
+              [(ngModel)]="coursedata.course_admission_requirement.academic_requirements_url" aria-label="aurl">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group text-left">
+            <label for="eurl" aria-label="eurl">English Requirements URL</label>
+            <input type="text" class="form-control"
+              [(ngModel)]="coursedata.course_admission_requirement.english_requirements_url" aria-label="eurl">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group text-left">
+            <label for="entryurl" aria-label="entryurl">Entry Requirements URL</label>
+            <input type="text" class="form-control"
+              [(ngModel)]="coursedata.course_admission_requirement.entry_requirements_url" aria-label="entryurl">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-2">
+    <div class="col-md-12">
+      <button role="button" aria-label="saveCourse" class="btn btn-outline-primary" (click)="saveCourse()"
+        data-toggle="tooltip" title="" data-original-title="Save changes">
+        <i class="fa fa-check-circle" aria-hidden="true"></i>
+        Save Changes</button>
+    </div>
+  </div>
+</div>
+<!-- 
+{{coursedata | json}} -->

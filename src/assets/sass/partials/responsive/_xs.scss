@@ -1,0 +1,12 @@
+/* full calendar */
+.fc-cust{
+    .fc-toolbar{
+        &.fc-header-toolbar{margin-top: -10px;
+            > div{margin-top: 10px;}
+        }
+        .fc-center h2{font-size: 14px; padding: 0 5px; margin-top: 3px;}
+    } 
+    button{font-size: .8rem; height: auto; padding: .1rem .3rem;}
+
+}
+/* / full calendar */

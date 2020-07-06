@@ -1,0 +1,170 @@
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+img.ng-lazyloaded {
+  transition: background-image 1s ease-out;
+}
+
+html {
+  -webkit-scroll-behavior: smooth;
+  -moz-scroll-behavior: smooth;
+  -ms-scroll-behavior: smooth;
+  scroll-behavior: smooth;
+}
+
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.border-radius-100 {
+  border-radius: 100px !important;
+}
+
+.la-1x {
+  font-size: 1.5em;
+}
+
+.border-bottom-right-radius-8 {
+  border-bottom-right-radius: 8px !important;
+}
+
+.border-bottom-left-radius-8 {
+  border-bottom-left-radius: 8px !important;
+}
+
+.border-top-left-radius-8 {
+  border-top-left-radius: 8px !important;
+}
+
+.course-card-wrap .custom-control-label::after {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.course-card-wrap .custom-control-label::before {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.course-card-wrap {
+  border: 1px solid transparent;
+}
+
+.course-card-wrap:hover {
+  border: 1px solid #007bff;
+}
+
+.course-card-wrap:hover .card-header {
+  background-color: #007bff !important;
+}
+
+.course-card-wrap:hover .card-header a {
+  color: #fff !important;
+}
+
+.course-card-wrap:hover .usd-text-hover {
+  color: #007bff !important;
+}
+
+.course-card-wrap:hover .custom-control-label::before {
+  border: 1px solid #fff;
+}
+
+.active-sider-bar-class .active svg {
+  fill: #fff;
+}
+
+.progressbar-model {
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+}
+
+.progressbar-model li a {
+  color: #495057;
+}
+
+.progressbar-model li:first-child a:before {
+  left: 50%;
+}
+
+.progressbar-model li:last-child a:before {
+  right: 50%;
+}
+
+.progressbar-model li a.active:before {
+  background-color: #007bff;
+}
+
+.progressbar-model li a:before {
+  content: "";
+  height: 2px;
+  position: absolute;
+  background-color: #7d7d7d;
+  bottom: 7px;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+
+.progressbar-model li a.active:after {
+  border-color: #007bff;
+  background-color: #007bff;
+}
+
+.progressbar-model li a:after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border: 2px solid #7d7d7d;
+  display: block;
+  margin: 2px auto 0 auto;
+  border-radius: 50%;
+  background-color: white;
+  position: relative;
+}
+
+.progressbar-model li a:hover {
+  color: #007bff;
+}
+
+.progressbar-model li a.active {
+  color: #007bff !important;
+}
+
+.progressbar-model li a:hover:before {
+  background-color: #007bff;
+}
+
+.progressbar-model li a:hover:after {
+  border-color: #007bff;
+  background-color: #007bff;
+}
+
+.progressbar-model.nav-tabs .nav-link {
+  border: transparent;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.setup-process-block .card-header.card-ctrl-collapse.collapsed h6 {
+  color: #007bff !important;
+}
+
+.setup-process-block .card-header.card-ctrl-collapse:hover h6 {
+  color: #007bff !important;
+}

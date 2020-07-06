@@ -1,0 +1,280 @@
+<body>
+  <table border="0" cellpadding="0" cellspacing="0" class="main"
+    style="page-break-after: always;page-break-inside: avoid;">
+    <tbody>
+      <tr>
+        <td class="gradient py-1">
+          <span class="font-20 px-5 text-white"> </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%">
+            <tbody>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td>
+                  <table width="55%" align="left">
+                    <tbody>
+                      <tr>
+                        <td class="bg-secondary-light rounded-lg p-4 position-relative">
+                          <img class="position-absolute" style="left: 55px; top: -65px; max-width: 90px;"
+                            src="../../../assets/images/pdfimages/course-compare.png" alt="">
+                          <h1 class="h1 font-weight-bold text-custom ml-5 pl-3 mb-0">COURSE <br> COMPARE</h1>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table width="40%" align="right">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="{{agnetDetails.agentLogoURL}}" style="padding-right: 10px;
+                            height: 125px;
+                            width: 279px;
+                            padding-left: 15px;" alt="">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="px-5">
+            <table width="100%">
+              <tbody>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td> &nbsp; </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../../../assets/images/pdfimages/first-page-img.png" alt="">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> &nbsp; </td>
+      </tr>
+      <tr>
+        <td> &nbsp; </td>
+      </tr>
+      <tr class="gradient" align="center">
+        <td align="center">
+          <table align="center">
+            <tbody>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td align="center">
+                  <a class="text-white h4" style="font-size: 1.5rem;text-decoration: none;"
+                    href="{{agnetDetails.agentWebURL}}" target="_blank">{{agnetDetails.agentOrganization}}</a>
+                </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td align="center" class="text-white h6" style="font-size: 1rem">
+                  powered by
+                </td>
+              </tr>
+              <tr>
+                <td align="center">
+                  <a class="text-white h6" style="font-size: 1rem" href="https://searchmycourse.com/"
+                    target="_blank">www.searchmycourse.com</a>
+                </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp; </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="795" class="main">
+    <tbody *ngIf="courseCompareData">
+      <tr>
+        <td>
+          <div class="px-2">
+
+            <table class="table table-striped table-bordered">
+              <tbody class="gradient">
+                <tr>
+                  <th class="text-white">COURSE NAME</th>
+                  <th class="text-white" *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_title}}</th>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td class="bg-custom" style=" background-color: #ebf7fe;">UNIVERSITY NAME</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.univ_name}}</td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">OVERVIEW</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_overview}}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">COUNTRY</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_country}}</td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">PROGRAM CODE</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.program_code}}</td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">CRICOS CODE</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    <ul class="pl-3" *ngFor="let maincricos of courseCompare.course_campus_location">
+                      <li>{{maincricos.name}}: {{maincricos.code}}</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">DURATION</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    <span *ngFor="let duration of courseCompare.course_duration_display">
+                      {{duration.duration}}
+                      {{duration.unit | uppercase}} / {{duration.display | uppercase}}<br>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">FEES</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    <ul class="pl-3">
+                      <li *ngFor="let mainFees of courseCompare.course_tuition_fee.fees">
+                        {{mainFees.name}}:
+                        {{mainFees.value.international_student.amount}} /
+                        {{mainFees.value.international_student.unit | uppercase}}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">INTAKE</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    <ul class="pl-3">
+                      <li *ngFor="let mainIntake of courseCompare.course_intake.intake">
+                        {{mainIntake.name}}:
+                        <span *ngFor="let subIntake of mainIntake.value">{{subIntake.actualdate}}, </span>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">STUDY MODE</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    {{courseCompare.course_study_mode}}</td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">CAMPUSES</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    <span *ngFor="let loc of courseCompare.course_campus_location">
+                      {{loc.name}},
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bg-custom">COURSE DISCIPLINE</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    <ul class="pl-3">
+                      <li *ngFor="let category of courseCompare.course_discipline">
+                        {{category}}
+                      </li>
+                    </ul>
+                </tr>
+                <tr>
+                  <td class="bg-custom">ENGLISH REQUIREMENT</td>
+                  <td *ngFor="let courseCompare of courseCompareData">
+                    <p *ngFor="let english of courseCompare.course_admission_requirement.english">
+                      <b>{{english.name | uppercase}}: </b>{{english.description}}
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> &nbsp; </td>
+      </tr>
+      <tr>
+        <td> &nbsp; </td>
+      </tr>
+      <tr>
+        <td> &nbsp; </td>
+      </tr>
+    </tbody>
+  </table>
+</body>

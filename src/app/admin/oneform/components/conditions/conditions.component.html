@@ -1,0 +1,1186 @@
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="modules-mainsection" id="divConditionType" *ngIf="divConditionType">
+                <div>
+                    <div class="modules-content" style="position: relative;">
+                        <div id="app_wizards" class="platformV4 conditionsV4">
+                            <div>
+                                <div *ngIf="divConditionnotempty" (click)="BacktoCondition()"
+                                    class="modules-subsection new-section hide-on-builder">
+                                    <div class="modules-header">
+                                        <div class="modules-back">
+                                            <span class="ji ji-cw_Back cw_Back" name="cw_Back"><i
+                                                    class="fa fa-chevron-left" aria-hidden="true"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modules-mainsection">
+                                    <div class="modules-content">
+                                        <div class="new-condition">
+                                            <div class="mainCard moreSpace">
+                                                <div class="card"
+                                                    style="margin-bottom: 21px; padding-bottom: 21px; border-bottom: 1px solid rgb(236, 233, 230); width:80%">
+                                                    <div class="card-leftSide">
+                                                        <span name="cw_ConditionalLogic"
+                                                            class="ji ji-cw_ConditionalLogic undefined"
+                                                            style="color: rgb(92, 171, 64);font-size: 35px !important; margin-left: -12px; line-height: 56px;">
+                                                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="card-contentWrapper">
+                                                        <div class="card-content">
+                                                            <h5 class="card-title"
+                                                                style="font-size: 18px; font-weight: 700;">NEW CONDITION
+                                                            </h5>
+                                                            <p class="card-text u-noMargin"
+                                                                style="font-size: 14px; line-height: 14px;">
+                                                                Select a suitable condition type below to add a new
+                                                                condition.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="xxxxx blue ng-scope" style="position: relative;">
+                                                    <div class="states-if">
+                                                        <div class="action"
+                                                            style="margin-top: 0px; position: relative;">
+                                                            <ul id="ulFilterField" class="conditionsCard bgGrey blue">
+                                                                <li class="line">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 14px; text-transform: uppercase; line-height: 27px; display: block;">Visa
+                                                                            Type</label>
+                                                                    </div>
+                                                                    <div class="column three four">
+                                                                        <div style="position: relative;">
+                                                                            <div>
+                                                                                <select aria-label="drpFirstField"
+                                                                                    class="form-control"
+                                                                                    [(ngModel)]="ProductID"
+                                                                                    id="drpFirstField"
+                                                                                    name="drpFirstField"
+                                                                                    (change)="GetDatafromVisaType('C')">
+                                                                                    <option value="0"> Please select a
+                                                                                        Visa Type</option>
+                                                                                    <option
+                                                                                        *ngFor="let obj of ngVisaTypeList"
+                                                                                        [ngValue]="obj.processid">
+                                                                                        {{obj.processname}}
+                                                                                    </option>
+                                                                                </select>
+
+                                                                                <span class="m-dropdownMask"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="line u-unselectable">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 14px; text-transform: uppercase; line-height: 27px; display: block;">
+                                                                            Target Section
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="column three four">
+                                                                        <div>
+                                                                            <select aria-label="GetDatafromSectionID"
+                                                                                class="form-control"
+                                                                                [(ngModel)]="FilterSectionID"
+                                                                                (change)="GetDatafromSectionID()">
+                                                                                <option value="0">Please select a
+                                                                                    Section</option>
+                                                                                <option *ngFor="let obj of ngSections"
+                                                                                    [ngValue]="obj.sectionidf">
+                                                                                    {{obj.sectionname}}
+                                                                                </option>
+                                                                            </select>
+
+                                                                            <span class="m-dropdownMask"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <ul>
+                                                    <li *ngFor="let ngConditions of ngConditions"
+                                                        (click)="ShowHidedivcondition(shortname,ngConditions)"
+                                                        class="mediaBox conditions type blue bgGrey shadow conditionsLeftBorder clearfix">
+                                                        <div class="card-leftSide">
+                                                            <div class="conditionsCard-info"
+                                                                style="max-width: 80px; padding-left: 0px;">
+                                                                <span name="cw_ShowHide"
+                                                                    class="ji ji-cw_ShowHide undefined"
+                                                                    style="font-size: 35px; margin: 0px 18px;">
+                                                                    <i class="{{ngConditions.imageicon}}"
+                                                                        aria-hidden="true"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-contentWrapper">
+                                                            <div class="card-content">
+                                                                <div class="conditionsCard-content">
+                                                                    <div
+                                                                        style="margin: 19px 0px; font-weight: 700; font-size: 15px;">
+                                                                        {{ngConditions.name}}</div>
+                                                                    <div
+                                                                        class="conditionsCard-desc hide-on-builder condition-field">
+                                                                        {{ngConditions.displaytext}}
+                                                                    </div>
+                                                                    <span name="cw_Arrow"
+                                                                        class="ji ji-cw_Arrow undefined"
+                                                                        style="font-size: 35px;">
+                                                                        <i class="fa fa-angle-double-left"
+                                                                            aria-hidden="true"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="modal-actions" style="display: block;">
+                                                <p> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modules-mainsection" id="divConditions" *ngIf="divConditions">
+                <div>
+                    <div class="modules-content" style="position: relative;">
+                        <div id="app_wizards" class="platformV4 conditionsV4">
+                            <div>
+                                <div (click)="BacktoConditionType()"
+                                    class="modules-subsection new-section hide-on-builder">
+                                    <div class="modules-header">
+                                        <div class="modules-back">
+                                            <span class="ji ji-cw_Back cw_Back" name="cw_Back"><i
+                                                    class="fa fa-chevron-left" aria-hidden="true"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modules-mainsection">
+                                    <div class="modules-content">
+                                        <div class="blue">
+                                            <!-- overflow-y: auto; -->
+                                            <div class="mainCard moreSpace" style="max-height: 416px;width:80%">
+                                                <div class="card conditionCardV4"
+                                                    style="margin-bottom: 21px; padding-bottom: 21px; border-bottom: 1px solid rgb(236, 233, 230);">
+                                                    <div class="card-leftSide">
+                                                        <span name="cw_ShowHide" class="ji ji-cw_ShowHide undefined"
+                                                            style="font-size: 35px; margin-left: -12px;">
+                                                            <i class="{{ConditionIcon}}" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="card-contentWrapper">
+                                                        <div class="card-content">
+                                                            <h5 class="card-title">{{ConditionHeader}}</h5>
+                                                            <p class="card-text u-noMargin"
+                                                                style="font-size: 14px; line-height: 14px;">
+                                                                {{ConditionSubHeader}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="xxxxx blue" style="position: relative;">
+                                                    <div class="states-if"
+                                                        *ngFor="let ControlIFcondtionmapping of ControlIFcondtionmapping;let i=index">
+                                                        <div class="conditions action"
+                                                            style="margin-top: 0px; position: relative;">
+                                                            <div class="conditionsCard-actions">
+                                                                <div class="u-verticalalign"
+                                                                    style="position: relative;">
+                                                                    <span id="spnANDtag{{i}}">(AND)</span>
+                                                                    <div class="icon-link" id="divAndAddIFButton{{i}}"
+                                                                        (click)="AddAndCondition(ControlIFcondtionmapping,i)">
+                                                                        <div class="cssIcon plus"></div>
+                                                                    </div>
+                                                                    <div style="display:none; cursor:pointer"
+                                                                        class="icon-link" id="divRemoveIFButton{{i}}"
+                                                                        (click)="RemoveAndOrCondition(ControlIFcondtionmapping,i)">
+                                                                        <div class="cssIcon minus">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <ul class="conditionsCard bgGrey blue">
+                                                                <li class="line">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">If</label>
+                                                                    </div>
+                                                                    <div class="column three four">
+                                                                        <div style="position: relative;">
+                                                                            <div class="hide-mobileV4"
+                                                                                style="display:none">
+                                                                                <div class="hide-on-mobile"
+                                                                                    style="position: absolute; top: -1px; right: -35px; cursor: pointer;">
+                                                                                    <div class="u-tooltipTrigger">
+                                                                                        <span name="cw_moreinfo"
+                                                                                            class="ji ji-cw_moreinfo undefined"
+                                                                                            style="font-size: 30px;">
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="toolTip u-neutral u-northEast u-tethered "
+                                                                                        style="width: 300px; z-index: 1100;">
+                                                                                        <span>Gray (Disabled) fields can
+                                                                                            not be used as a condition
+                                                                                            trigger point.</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <select aria-label="GetConditionState"
+                                                                                    [(ngModel)]="ControlIFcondtionmapping.sourcecontroldrpid"
+                                                                                    id="drpFirstField"
+                                                                                    name="drpFirstField"
+                                                                                    class="form-control"
+                                                                                    (change)="GetConditionState(ControlIFcondtionmapping, i)">
+                                                                                    <option value="">Please select a
+                                                                                        field</option>
+                                                                                    <optgroup
+                                                                                        *ngFor="let obj of ngSectionControls | groupBy : 'sectionname'"
+                                                                                        label="{{obj.key}}">
+                                                                                        <option
+                                                                                            *ngFor="let objV of obj.value"
+                                                                                            [ngValue]="objV.formcontrolid+'_'+objV.Controltype">
+                                                                                            {{objV.question}}
+                                                                                        </option>
+                                                                                    </optgroup>
+                                                                                </select>
+
+                                                                                <span class="m-dropdownMask"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="line u-unselectable">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">STATE</label>
+                                                                    </div>
+                                                                    <div class="column three four">
+                                                                        <div>
+                                                                            <select aria-label="ShowHideTarget"
+                                                                                [(ngModel)]="ControlIFcondtionmapping.operatoridf"
+                                                                                id="drpFirstField" name="drpFirstField"
+                                                                                class="form-control"
+                                                                                (change)="ShowHideTarget(ControlIFcondtionmapping,i)">
+                                                                                <option value="0">Please select a field
+                                                                                    state</option>
+                                                                                <option
+                                                                                    *ngFor="let obj of ControlIFcondtionmapping.ngConditionstate"
+                                                                                    [ngValue]="obj.conditionstateid">
+                                                                                    {{obj.name}}
+                                                                                </option>
+                                                                            </select>
+                                                                            <span class="m-dropdownMask"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="line" id="liConditionTarget{{i}}"
+                                                                    style="display:none">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 18px; text-transform: uppercase; line-height: 27px;">Target</label>
+                                                                    </div>
+                                                                    <div class="column three four">
+                                                                        <div>
+                                                                            <select aria-label="ShowHideSecondCondition"
+                                                                                [(ngModel)]="ControlIFcondtionmapping.target"
+                                                                                class="form-control"
+                                                                                (change)="ShowHideSecondCondition(ControlIFcondtionmapping, i)">
+                                                                                <option selected="selected" value="0">--
+                                                                                    Select Target --</option>
+                                                                                <option value="1">Value</option>
+                                                                                <option value="2">Another Field</option>
+                                                                            </select><span
+                                                                                class="m-dropdownMask"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li id="liSecondValue{{i}}" style="display:none"
+                                                                    class="line clearfix u-unselectable">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">VALUE</label>
+                                                                    </div>
+                                                                    <div
+                                                                        [ngClass]="ControlIFcondtionmapping.SourceControlType == 'DT' ? 'column two four' : 'column three four'">
+                                                                        <div style="position: relative;">
+                                                                            <div>
+                                                                                <input
+                                                                                    [(ngModel)]="ControlIFcondtionmapping.targetvalue"
+                                                                                    type="text" class="form-control"
+                                                                                    placeholder="Please type a value here"
+                                                                                    style="padding-right: 30px">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="column one four"
+                                                                        style="padding-left:3px"
+                                                                        *ngIf="ControlIFcondtionmapping.SourceControlType == 'DT' && ControlIFcondtionmapping.operatoridf != 29">
+                                                                        <div style="position: relative;">
+                                                                            <div>
+                                                                                <select aria-label="targetdays"
+                                                                                    [(ngModel)]="ControlIFcondtionmapping.targetdays"
+                                                                                    class="form-control">
+                                                                                    <option selected="selected"
+                                                                                        value="">-- Select --</option>
+                                                                                    <option value="Day">Day</option>
+                                                                                    <option value="Week">Week</option>
+                                                                                    <option value="Month">Month</option>
+                                                                                    <option value="Year">Year</option>
+                                                                                </select><span
+                                                                                    class="m-dropdownMask"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li *ngIf="ControlIFcondtionmapping.operatoridf == 29"
+                                                                    class="line clearfix u-unselectable">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;"></label>
+                                                                    </div>
+                                                                    <div
+                                                                        [ngClass]="ControlIFcondtionmapping.SourceControlType == 'DT' ? 'column two four' : 'column three four'">
+                                                                        <div style="position: relative;">
+                                                                            <div>
+                                                                                <input
+                                                                                    [(ngModel)]="ControlIFcondtionmapping.targetbetweenvalue"
+                                                                                    type="text" class="form-control"
+                                                                                    placeholder="Please type a value here"
+                                                                                    style="padding-right: 30px">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="column one four"
+                                                                        style="padding-left:3px">
+                                                                        <div style="position: relative;">
+                                                                            <div>
+                                                                                <select aria-label="targetbetweendays"
+                                                                                    [(ngModel)]="ControlIFcondtionmapping.targetbetweendays"
+                                                                                    class="form-control">
+                                                                                    <option selected="selected"
+                                                                                        value="Year">Year</option>
+                                                                                </select><span
+                                                                                    class="m-dropdownMask"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li id="liOptionSecondValue{{i}}" style="display:none"
+                                                                    class="line clearfix u-unselectable">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">VALUE</label>
+                                                                    </div>
+                                                                    <div class="column three four">
+                                                                        <div style="position: relative;">
+                                                                            <div>
+                                                                                <select aria-label="targetOptionvalue"
+                                                                                    [(ngModel)]="ControlIFcondtionmapping.targetOptionvalue"
+                                                                                    id="ddlOptionSecondValue"
+                                                                                    name="ddlOptionSecondValue"
+                                                                                    class="form-control">
+                                                                                    <option disabled="" value="none">
+                                                                                        Please select a Value</option>
+                                                                                    <option
+                                                                                        *ngFor="let obj of ControlIFcondtionmapping.ngOptionSecondValue"
+                                                                                        [ngValue]="obj.optiontext">
+                                                                                        {{obj.optiontext}}
+                                                                                    </option>
+                                                                                </select>
+
+                                                                                <span class="m-dropdownMask"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li id="liSecondField{{i}}" style="display:none"
+                                                                    class="line clearfix u-unselectable">
+                                                                    <div class="column one four">
+                                                                        <label
+                                                                            style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">FIELD</label>
+                                                                    </div>
+                                                                    <div class="column three four">
+                                                                        <div style="position: relative;">
+                                                                            <div>
+                                                                                <select aria-label="targetcontrolidf"
+                                                                                    [(ngModel)]="ControlIFcondtionmapping.targetcontrolidf"
+                                                                                    id="ddlTargetField"
+                                                                                    name="ddlTargetField"
+                                                                                    class="form-control">
+                                                                                    <option disabled="" value="none">
+                                                                                        Please select a Value</option>
+                                                                                    <optgroup
+                                                                                        *ngFor="let obj of ngSectionControls | groupBy : 'sectionname'"
+                                                                                        label="{{obj.key}}">
+                                                                                        <option
+                                                                                            *ngFor="let objV of obj.value"
+                                                                                            [ngValue]="objV.formcontrolid">
+                                                                                            {{objV.question}}</option>
+                                                                                    </optgroup>
+                                                                                </select>
+                                                                                <span class="m-dropdownMask"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+
+                                                            <div class="conditionsCard-conditionjoin">
+                                                                <div class="u-verticalalign"
+                                                                    style="position: relative;">
+                                                                    <div class="icon-link" id="divORAddIFButton{{i}}"
+                                                                        (click)="AddOrCondition(ControlIFcondtionmapping,i)">
+                                                                        <div class="cssIcon plus"></div><span
+                                                                            id="spnORtag{{i}}"
+                                                                            style="position: absolute">(OR)</span>
+                                                                    </div>
+                                                                    {{ControlIFcondtionmapping.controljoinopt}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="states-second"
+                                                        *ngFor="let ControlDOconditionmapping of ControlDOconditionmapping">
+                                                        <div>
+                                                            <div>
+                                                                <div class="conditions action"
+                                                                    style="margin-top: 0px; position: relative;">
+                                                                    <div class="conditionsCard-actions"
+                                                                        style="display:none">
+                                                                        <div class="u-verticalalign"
+                                                                            style="position: relative;">
+                                                                            <div class="icon-link">
+                                                                                <div class="cssIcon plus">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <ul class="conditionsCard bgGrey blue">
+                                                                        <li class="line">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">DO</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <select
+                                                                                        aria-label="conditiontypeidf"
+                                                                                        [(ngModel)]="ControlDOconditionmapping.conditiontypeidf"
+                                                                                        id="divConditionType"
+                                                                                        class="form-control"
+                                                                                        (change)="HideShowYesNoControls(ControlDOconditionmapping);">
+                                                                                        <option value="0">Please select
+                                                                                            condition action</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of ngConditionType"
+                                                                                            [ngValue]="obj.conditiontypeid">
+                                                                                            {{obj.name}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                    <span class="m-dropdownMask"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liFromTargetField"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">Field</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="targetfieldidf"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.targetfieldidf"
+                                                                                            class="form-control">
+                                                                                            <option disabled=""
+                                                                                                value="0">Please select
+                                                                                                a Value</option>
+                                                                                            <optgroup
+                                                                                                *ngFor="let obj of ngDOSectionControlsField | groupBy : 'sectionname'"
+                                                                                                label="{{obj.key}}">
+                                                                                                <option
+                                                                                                    *ngFor="let objV of obj.value"
+                                                                                                    [ngValue]="objV.formcontrolid">
+                                                                                                    {{objV.question}}
+                                                                                                </option>
+                                                                                            </optgroup>
+                                                                                        </select>
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liToTargetField"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">To
+                                                                                    Field</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="targetsecondidf1"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.targetsecondidf"
+                                                                                            class="form-control">
+                                                                                            <option disabled=""
+                                                                                                value="none">Please
+                                                                                                select a Section
+                                                                                            </option>
+                                                                                            <optgroup
+                                                                                                *ngFor="let obj of ngDOSectionControlsField | groupBy : 'sectionname'"
+                                                                                                label="{{obj.key}}">
+                                                                                                <option
+                                                                                                    *ngFor="let objV of obj.value"
+                                                                                                    [ngValue]="objV.formcontrolid">
+                                                                                                    {{objV.question}}
+                                                                                                </option>
+                                                                                            </optgroup>
+                                                                                        </select>
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liSectionTarget"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">Section
+                                                                                    / Page</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <select aria-label="sectionidf2"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.sectionidf"
+                                                                                            class="form-control">
+                                                                                            <option disabled=""
+                                                                                                value="none">Please
+                                                                                                select a Section
+                                                                                            </option>
+                                                                                            <option
+                                                                                                *ngFor="let obj of ngSections"
+                                                                                                [ngValue]="obj.sectionname">
+                                                                                                {{obj.question}}
+                                                                                            </option>
+                                                                                        </select>
+
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liAlertMessage"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">Message</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <input
+                                                                                            [(ngModel)]="ControlDOconditionmapping.alertmessage"
+                                                                                            type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Please type a message here"
+                                                                                            style="padding-right: 30px;">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liOkButton"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;"></label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div
+                                                                                        class="editor-container editorNoText">
+                                                                                        <button role="button"
+                                                                                            aria-label="SetOkButtonName"
+                                                                                            id="btnOk{{i}}"
+                                                                                            style="min-width:48px !important; min-height:30px !important;"
+                                                                                            placeholder=""
+                                                                                            contenteditable="true"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.OkButton"
+                                                                                            type="button"
+                                                                                            class="form-submit-button btnYes"
+                                                                                            (keyup)="SetOkButtonName(ControlDOconditionmapping,i)">
+                                                                                            {{ControlDOconditionmapping.OkButton}}
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liYesNoButton"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;"></label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div
+                                                                                        class="editor-container editorNoText">
+
+                                                                                        <button role="button"
+                                                                                            aria-label="SetNoButtonName"
+                                                                                            id="btnNo{{i}}"
+                                                                                            style="min-width:48px !important; min-height:30px !important;"
+                                                                                            placeholder=""
+                                                                                            contenteditable="true"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.NoButton"
+                                                                                            type="button"
+                                                                                            class="form-submit-button btnYes"
+                                                                                            (keyup)="SetNoButtonName(ControlDOconditionmapping,i)">
+                                                                                            {{ControlDOconditionmapping.NoButton}}
+                                                                                        </button>
+
+                                                                                        <div
+                                                                                            class="form-group m-form__group">
+                                                                                            <input type="checkbox"
+                                                                                                [(ngModel)]="ControlDOconditionmapping.IsNoButton"
+                                                                                                (change)="SetNoCondition(ControlDOconditionmapping)" />
+                                                                                            Is Conditional
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+
+                                                                        <li *ngIf="liNoConditions"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">DO</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <select
+                                                                                        aria-label="NoConditiontypeidf"
+                                                                                        [(ngModel)]="ControlDOconditionmapping.NoConditiontypeidf"
+                                                                                        id="divConditionType"
+                                                                                        class="form-control"
+                                                                                        (change)="SetNoDoCondition(ControlDOconditionmapping)">
+                                                                                        <option disabled="" value="">
+                                                                                            Please select condition
+                                                                                            action</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of ngAlertConditionType"
+                                                                                            [ngValue]="obj.conditiontypeid">
+                                                                                            {{obj.name}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                    <span class="m-dropdownMask"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+
+                                                                        <li *ngIf="liNoFromTargetField"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">No
+                                                                                    Field</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="NoConditiontargetfieldif"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.NoConditiontargetfieldif"
+                                                                                            class="form-control">
+                                                                                            <option value="none">Please
+                                                                                                select a Section
+                                                                                            </option>
+                                                                                            <optgroup
+                                                                                                *ngFor="let obj of ngDOSectionControls | groupBy : 'sectionname'"
+                                                                                                label="{{obj.key}}">
+                                                                                                <option
+                                                                                                    *ngFor="let objV of obj.value"
+                                                                                                    [ngValue]="objV.formcontrolid">
+                                                                                                    {{objV.question}}
+                                                                                                </option>
+                                                                                            </optgroup>
+                                                                                        </select>
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liNoSection"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">Section</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="NoSectionidf"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.NoSectionidf"
+                                                                                            class="form-control">
+                                                                                            <option value="none">Please
+                                                                                                select a Section
+                                                                                            </option>
+                                                                                            <option
+                                                                                                *ngFor="let obj of ngSections"
+                                                                                                [ngValue]="obj.sectionidf">
+                                                                                                {{obj.sectionname}}
+                                                                                            </option>
+                                                                                        </select>
+
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liYesNoButton"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;"></label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div
+                                                                                        class="editor-container editorNoText">
+                                                                                        <button role="button"
+                                                                                            aria-label="SetYesButtonName"
+                                                                                            id="btnYes{{i}}"
+                                                                                            style="min-width:48px !important; min-height:30px !important;"
+                                                                                            placeholder=""
+                                                                                            contenteditable="true"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.YesButton"
+                                                                                            type="button"
+                                                                                            class="form-submit-button btnYes"
+                                                                                            (keyup)="SetYesButtonName(ControlDOconditionmapping,i)">
+                                                                                            {{ControlDOconditionmapping.YesButton}}
+                                                                                        </button>
+
+                                                                                        <div
+                                                                                            class="form-group m-form__group">
+                                                                                            <input type="checkbox"
+                                                                                                [(ngModel)]="ControlDOconditionmapping.IsYesButton"
+                                                                                                (change)="SetYesCondition(ControlDOconditionmapping)" />
+                                                                                            Is Conditional
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liYesConditions"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">DO</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+
+                                                                                    <select
+                                                                                        aria-label="YesConditiontypeidf"
+                                                                                        [(ngModel)]="ControlDOconditionmapping.YesConditiontypeidf"
+                                                                                        id="divConditionType"
+                                                                                        class="form-control"
+                                                                                        class="form-control"
+                                                                                        (change)="SetYesDoCondition(ControlDOconditionmapping)">
+                                                                                        <option disabled="" value="">
+                                                                                            Please select condition
+                                                                                            action</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of ngAlertConditionType"
+                                                                                            [ngValue]="obj.conditiontypeid">
+                                                                                            {{obj.name}}
+                                                                                        </option>
+                                                                                    </select>
+
+                                                                                    <span class="m-dropdownMask"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liYesFromTargetField"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">Yes
+                                                                                    Field</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="YesConditiontargetfieldif2"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.YesConditiontargetfieldif"
+                                                                                            class="form-control">
+                                                                                            <option value="none">Please
+                                                                                                select a Section
+                                                                                            </option>
+                                                                                            <optgroup
+                                                                                                *ngFor="let obj of ngDOSectionControls | groupBy : 'sectionname'"
+                                                                                                label="{{obj.key}}">
+                                                                                                <option
+                                                                                                    *ngFor="let objV of obj.value"
+                                                                                                    [ngValue]="objV.formcontrolid">
+                                                                                                    {{objV.question}}
+                                                                                                </option>
+                                                                                            </optgroup>
+                                                                                        </select>
+
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li *ngIf="liYesSection"
+                                                                            class="line u-unselectable">
+                                                                            <div class="column one four">
+                                                                                <label
+                                                                                    style="font-size: 18px; text-transform: uppercase; line-height: 27px; display: block;">Section</label>
+                                                                            </div>
+                                                                            <div class="column three four">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="YesSectionidf2"
+                                                                                            [(ngModel)]="ControlDOconditionmapping.YesSectionidf"
+                                                                                            class="form-control">
+                                                                                            <option value="none">Please
+                                                                                                select a Section
+                                                                                            </option>
+                                                                                            <option
+                                                                                                *ngFor="let obj of ngSections"
+                                                                                                [ngValue]="obj.sectionidf">
+                                                                                                {{obj.sectionname}}
+                                                                                            </option>
+                                                                                        </select>
+
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-actions" style="display: block;">
+                                                <a aria-label="InsertUpdateConditions" class="btn btn-primary btndesign"
+                                                    (click)="InsertUpdateConditions();">
+                                                    <i class="fa fa-check"></i>&nbsp;Save
+                                                </a>
+                                                <a aria-label="BacktoConditionType" class="btn btn-warning"
+                                                    (click)="BacktoConditionType()">
+                                                    <i class="fa fa-arrow-left"></i>&nbsp;Back
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modules-mainsection" *ngIf="divConditionDisplay">
+                <div>
+                    <div class="modules-content" style="position: relative;">
+                        <div id="app_wizards" class="platformV4 conditionsV4">
+                            <div style="min-width:700px">
+                                <div class="modules-mainsection">
+                                    <div class="modules-content">
+                                        <div style="margin-top: 35px;">
+                                            <div class="xxxxx blue ng-scope" style="position: relative;">
+                                                <div class="states-if">
+                                                    <div class="action" style="margin-top: 0px; position: relative;">
+                                                        <ul id="ulFilterField" class="conditionsCard bgGrey blue">
+                                                            <li class="line">
+                                                                <div class="column one four">
+                                                                    <label
+                                                                        style="font-size: 14px; text-transform: uppercase; line-height: 27px; display: block;">Visa
+                                                                        Type</label>
+                                                                </div>
+                                                                <div class="column three four">
+                                                                    <div style="position: relative;">
+                                                                        <div>
+                                                                            <select aria-label="GetDatafromVisaType"
+                                                                                [(ngModel)]="ProductID"
+                                                                                id="drpFirstField" name="drpFirstField"
+                                                                                class="form-control"
+                                                                                (change)="GetDatafromVisaType('D')">
+                                                                                <option disabled="" value="0">Please
+                                                                                    select a Visa Type</option>
+                                                                                <option
+                                                                                    *ngFor="let obj of ngVisaTypeList"
+                                                                                    [ngValue]="obj.processid">
+                                                                                    {{obj.processname}}
+                                                                                </option>
+                                                                            </select>
+
+                                                                            <span class="m-dropdownMask"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="line"
+                                                style="margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgb(236, 233, 230);"
+                                                *ngIf="permissions.canAdd">
+                                                <a aria-label="AddNewCondition" class="btn u-call u-massy"
+                                                    style="display: table; margin: 0px auto;">
+                                                    <span name="plusBold" class="ji ji-plusBold undefined"
+                                                        style="font-size: 24px; float: left;"
+                                                        (click)="AddNewCondition()">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span>NEW CONDITION</span>
+                                                </a>
+                                            </div>
+                                            <div class="listGroup" style="padding: 0px;"
+                                                *ngFor="let ngControlConditionmapping of ngControlConditionmapping">
+                                                <ul class="listGroup-content">
+                                                    <li class="mediaBox conditions isDraggable icon_field blue">
+                                                        <div class="bgColor itemBox-drag">
+                                                            <div class="itemBox-number">1</div>
+                                                            <span
+                                                                style="top: 50%!important;margin-top: -.8125rem;position: absolute;color:#fff;margin-left: 5px;">
+                                                                <i class="{{ngControlConditionmapping.ConditionIcon}}"
+                                                                    aria-hidden="true"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="mediaBox-content">
+                                                            <div class="mediaBox-contentmain u-blur"
+                                                                style="padding: 12px 54px 10px 36px;">
+                                                                <div class="textColor"
+                                                                    style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">
+                                                                    SHOW / HIDE FIELD
+                                                                </div>
+                                                                <div class="content">
+                                                                    <span>
+                                                                        <div class="content-infos if">
+                                                                            <div class="info bgColor-before">
+                                                                                <span
+                                                                                    style="left: -1.25rem;position: absolute;color:#3498db">
+                                                                                    <i class="fa fa-arrow-right"
+                                                                                        aria-hidden="true"></i>
+                                                                                </span>
+                                                                                <div class="text-truncate"
+                                                                                    style="width: 460px;"
+                                                                                    *ngFor="let ControlIFcondtionmappingDisplay of ControlIFcondtionmappingDisplay  | filter: 'formcontrolmapidf' : ngControlConditionmapping.formcontrolmapid">
+                                                                                    <b>If</b>
+                                                                                    <span
+                                                                                        class="">{{ControlIFcondtionmappingDisplay.SourceQuestion}}</span><b>{{ControlIFcondtionmappingDisplay.ConditionStateName}}</b>
+                                                                                    <span class=""
+                                                                                        *ngIf="ControlIFcondtionmappingDisplay.SourceControlType == 'D'">"{{ControlIFcondtionmappingDisplay.targetoption}}"</span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ControlIFcondtionmappingDisplay.SourceControlType == 'C'">"{{ControlIFcondtionmappingDisplay.targetoption}}"</span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ControlIFcondtionmappingDisplay.SourceControlType == 'R'">"{{ControlIFcondtionmappingDisplay.targetoption}}"</span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ControlIFcondtionmappingDisplay.target == '1'">"{{ControlIFcondtionmappingDisplay.targetvalue}}"
+                                                                                        "{{ControlIFcondtionmappingDisplay.targetdays}}"</span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ControlIFcondtionmappingDisplay.target == '2'">"{{ControlIFcondtionmappingDisplay.TargetQuestion}}"</span>
+                                                                                    <span
+                                                                                        class=""><b>{{ControlIFcondtionmappingDisplay.controljoinopt}}</b></span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="content-infos do icon_Hide">
+                                                                            <div class="info bgColor-before">
+                                                                                <span
+                                                                                    style="left: -1.25rem;position: absolute;color:#3498db">
+                                                                                    <i class="{{ngControlConditionmapping.ConditionIcon}}"
+                                                                                        aria-hidden="true"></i>
+                                                                                </span>
+                                                                                <div class="text-truncate"
+                                                                                    style="width: 460px;"
+                                                                                    *ngFor="let ControlDOconditionmappingDisplay of ControlDOconditionmappingDisplay  | filter: 'formcontrolmapidf' : ngControlConditionmapping.formcontrolmapid">
+                                                                                    <span class=""
+                                                                                        *ngIf="ngControlConditionmapping.ConditionShortName != 'C'"><b>{{ControlDOconditionmappingDisplay.ConditionTypeName}}</b></span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ngControlConditionmapping.ConditionShortName == 'C'"><b>Insert</b></span>
+                                                                                    <span
+                                                                                        class="">{{ControlDOconditionmappingDisplay.TargetQuestion}}</span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ngControlConditionmapping.ConditionShortName == 'C'"><b>Into</b></span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ngControlConditionmapping.ConditionShortName == 'C'">{{ControlDOconditionmappingDisplay.TargetsecondQuestion}}</span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ngControlConditionmapping.ConditionShortName == 'P'">{{ControlDOconditionmappingDisplay.Targetsectionname}}</span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ngControlConditionmapping.ConditionShortName == 'A'">
+                                                                                        {{ControlDOconditionmappingDisplay.alertmessage}}
+                                                                                    </span>
+                                                                                    <span class=""
+                                                                                        *ngIf="ngControlConditionmapping.ConditionShortName == 'A'">
+                                                                                        <span class=""
+                                                                                            *ngIf="ControlDOconditionmappingDisplay.IsNoButton == true">
+                                                                                            <br />
+                                                                                            <b>IF </b> No <b>
+                                                                                                {{ControlDOconditionmappingDisplay.NoConditionTypeName}}
+                                                                                            </b>
+                                                                                            {{ControlDOconditionmappingDisplay.NoTargetsectionname}}
+                                                                                            {{ControlDOconditionmappingDisplay.NoConditionTargetQuestion}}
+                                                                                        </span>
+
+                                                                                        <span class=""
+                                                                                            *ngIf="ControlDOconditionmappingDisplay.IsYesButton == true">
+                                                                                            <br />
+                                                                                            <b>IF </b> Yes <b>
+                                                                                                {{ControlDOconditionmappingDisplay.YesConditionTypeName}}
+                                                                                            </b>
+                                                                                            {{ControlDOconditionmappingDisplay.YesTargetsectionname}}
+                                                                                            {{ControlDOconditionmappingDisplay.YesConditionTargetQuestion}}
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                    <div class="note-wp"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mediaBox-contenthover">
+                                                                <ul class="vertical-align"
+                                                                    style="float:right; position: relative;">
+                                                                    <li *ngIf="permissions.canEdit">
+                                                                        <div style="float:right; padding: 10px; cursor: pointer;"
+                                                                            (click)="EditCondition(ngControlConditionmapping)">
+                                                                            <span name="cw_Edit"
+                                                                                class="ji ji-cw_Edit undefined"
+                                                                                style="font-size: 16px;margin:0px 0px 0px 20px;display: block;">
+                                                                                <i class="far fa-edit"
+                                                                                    aria-hidden="true"></i>
+                                                                            </span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Edit</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li *ngIf="permissions.canDelete">
+                                                                        <div style="float:right; padding: 10px; cursor: pointer;"
+                                                                            (click)="DeleteCondition(ngControlConditionmapping)">
+                                                                            <span name="cw_Edit"
+                                                                                class="ji ji-cw_Edit undefined"
+                                                                                style="font-size: 16px;margin:20px 0px 0px -12px;display: block;color:red">
+                                                                                <i class="fa fa-lg fa-trash-alt"
+                                                                                    aria-hidden="true"></i>
+                                                                            </span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Delete</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li style="display:none">
+                                                                        <div style="padding: 10px; cursor: pointer;">
+                                                                            <span name="cw_DuplicateCondition"
+                                                                                class="ji ji-cw_DuplicateCondition undefined"
+                                                                                style="font-size: 44px; color: rgb(255, 255, 255); display: block;">
+                                                                            </span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Clone</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li style="display:none">
+                                                                        <div style="padding: 10px; cursor: pointer;">
+                                                                            <span name="cw_DisableCondition"
+                                                                                class="ji ji-cw_DisableCondition undefined"
+                                                                                style="font-size: 44px; color: rgb(255, 255, 255); display: block;"></span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Disable</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li style="display:none"
+                                                                        *ngIf="permissions.canDelete">
+                                                                        <div style="padding: 10px; cursor: pointer;">
+                                                                            <span name="cw_DeleteCondition"
+                                                                                class="ji ji-cw_DeleteCondition undefined"
+                                                                                style="font-size: 44px; color: rgb(255, 255, 255); display: block;"></span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Delete</span>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="vertical-align"
+                                                                    style="text-align: center; position: relative; display:none">
+                                                                    <li *ngIf="permissions.canDelete">
+                                                                        <div style="padding: 10px; cursor: pointer;">
+                                                                            <span name="cw_DeleteCondition"
+                                                                                class="ji ji-cw_DeleteCondition undefined"
+                                                                                style="font-size: 44px; color: rgb(255, 255, 255); display: block;"></span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Delete</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div style="padding: 10px; cursor: pointer;">
+                                                                            <span name="cw_DisableCondition"
+                                                                                class="ji ji-cw_DisableCondition undefined"
+                                                                                style="font-size: 44px; color: rgb(255, 255, 255); display: block;"></span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Disable</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div style="padding: 10px; cursor: pointer;">
+                                                                            <span name="cw_DuplicateCondition"
+                                                                                class="ji ji-cw_DuplicateCondition undefined"
+                                                                                style="font-size: 44px; color: rgb(255, 255, 255); display: block;"></span>
+                                                                            <span
+                                                                                style="text-transform: uppercase;">Duplicate</span>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

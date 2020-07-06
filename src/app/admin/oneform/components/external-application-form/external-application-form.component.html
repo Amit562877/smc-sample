@@ -1,0 +1,827 @@
+<style type="text/css">
+  .odd,
+  .odd em {
+    background: rgba(210, 255, 82, 1) !important;
+  }
+
+  .even,
+  .even em {
+    background: rgba(241, 231, 103, 1) !important;
+  }
+
+  .odd.selected,
+  .even.selected,
+  .odd.selected em,
+  .even.selected em {
+    background: red !important;
+  }
+
+  .r--main-form .input-as-label {
+    border: none;
+    box-shadow: none;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    width: 40vw;
+    background-color: transparent;
+  }
+
+  .r--main-form .active-field {
+    background-color: #cdd6d8 !important;
+    cursor: pointer !important;
+  }
+
+  .r--main-form .bg-secondary2 {
+    background-color: #edecef;
+    margin-bottom: 5px;
+  }
+
+  .r--main-form .form-group {
+    padding: 10px;
+    position: relative;
+  }
+
+  .r--main-form .form-group i.remove-ico {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+  }
+
+  .r--main-form .orange-txt {
+    color: red;
+  }
+
+
+  select option {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+</style>
+<style>
+  .m-accordion .m-accordion__item {
+    overflow: hidden;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head {
+    display: table;
+    padding: 1rem 2rem;
+    width: 100%;
+    overflow: hidden;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head .m-accordion__item-icon {
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 0;
+    padding-right: 1rem;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head .m-accordion__item-icon>i {
+    display: inline-block;
+    font-size: 2rem;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head .m-accordion__item-title {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head .m-accordion__item-mode {
+    font-family: LineAwesome;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    font-size: 1.3rem;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head .m-accordion__item-mode:before {
+    content: "";
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    font-family: LineAwesome;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode:before {
+    content: "";
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-head:hover {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    cursor: pointer;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-body .m-accordion__item-content,
+  .m-accordion .m-accordion__item .m-accordion__item-body>span {
+    padding: 1.5rem 2rem;
+  }
+
+  .m-accordion .m-accordion__item .m-accordion__item-body .m-accordion__item-content>p:last-child,
+  .m-accordion .m-accordion__item .m-accordion__item-body>span>p:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .m-accordion .m-accordion__item:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-accordion.m-accordion--default .m-accordion__item {
+    margin-bottom: 1rem;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item:not(:first-child):not(:last-child) {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item:last-child {
+    -webkit-border-top-left-radius: 0;
+    -moz-border-top-left-radius: 0;
+    -ms-border-top-left-radius: 0;
+    -o-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+    -moz-border-top-right-radius: 0;
+    -ms-border-top-right-radius: 0;
+    -o-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item:first-child {
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-bottom-left-radius: 0;
+    -ms-border-bottom-left-radius: 0;
+    -o-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-bottom-right-radius: 0;
+    -ms-border-bottom-right-radius: 0;
+    -o-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item {
+    margin-bottom: 2rem;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode>i:before {
+    content: "\f2c2";
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-body .m-accordion__item-content,
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-body>span {
+    padding-top: 0;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-accordion.m-accordion--toggle-arrow .m-accordion__item .m-accordion__item-head .m-accordion__item-mode {
+    font-family: LineAwesome;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    font-size: 1.3rem;
+  }
+
+  .m-accordion.m-accordion--toggle-arrow .m-accordion__item .m-accordion__item-head .m-accordion__item-mode:before {
+    content: "";
+  }
+
+  .m-accordion.m-accordion--toggle-arrow .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    font-family: LineAwesome;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+  }
+
+  .m-accordion.m-accordion--toggle-arrow .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode:before {
+    content: "";
+  }
+
+  .m-accordion.m-accordion--padding-lg .m-accordion__item .m-accordion__item-head {
+    padding: 1.5rem 2rem;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item,
+  .m-accordion.m-accordion--default .m-accordion__item {
+    border: 1px solid #ebedf2;
+    background-color: #fff;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item .m-accordion__item-head.collapsed,
+  .m-accordion.m-accordion--default .m-accordion__item .m-accordion__item-head.collapsed {
+    background-color: #fff;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item .m-accordion__item-head,
+  .m-accordion.m-accordion--bordered .m-accordion__item .m-accordion__item-head:hover,
+  .m-accordion.m-accordion--default .m-accordion__item .m-accordion__item-head,
+  .m-accordion.m-accordion--default .m-accordion__item .m-accordion__item-head:hover {
+    background-color: #f4f5f8;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item .m-accordion__item-head .m-accordion__item-mode,
+  .m-accordion.m-accordion--default .m-accordion__item .m-accordion__item-head .m-accordion__item-mode {
+    color: #a4a6ae;
+  }
+
+  .m-accordion.m-accordion--bordered .m-accordion__item .m-accordion__item-body,
+  .m-accordion.m-accordion--default .m-accordion__item .m-accordion__item-body {
+    border-top: 1px solid #ebedf2;
+  }
+
+  .m-accordion.m-accordion--solid .m-accordion__item .m-accordion__item-head.collapsed {
+    background-color: #f7f8fa;
+  }
+
+  .m-accordion.m-accordion--solid .m-accordion__item .m-accordion__item-head,
+  .m-accordion.m-accordion--solid .m-accordion__item .m-accordion__item-head:hover {
+    background-color: #f4f5f8;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item {
+    border: none;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-head {
+    background-color: #f7f8fa;
+    color: #716aca !important;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-head .m-accordion__item-mode {
+    color: #716aca !important;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-head.collapsed {
+    color: #837dd1 !important;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #837dd1 !important;
+  }
+
+  .m-accordion.m-accordion--section .m-accordion__item .m-accordion__item-body {
+    border-top: none;
+    background-color: #f7f8fa;
+  }
+
+  .m-accordion .m-accordion__item--brand {
+    border: 1px solid #716aca !important;
+  }
+
+  .m-accordion .m-accordion__item--brand .m-accordion__item-head,
+  .m-accordion .m-accordion__item--brand .m-accordion__item-head:hover {
+    background-color: #5f57c3 !important;
+  }
+
+  .m-accordion .m-accordion__item--brand .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--brand .m-accordion__item-head.collapsed {
+    background-color: #716aca !important;
+  }
+
+  .m-accordion .m-accordion__item--brand .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--brand .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--metal {
+    border: 1px solid #c4c5d6 !important;
+  }
+
+  .m-accordion .m-accordion__item--metal .m-accordion__item-head,
+  .m-accordion .m-accordion__item--metal .m-accordion__item-head:hover {
+    background-color: #b5b6cc !important;
+  }
+
+  .m-accordion .m-accordion__item--metal .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--metal .m-accordion__item-head.collapsed {
+    background-color: #c4c5d6 !important;
+  }
+
+  .m-accordion .m-accordion__item--metal .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--metal .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--light {
+    border: 1px solid #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--light .m-accordion__item-head,
+  .m-accordion .m-accordion__item--light .m-accordion__item-head:hover {
+    background-color: #f2f2f2 !important;
+  }
+
+  .m-accordion .m-accordion__item--light .m-accordion__item-head .m-accordion__item-mode {
+    color: #282a3c !important;
+  }
+
+  .m-accordion .m-accordion__item--light .m-accordion__item-head.collapsed {
+    background-color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--light .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #282a3c !important;
+  }
+
+  .m-accordion .m-accordion__item--light .m-accordion__item-head>span {
+    color: #282a3c !important;
+  }
+
+  .m-accordion .m-accordion__item--accent {
+    border: 1px solid #00c5dc !important;
+  }
+
+  .m-accordion .m-accordion__item--accent .m-accordion__item-head,
+  .m-accordion .m-accordion__item--accent .m-accordion__item-head:hover {
+    background-color: #00aec3 !important;
+  }
+
+  .m-accordion .m-accordion__item--accent .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--accent .m-accordion__item-head.collapsed {
+    background-color: #00c5dc !important;
+  }
+
+  .m-accordion .m-accordion__item--accent .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--accent .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--focus {
+    border: 1px solid #9816f4 !important;
+  }
+
+  .m-accordion .m-accordion__item--focus .m-accordion__item-head,
+  .m-accordion .m-accordion__item--focus .m-accordion__item-head:hover {
+    background-color: #8b0be6 !important;
+  }
+
+  .m-accordion .m-accordion__item--focus .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--focus .m-accordion__item-head.collapsed {
+    background-color: #9816f4 !important;
+  }
+
+  .m-accordion .m-accordion__item--focus .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--focus .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--primary {
+    border: 1px solid #5867dd !important;
+  }
+
+  .m-accordion .m-accordion__item--primary .m-accordion__item-head,
+  .m-accordion .m-accordion__item--primary .m-accordion__item-head:hover {
+    background-color: #4354d9 !important;
+  }
+
+  .m-accordion .m-accordion__item--primary .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--primary .m-accordion__item-head.collapsed {
+    background-color: #5867dd !important;
+  }
+
+  .m-accordion .m-accordion__item--primary .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--primary .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--success {
+    border: 1px solid #34bfa3 !important;
+  }
+
+  .m-accordion .m-accordion__item--success .m-accordion__item-head,
+  .m-accordion .m-accordion__item--success .m-accordion__item-head:hover {
+    background-color: #2fab92 !important;
+  }
+
+  .m-accordion .m-accordion__item--success .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--success .m-accordion__item-head.collapsed {
+    background-color: #34bfa3 !important;
+  }
+
+  .m-accordion .m-accordion__item--success .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--success .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--info {
+    border: 1px solid #36a3f7 !important;
+  }
+
+  .m-accordion .m-accordion__item--info .m-accordion__item-head,
+  .m-accordion .m-accordion__item--info .m-accordion__item-head:hover {
+    background-color: #1d98f6 !important;
+  }
+
+  .m-accordion .m-accordion__item--info .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--info .m-accordion__item-head.collapsed {
+    background-color: #36a3f7 !important;
+  }
+
+  .m-accordion .m-accordion__item--info .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--info .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--warning {
+    border: 1px solid #ffb822 !important;
+  }
+
+  .m-accordion .m-accordion__item--warning .m-accordion__item-head,
+  .m-accordion .m-accordion__item--warning .m-accordion__item-head:hover {
+    background-color: #ffb009 !important;
+  }
+
+  .m-accordion .m-accordion__item--warning .m-accordion__item-head .m-accordion__item-mode {
+    color: #111 !important;
+  }
+
+  .m-accordion .m-accordion__item--warning .m-accordion__item-head.collapsed {
+    background-color: #ffb822 !important;
+  }
+
+  .m-accordion .m-accordion__item--warning .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #111 !important;
+  }
+
+  .m-accordion .m-accordion__item--warning .m-accordion__item-head>span {
+    color: #111 !important;
+  }
+
+  .m-accordion .m-accordion__item--danger {
+    border: 1px solid #f4516c !important;
+  }
+
+  .m-accordion .m-accordion__item--danger .m-accordion__item-head,
+  .m-accordion .m-accordion__item--danger .m-accordion__item-head:hover {
+    background-color: #f23958 !important;
+  }
+
+  .m-accordion .m-accordion__item--danger .m-accordion__item-head .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--danger .m-accordion__item-head.collapsed {
+    background-color: #f4516c !important;
+  }
+
+  .m-accordion .m-accordion__item--danger .m-accordion__item-head.collapsed .m-accordion__item-mode {
+    color: #fff !important;
+  }
+
+  .m-accordion .m-accordion__item--danger .m-accordion__item-head>span {
+    color: #fff !important;
+  }
+
+  .m-blockui {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    display: table;
+    table-layout: fixed;
+  }
+
+  .margin5px {
+    margin: 0 0 0 5px;
+  }
+</style>
+
+<div class="split-aside-close nav-sidebar-minimize">
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col w-100">
+        <div class="w-100">
+          <div id="split-aside-resize" class="">
+            <div class="row w-100">
+              <div class="left-sidebar col-2 p-3 border-right">
+                <h4>Place hear anything which you want</h4>
+              </div>
+              <div class="main-content col-12 px-4">
+                <div class="mt-4 row">
+                  <div class="col">
+                    <div class="card shadow mb-4" *ngIf="divSectionAdd">
+                      <div class="card-header py-2">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <h5 class="m-0">Process Manage</h5>
+                          </div>
+                          <div class="col-auto">
+                            <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                              <button id="btnAddProcess" type="button" class="btn btn-primary"
+                                (click)="AddNewSection()">
+                                <i class="la la-plus"></i> Add Section
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="card card-body px-3 pt-3 pb-1 mb-3" id="AddSectionId" *ngIf="AddSectionId">
+                          <form [formGroup]="addSectionForm">
+                            <div class="form-row align-items-center">
+                              <div class="form-group col-auto">
+                                <label>Section Name</label>
+                              </div>
+                              <div class="form-group col">
+                                <input type="text" class="form-control form-control-sm" id="txtSectionName"
+                                  [(ngModel)]="sectionname" formControlName="sectionname"
+                                  [ngClass]="{ 'is-invalid': submitted && fval.sectionname.invalid }">
+                                <div *ngIf="submitted && fval.sectionname.errors" class="invalid-feedback">
+                                  <div *ngIf="fval.sectionname.errors.required">Section name is required</div>
+                                </div>
+                              </div>
+                              <div class="form-group col-auto">
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                  <input type="checkbox" class="custom-control-input" id="isactive"
+                                    [(ngModel)]="isactive" formControlName="isactive">
+                                  <label class="custom-control-label" for="isactive">Isactive</label>
+                                </div>
+                              </div>
+                              <div class="form-group col-auto">
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                  <input type="checkbox" class="custom-control-input" id="ismultiple"
+                                    [(ngModel)]="ismultiple" formControlName="ismultiple">
+                                  <label class="custom-control-label" for="ismultiple">ismultiple</label>
+                                </div>
+                              </div>
+                              <div class="form-group col-auto">
+                                <button type="submit" class="btn btn-success btn-w80" (click)="SaveSection()">
+                                  <i class="fa fa-lg fa-save mr-2"></i>Save</button>
+                                <button class="btn btn-outline-danger btn-w80 margin5px" (click)="ClearField()">
+                                  <i class="fa fa-lg fa-times mr-2"></i>Cancel
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="table-responsive" id="displaySectionRecords" *ngIf="displaySectionRecords">
+                          <table class="table table-striped">
+                            <thead class="text-uppercase">
+                              <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Sequence</th>
+                                <th>Isactive</th>
+                                <th>Ismultiple</th>
+                                <th>Mapping Controls</th>
+                              </tr>
+                            </thead>
+                            <tbody cdkDropList #sectionlistList="cdkDropList" class="container-fluid" id="dropZone"
+                              [cdkDropListData]="sectionlist" (cdkDropListDropped)="dropSection($event)">
+                              <ng-container *ngIf="sectionlist">
+                                <tr class="tr-action-outer" *ngFor="let list of sectionlist;let index = index" cdkDrag>
+                                  <td>
+                                    <a href="javascript:void(0);" class="form-group col-auto"
+                                      (click)="EditSection(list)">
+                                      <i class="fa fa-lg fa-pencil-alt"></i>
+                                    </a>
+                                    {{index+1}}
+                                  </td>
+                                  <td>{{list.sectionname}}</td>
+                                  <td>{{list.sequence}}</td>
+
+                                  <td>
+                                    <span class="badge badge-success" *ngIf="list.isactive==true">Active</span>
+                                    <span class="badge badge-danger" *ngIf="list.isactive==false">InActive</span>
+                                  </td>
+                                  <td>
+                                    <span class="badge badge-success" *ngIf="list.ismultiple==true">True</span>
+                                    <span class="badge badge-danger" *ngIf="list.ismultiple==false">False</span>
+                                  </td>
+                                  <td>
+                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                      (click)="ManageControls(list)">
+                                      <i class="far fa-edit"></i> Manage Controls
+                                    </button>
+                                  </td>
+                                </tr>
+                              </ng-container>
+                              <ng-container *ngIf="sectionlist && sectionlist.length==0">
+                                <tr class="text-center text-color-red">
+                                  <td colspan="6">
+                                    No Data Found
+                                  </td>
+                                </tr>
+                              </ng-container>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <section *ngIf="divaddcontrols">
+                        <div class="content-wrapper" style="margin-left:0px !important">
+                          <div class="container-fluid">
+                            <div>
+                              <div class="row">
+                                <div class="col-md-3" id="sideBar">
+                                  <div class="border">
+                                    <div class="tab-container">
+                                      <ul class="nav nav-pills nav-fill" role="tablist">
+                                        <li role="presentation" class="nav-item nav-link active" id="addFeildLI">
+                                          <a class="text-white" href="javascript:void(0)" id="addFieldTab_lnk"
+                                            aria-controls="home" role="tab" data-toggle="tab" (click)="Changetab()">Add
+                                            a Field</a>
+                                        </li>
+                                        <li role="presentation" class="nav-item nav-link" id="feildSettingLI">
+                                          <a href="#fieldSettingTab" id="fieldSettingTab_lnk" aria-controls="profile"
+                                            role="tab">Field Settings</a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <div class="tab-content" style="overflow-y: scroll; height: 500px;">
+                                      <div role="tabpanel" class="tab-pane active" id="addFieldTab">
+                                        <div cdkDropList [(ngModel)]="dragElements" #dragElementList="cdkDropList"
+                                          [cdkDropListData]="dragElements" [cdkDropListConnectedTo]="[formfieldsList]"
+                                          class="row col-md-12" (cdkDropListDropped)="drop($event)">
+                                          <div style="cursor:pointer;" class="border d-inline-block m-1 p-2" cdkDrag
+                                            (click)="AddElement(ele)"
+                                            *ngFor="let ele of dragElements; let index = index" data-index="index">
+                                            <i class="fa fa-cogs"></i> {{ele.Name}}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="fieldSettingTab">
+                                        <div class="form-group" [hidden]="currentField.type != 'question'">
+                                          &nbsp;&nbsp;
+                                          <label class="checkbox-inline">
+                                            <input checked="checked" type="checkbox"
+                                              [(ngModel)]="currentField.isrequired"
+                                              class="ng-pristine ng-untouched ng-valid ng-empty"> Is Required
+                                            <span></span>
+                                          </label>
+                                        </div>
+                                        <div class="form-group" [hidden]="currentField.type != 'section'">
+                                          &nbsp;&nbsp;
+                                          <label class="checkbox-inline">
+                                            <input checked="checked" type="checkbox"
+                                              [(ngModel)]="currentField.ismultiple"
+                                              class="ng-pristine ng-untouched ng-valid ng-empty"> Is Multiple
+                                            <span></span>
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-9 r--main-form">
+                                  <div class="tab-content border">
+                                    <div role="tabpanel" class="tab-pane active text-left" id="formBuilderContent">
+                                      <div class="mb-2">
+                                        <i class="fa fa-pencil fa-lg"></i> <b>{{sectionname}}</b>
+                                        <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+                                      </div>
+                                      <div cdkDropList #formfieldsList="cdkDropList" class="container-fluid"
+                                        id="dropZone" [cdkDropListData]="formFields"
+                                        [cdkDropListConnectedTo]="[dragElementList]"
+                                        (cdkDropListDropped)="drop($event)">
+                                        <div class="row sortable-formbuilder" ui-sortable="sortableOptions"
+                                          style="overflow-y: scroll; min-height: 200px;max-height: 500px;"
+                                          id="sortable-formbuilder-ul">
+                                          <div class="col-md-12 bg-secondary2"
+                                            *ngFor="let field of formFields; let index = index" cdkDrag
+                                            [ngSwitch]="field.type" (click)="ActiveField(field)">
+                                            <!-- <div class="col-md-12 bg-secondary2" element-drop data-index="index"
+                                            *ngFor="let field of formFields; let index = index" [ngSwitch]="field.type"
+                                            (click)="activeField(field)"> -->
+
+                                            <div class="form-group" *ngSwitchCase="'section'"
+                                              [ngClass]="field.Active ? 'active-field' : '' ">
+                                              <span *ngIf="field.isrequired==true" class="orange-txt">*</span>
+                                              <input type="text" class="input-as-label" [(ngModel)]="field.Name"
+                                                value="{{field.Name}}" />
+                                              <i class="fa fa-lg fa-minus-square-o remove-ico"
+                                                (click)="removeElement(index)"></i>
+                                            </div>
+                                            <div class="form-group" *ngSwitchCase="'question'"
+                                              [ngClass]="field.Active ? 'active-field' : '' ">
+                                              <span *ngIf="field.isrequired==true" class="orange-txt">*</span>
+                                              <input type="text" class="input-as-label" [(ngModel)]="field.Name" />
+                                              <input type="text" class="form-control"
+                                                id="{{field.Name.replace(' ','_') + field.id}}" value="{{field.Value}}"
+                                                placeholder="{{field.Name}}">
+                                              <i class="la la-lg la-minus-square-o remove-ico"
+                                                (click)="RemoveElement(index)"></i>
+                                            </div>
+                                            <div *ngSwitchDefault>
+                                            </div>
+                                          </div>
+                                          <div class="drop-to-add col-md-12">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <br />
+                                  <div class="form-group col-auto">
+                                    <button type="submit" class="btn btn-success btn-w80 pull-right  margin5px"
+                                      (click)="SaveElement()"><i class="fa fa-lg fa-save mr-2"></i>Save</button>
+                                    <button class="btn btn-outline-danger pull-right btn-w80"
+                                      (click)="CancelElement()"><i class="fa fa-lg fa-times mr-2"></i>Cancel</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

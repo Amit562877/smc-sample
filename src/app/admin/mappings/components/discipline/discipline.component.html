@@ -1,0 +1,190 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Manage Master Discipline</h5>
+                        </div>
+                        <div class="col-auto">
+                          <!-- <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                              <button id="btnAddProcess" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#media">
+                                <i class="la la-plus"></i> Add new
+                              </button>
+                            </div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="card-ctrls border-left d-inline-flex align-items-center ml-2"
+                            *ngIf="permissions.canAdd">
+                            <button id="btnAddProcess" style="margin-top: 27px;" type="button"
+                              class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#media" role="button"
+                              aria-label="add">
+                              <i class="la la-plus"></i> Add new
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-5">
+                              <div class="form-group text-left">
+                                <label class="font-weight-500">Show me</label>
+                                <div class="input-group">
+                                  <select class="form-control border-secondary shadow" id="inputGroupSelect01"
+                                    [(ngModel)]="showme" (change)="getAllDiscipline()" aria-label="getalldiscipline">
+                                    <option value="1">Only blank</option>
+                                    <option value="2">Only filled</option>
+                                    <option value="0">All</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-5">
+                              <div class="form-group text-left">
+                                <label class="font-weight-500">Records</label>
+                                <div class="input-group">
+                                  <select class="form-control border-secondary shadow" id="inputGroupSelect01"
+                                    [(ngModel)]="records" (change)="getAllDiscipline()"
+                                    aria-label="getalldisciplinerange">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="0">All</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <div class="form-group text-left">
+                                <button class="btn btn-outline-secondary rounded-circle" style="margin-top: 27px;"
+                                  (click)="getAllDiscipline()" role="button" aria-label="getalldiscipline"><i
+                                    class="fa fa-retweet" aria-hidden="true"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th>
+                                Discipline
+                              </th>
+                              <th>
+                                Master Discipline
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="disciplineList.length>0">
+                            <tr *ngFor="let discipline of disciplineList;let ind=index">
+                              <td>{{discipline.discipline}}</td>
+                              <td>
+                                <select class="form-control" [disabled]="!permissions.canEdit"
+                                  attr.data-name="mdid{{ind}}" data-type="select" name="mdid{{ind}}"
+                                  data-prefix="Master discipline" [(ngModel)]="discipline.masterdisciplineid"
+                                  attr.aria-label="mdid{{ind}}">
+                                  <option *ngFor="let mdl of masterDisciplineList" [ngValue]="mdl.id">
+                                    {{mdl.name}}</option>
+                                </select>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tbody *ngIf="disciplineList.length==0">
+                            <tr>
+                              <td colspan="2" class="text-center text-danger">
+                                No data found
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot *ngIf="permissions.canEdit">
+                            <tr>
+                              <td colspan="2">
+                                <button (click)="saveMasterDisciplineMapping()" class="btn btn-outline-primary btn-sm"
+                                  data-toggle="tooltip" title="" data-original-title="Search courses" role="button"
+                                  aria-label="searchcourse">
+                                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                  Save changes</button>&nbsp;
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="media" role="dialog" *ngIf="permissions.canAdd">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">{{(mdiscipline.id>0)?'Update':'Add'}} Master discipline</h4>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="close" data-dismiss="modal" role="button" aria-label="close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form #headform="ngForm" novalidate autocomplete="off">
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500" for="name" aria-label="name">Name</label>
+                <input type="text" data-name="name" data-type="text" name="name" data-prefix="Name" required
+                  class="form-control" [(ngModel)]="mdiscipline.name" aria-label="name">
+              </div>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Image</label>
+                <input type="file" class="form-control border-secondary shadow" required accept=".jpg,.jpeg,.png"
+                  [(ngModel)]="mdiscipline.file" data-name="mdfile" data-type="select" name="mdfile" data-prefix="Image"
+                  (change)="fileSlectionChanged($event)">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-outline-primary" appValidation [form]="headform"
+              [validparent]="'form-group'" (click)="addNewMD(headform)" role="button" aria-label="add">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              Save</button>&nbsp;
+            <button type="button" appClearValidation [form]="headform" class="btn btn-outline-danger"
+              data-dismiss="modal" (click)="cancelProcess()" role="button" aria-label="cancel">
+              <i class="fa fa-ban" aria-hidden="true"></i>
+              Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

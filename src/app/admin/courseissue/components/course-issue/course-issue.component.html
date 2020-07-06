@@ -1,0 +1,210 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Manage Course</h5>
+                        </div>
+                        <div class="col-auto">
+                          <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                            <button type="button" class="btn btn-secondary" data-toggle="tooltip"
+                              data-original-title="Download excel" (click)="generateExcelSample()">
+                              Export Sample <i class="fas fa-download"></i>
+                            </button>&nbsp;
+                            <button type="button" class="btn btn-secondary" data-toggle="tooltip"
+                              data-original-title="Download excel" (click)="generateExcel()">
+                              Export <i class="fas fa-download"></i>
+                            </button>&nbsp;
+                            <label for="upload-photo" id='upload-photolbl' class="btn btn-secondary"
+                              data-toggle="tooltip" data-original-title="Upload excel">
+                              Import <i class="fas fa-upload"></i>
+                            </label>
+                            <input type="file" name="photo" (change)="importExcel($event)" accept=".xls,.xlsx"
+                              id="upload-photo" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <!-- <div class="col-md-3">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Country</label>
+                            <div class="input-group">
+                              <select class="form-control" [(ngModel)]="countryid" (change)="getAllCourses()"
+                                aria-label="uid">
+                                <option value="0">Choose</option>
+                                <option *ngFor="let country of countrylist" [value]="country.id">
+                                  {{country.name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div> -->
+                        <div class="col-md-4">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">University</label>
+                            <div class="input-group">
+                              <select class="form-control" [(ngModel)]="universityid" (change)="getAllCourses()"
+                                aria-label="uid">
+                                <option value="0">Choose</option>
+                                <option *ngFor="let university of universitylist" [value]="university.id">
+                                  {{university.name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Studylevel</label>
+                            <div class="input-group">
+                              <select class="form-control" [(ngModel)]="studylevelid" (change)="getAllCourses()"
+                                aria-label="slevelid">
+                                <option value="0">Choose</option>
+                                <option *ngFor="let studylevel of studylevellist" [value]="studylevel.id">
+                                  {{studylevel.name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Issue</label>
+                            <div class="input-group">
+                              <select class="form-control" [(ngModel)]="issuetype" (change)="getAllCourses()"
+                                aria-label="issuetype">
+                                <option value="0">All</option>
+                                <option value="1">Missing IELTS</option>
+                                <option value="2">Missing Intake</option>
+                                <option value="3">Missing Fees</option>
+                                <option value="4">Missing Duration</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th>Sequence</th>
+                              <th>Course name</th>
+                              <th>University name</th>
+                              <th *ngIf="permissions.canEdit">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="courselist.length>0">
+                              <tr class="tr-action-outer" *ngFor="let course of courselist  | paginate: {itemsPerPage: pageSize,
+                                  currentPage: pageIndex,
+                                  totalItems: coursecount};let index = index">
+                                <td>{{course.SRNO}}</td>
+                                <td>{{course.coursename}}</td>
+                                <td>{{course.universityname}}</td>
+                                <td *ngIf="permissions.canEdit">
+                                  <a class="btn btn-sm btn-outline-primary rounded-circle"
+                                    [routerLink]="['edit-course-issue',course.id | encdec :'enc']"><i
+                                      class="fa fa-lg fa-edit" data-toggle="tooltip" title="" data-original-title="Edit"
+                                      aria-label="edit_issue"></i></a>
+                                  <!-- <button class="btn btn-outline-danger rounded-circle" data-toggle="tooltip" title=""
+                                    data-original-title="Remove" (click)="deleteCurrency(course)"><i
+                                      class="fa fa-times-circle" aria-hidden="true"></i></button> -->
+                                </td>
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="courselist.length==0">
+                              <tr class="text-center text-color-red">
+                                <td colspan="4">
+                                  No Data Found
+                                </td>
+                              </tr>
+                            </ng-container>
+
+                          </tbody>
+                        </table>
+
+                      </div>
+                      <div class="px-3">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <select style="width: 60px;" class="custom-select custom-select-sm mr-2"
+                              id="inputGroupSelect01" [(ngModel)]="pageSize" (change)="getAllCourses()"
+                              aria-label="viewcnt">
+                              <option value="10">10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            <p class="d-inline-block" *ngIf="(pageIndex*pageSize)>coursecount">Displaying
+                              {{(coursecount==0)?0:((pageIndex-1)*pageSize) + 1}} - {{coursecount}} of
+                              {{coursecount}}
+                              records</p>
+                            <p class="d-inline-block" *ngIf="(pageIndex*pageSize)<coursecount">Displaying
+                              {{((pageIndex-1)*pageSize) + 1}} -
+                              {{(((pageIndex-1)*pageSize) + pageSize)}} of
+                              {{coursecount}}
+                              records</p>
+                          </div>
+
+                          <div class="col-auto">
+                            <nav aria-label="Page navigation example">
+                              <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)">
+                              </pagination-controls>
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="progress" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body"
+        style="height: 100%;width: 100%;padding:100px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <h3 *ngIf="prepare">Preparing your excel please wait..... <i class="fas fa-sync fa-refresh"></i>
+        </h3>
+        <span *ngIf="download">
+          <h3>Downloading in progress </h3>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{downloadpr}}" attr.aria-valuemin="0"
+              attr.aria-valuemax="100" [ngStyle]="{width: downloadpr+'%'}">
+              <span>{{downloadpr}}% Complete</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>File size:</strong> {{(totalsize/1048576) | number : '1.2-2'}} in MB
+              <!-- <strong>File size:</strong> Unknown -->
+            </div>
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>Total download:</strong> {{(downloadedsize/1048576) | number : '1.2-2'}} in MB
+            </div>
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>Network speed:</strong> {{speed}}
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

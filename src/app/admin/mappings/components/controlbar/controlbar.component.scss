@@ -1,0 +1,13 @@
+.brd {
+  border: 1px solid black !important;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  width: 200px;
+  padding: 20px;
+  background-color: ghostwhite;
+}
+.draggable {
+  cursor: all-scroll;
+}

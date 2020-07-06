@@ -1,0 +1,1813 @@
+<div class="row flex-nowrap">
+    <div class="col w-100">
+        <div class="d-flex flex-row w-100 split-aside-wrap">
+            <div id="split-aside-resize" class="w-100">
+                <div class="row">
+                    <div class="left-sidebar col-2 p-3 border-right">
+                        <h4>Place hear anything which you want</h4>
+                    </div>
+                    <div class="main-content col-12 px-4">
+                        <div class="mt-4 row">
+                            <div class="col">
+                                <div class="card shadow mb-4" id="mainProcessModel">
+                                    <div class="card-header py-2">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h5 class="m-0">Process Manage</h5>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                                                    <button role="button" aria-label="refreshbtn"
+                                                        class="card-ctrl-refresh btn btn-link btn-sm" type="button">
+                                                        <i class="material-icons material-icons-18">
+                                                            refresh
+                                                        </i>
+                                                    </button>
+                                                    <button role="button" aria-label="keyboard_arrow_upbtn"
+                                                        class="card-ctrl-collapse btn btn-link btn-sm" type="button">
+                                                        <i class="material-icons material-icons-18">
+                                                            keyboard_arrow_up
+                                                        </i>
+                                                    </button>
+                                                    <button role="button" aria-label="fullscreenbtn"
+                                                        class="card-ctrl-fullscreen btn btn-link btn-sm" type="button">
+                                                        <i class="fullscreen material-icons material-icons-18">
+                                                            fullscreen
+                                                        </i>
+                                                        <i class="fullscreen-exit material-icons material-icons-18">
+                                                            fullscreen_exit
+                                                        </i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Start Main process list Model -->
+                                        <div id="maindivModel">
+                                            <div class="form-row">
+                                                <div class="form-group col-10">
+                                                    <label for="productidf">Process</label>
+                                                    <select aria-label="DisplayBoxes" class="form-control"
+                                                        id="masterListId" (change)="DisplayBoxes($event)">
+                                                        <option value="">Select Process</option>
+                                                        <option *ngFor="let obj of masterlist" [value]="obj.processid">
+                                                            {{obj.processname}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-auto d-flex align-items-end"
+                                                    *ngIf="permissions.canAdd">
+                                                    <button role="button" aria-label="AddNewProcessbtn"
+                                                        id="btnAddProcess" type="button" class="btn btn-primary"
+                                                        (click)="AddNewProcess()">
+                                                        <i class="la la-plus"></i> Add New Process
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="boolstage &&  permissions.canAdd">
+                                                <div class="form-group col-auto">
+                                                    <button role="button" aria-label="AddStagebtn" type="button"
+                                                        class="btn btn-primary btn-sm" id="addBox"
+                                                        (click)="AddStage('addsection','')">
+                                                        <i class="la la-plus"></i> Add Stages
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Main process list Model -->
+
+                                        <!-- Start Add Process Model -->
+                                        <form #addProcessForm="ngForm" novalidate>
+                                            <div class="card mb-3 pt-3 px-3" id="AddProcessModel">
+                                                <div class="form-row align-items-center">
+                                                    <div class="form-group col-auto">
+                                                        <label>Process Name</label>
+                                                    </div>
+                                                    <div class="form-group col">
+                                                        <input type="text" class="form-control" name="ProcessName1"
+                                                            [(ngModel)]="ProcessName" [required]="true"
+                                                            [ngClass]="(submitted && addProcessForm.controls.ProcessName1.invalid)?'invalid':''">
+
+                                                    </div>
+                                                    <div class="form-group col-auto">
+                                                        <div
+                                                            class="custom-control custom-checkbox custom-control-inline">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                name="proisactive" id="proisactive"
+                                                                [checked]="proisactive==true?true:false"
+                                                                [(ngModel)]="proisactive">
+                                                            <label class="custom-control-label"
+                                                                for="proisactive">Isactive</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-auto">
+                                                        <button role="button" aria-label="SaveProcessbtn" type="submit"
+                                                            class="btn btn-success btn-w80"
+                                                            (click)="SaveProcess(addProcessForm)"><i
+                                                                class="fa fa-lg fa-save mr-2"></i>Save</button>
+                                                        <button role="button" aria-label="CancelProcessbtn"
+                                                            class="btn btn-outline-danger btn-w80 margin5px"
+                                                            (click)="CancelProcess()"><i
+                                                                class="fa fa-lg fa-times mr-2"></i>Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- End Add Process Model -->
+
+                                        <!-- Start Add Stage Model -->
+                                        <form #addSectionForm="ngForm" novalidate>
+                                            <div class="card card-body px-3 pt-3 pb-1 mb-3" id="StageModel">
+                                                <div class="form-row align-items-center">
+                                                    <div class="form-group col-auto">
+                                                        <label>Stage Name</label>
+                                                    </div>
+                                                    <div class="form-group col">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="txtSectionName" [required]="true" name="SectionName"
+                                                            [(ngModel)]="SectionName"
+                                                            [ngClass]="(sectionSubmitted && addSectionForm.controls.SectionName.invalid)?'invalid':''">
+                                                    </div>
+                                                    <div class="form-group col-auto">
+                                                        <div
+                                                            class="custom-control custom-checkbox custom-control-inline">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="isactive" name="isactive" [(ngModel)]="isactive">
+                                                            <label class="custom-control-label"
+                                                                for="isactive">Isactive</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-auto">
+                                                        <button role="button" aria-label="SaveSectionbtn" type="submit"
+                                                            class="btn btn-success btn-w80"
+                                                            (click)="SaveSection(addSectionForm)"><i
+                                                                class="fa fa-lg fa-save mr-2"></i>Save</button>
+                                                        <button role="button" aria-label="CancelStageRulesbtn"
+                                                            class="btn btn-outline-danger btn-w80 margin5px"
+                                                            (click)="CancelStageRules()"><i
+                                                                class="fa fa-lg fa-times mr-2"></i>Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- End Add Stage Model -->
+
+                                        <div class="table-responsive" id="parentsectionModel">
+                                            <table class="table table-striped">
+                                                <thead class="text-uppercase">
+                                                    <tr>
+                                                        <th width="5%"></th>
+                                                        <th width="65%">Name</th>
+                                                        <th width="10%">Status</th>
+                                                        <th width="20%">Manage</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody cdkDropList [cdkDropListData]="displayboxes"
+                                                    (cdkDropListDropped)="boxesSectionDrop($event)">
+                                                    <ng-container *ngIf="displayboxes">
+                                                        <tr *ngFor="let sec of displayboxes;let i = index" cdkDrag>
+                                                            <ng-container
+                                                                *ngIf="sec.isform ==true && sec.issubsection==false && sec.sectionparentidf==0">
+                                                                <td>
+                                                                    <a *ngIf="permissions.canEdit"
+                                                                        (click)="AddStage('editsection',sec)"
+                                                                        href="javascript:void(0);"
+                                                                        data-toggle="m-tooltip" title=""
+                                                                        data-skin="dark" data-original-title="Edit">
+                                                                        <i class="la la-edit fa-lg"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td>
+                                                                    <b>{{sec.name}}</b>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="badge badge-success"
+                                                                        *ngIf="sec.isactive==true">Active</span>
+                                                                    <span class="badge badge-danger"
+                                                                        *ngIf="sec.isactive==false">InActive</span>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="javascript:void(0);"
+                                                                        (click)="ManageControls(sec,true)"
+                                                                        class="btn btn-sm btn-outline-secondary margin5px"
+                                                                        title="Edit details">
+                                                                        <i class="far fa-edit"></i> Manage Controls
+                                                                    </a>
+                                                                </td>
+                                                            </ng-container>
+
+                                                        </tr>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="displayboxes && displayboxes.length == 0">
+                                                        <tr class="text-center text-color-red">
+                                                            <td colspan="6">
+                                                                No Data Found
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <section id="divaddcontrols">
+                                        <div class="content-wrapper">
+                                            <div class="container-fluid">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-md-4" id="sideBar">
+                                                            <div class="border">
+                                                                <div class="tab-container">
+                                                                    <ul class="nav nav-pills nav-fill" role="tablist">
+
+                                                                        <li role="presentation"
+                                                                            class="nav-item nav-link active"
+                                                                            id="addFeildLI">
+                                                                            <a class="text-white" href=""
+                                                                                id="addFieldTab_lnk"
+                                                                                aria-controls="home" role="tab"
+                                                                                data-toggle="tab" (click)="changetab()">
+                                                                                Add a Field
+                                                                            </a>
+                                                                        </li>
+                                                                        <li role="presentation"
+                                                                            class="nav-item nav-link"
+                                                                            id="feildSettingLI">
+                                                                            <a href="javascript:void(0)"
+                                                                                id="fieldSettingTab_lnk"
+                                                                                aria-controls="profile" role="tab">
+                                                                                Field Settings
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="tab-content"
+                                                                    style="overflow-y: scroll; height: 89vh;">
+                                                                    <div role="tabpanel" class="tab-pane active"
+                                                                        id="addFieldTab">
+                                                                        <div cdkDropList #dragElementList="cdkDropList"
+                                                                            [cdkDropListData]="dragElements"
+                                                                            [cdkDropListConnectedTo]="[formfieldsList]"
+                                                                            (cdkDropListDropped)="drop($event)">
+                                                                            <div style="cursor:pointer;"
+                                                                                class="col-md-5 border d-inline-block m-1 p-1"
+                                                                                cdkDrag *ngFor="let ele of dragElements"
+                                                                                (click)="AddElement(ele)">
+                                                                                <i class="{{ele.ICon}}"></i>
+                                                                                {{ele.Name}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- Copy Question Hide -->
+                                                                        <div class="row col-md-11  m-1 p-1"
+                                                                            style="display: none">
+                                                                            <select aria-label="CopyControlField_1"
+                                                                                style="width:100% !important"
+                                                                                [(ngModel)]="CopyControlField"
+                                                                                id="drpcopyfield_" name="drpcopyfield_"
+                                                                                class="form-control">
+                                                                                <option value="">Copy Question</option>
+                                                                                <option *ngFor="let obj of AllControls"
+                                                                                    [ngValue]="obj.formcontrolid">
+                                                                                    {{obj.questionname}}
+                                                                                </option>
+
+                                                                            </select>
+                                                                            <button role="button"
+                                                                                aria-label="copyElement" type="button"
+                                                                                class="btn-primary btn-sm"
+                                                                                (click)="copyElement()">
+                                                                                Copy Question
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- Copy Sub Section Hide -->
+                                                                        <div class="row col-md-11  m-1 p-1"
+                                                                            style="display: none">
+                                                                            <select aria-label="drpcopyfromsectionid2"
+                                                                                [(ngModel)]="drpcopyfromsectionid"
+                                                                                id="drpcopyfromsectionid"
+                                                                                name="drpcopyfromsectionid"
+                                                                                class="form-control">
+                                                                                <option value="">Copy Section</option>
+                                                                                <option
+                                                                                    *ngFor="let obj of AllSubSectionList"
+                                                                                    [ngValue]="obj.sectionidf">
+                                                                                    {{obj.sectionname}}
+                                                                                </option>
+                                                                            </select>
+                                                                            <button role="button"
+                                                                                aria-label="copySubSection"
+                                                                                type="button" class="btn-primary btn-sm"
+                                                                                (click)="copySubSection()">
+                                                                                Copy Sub Section
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- Copy Predefined Control / Section Hide -->
+                                                                        <div class="row col-md-11  m-1 p-1"
+                                                                            style="display: none">
+                                                                            <select
+                                                                                aria-label="drpcopypredefinedcontrolid3"
+                                                                                [(ngModel)]="drpcopypredefinedcontrolid"
+                                                                                id="drpcopypredefinedcontrolid"
+                                                                                name="drpcopypredefinedcontrolid"
+                                                                                class="form-control">
+                                                                                <option value="">Copy Predefined Control
+                                                                                    / Section</option>
+                                                                                <option
+                                                                                    *ngFor="let obj of predefinedcontrollist"
+                                                                                    [ngValue]="obj.controlid">
+                                                                                    {{obj.controlname}}
+                                                                                </option>
+                                                                            </select>
+                                                                            <button role="button"
+                                                                                aria-label="copyPredefinedControlsection"
+                                                                                type="button" class="btn-primary btn-sm"
+                                                                                (click)="copyPredefinedControlsection()">
+                                                                                Copy Predefined Controls
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- Copy Predefined Page Control -->
+                                                                        <div class="row col-md-11  m-1 p-1"
+                                                                            style="display:none">
+                                                                            <select
+                                                                                aria-label="drpcopypredefinedpagecontrolid5"
+                                                                                id="drpcopypredefinedpagecontrolid"
+                                                                                name="drpcopypredefinedpagecontrolid"
+                                                                                class="form-control"
+                                                                                data-ng-model="CopyPageControlField"
+                                                                                ng-options="obj.fieldid as obj.displayname group by obj.modulename for obj
+                                                                                                                              in predefinedpagecontrol">
+                                                                                <option disabled value="">
+                                                                                    Copy Predefined Page Control
+                                                                                </option>
+                                                                            </select>
+                                                                            <button role="button"
+                                                                                aria-label="copyPredefinedPageControl"
+                                                                                type="button" class="btn-primary btn-sm"
+                                                                                (click)="copyPredefinedPageControl()">
+                                                                                Copy Predefined Page Controls
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div role="tabpanel" class="tab-pane"
+                                                                        id="fieldSettingTab">
+                                                                        <div>
+                                                                            <div class="col">
+                                                                                <div class="form-group"
+                                                                                    (hidden)="!(currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature')">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isrequired">
+                                                                                        Is Required
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                    &nbsp;&nbsp;
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'displayeditor'">
+                                                                                    <label
+                                                                                        for="question">Question</label>
+                                                                                    <input type="text"
+                                                                                        [(ngModel)]="currentField.Settings.label"
+                                                                                        class="form-control"
+                                                                                        (change)="changeField(currentField.Settings.label)"
+                                                                                        placeholder="Question">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField && currentField.type == 'text'">
+                                                                                    <label for="maxlength">
+                                                                                        Max Input Length
+                                                                                    </label>
+                                                                                    <input type="text"
+                                                                                        [(ngModel)]="currentField.Settings.maxlength"
+                                                                                        class="form-control" value="50"
+                                                                                        placeholder="Max Input Length">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type == 'text' || currentField.type == 'stext'">
+                                                                                    <label for="placeholder">
+                                                                                        Place Holder
+                                                                                    </label>
+                                                                                    <input type="text"
+                                                                                        [(ngModel)]="currentField.Settings.placeholder"
+                                                                                        class="form-control" value=""
+                                                                                        placeholder="placeholder">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    <label for="placeholder">
+                                                                                        Hover Text
+                                                                                    </label>
+                                                                                    <input type="text"
+                                                                                        [(ngModel)]="currentField.Settings.hovertext"
+                                                                                        class="form-control" value=""
+                                                                                        placeholder="Hover Text">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    <label for="placeholder">
+                                                                                        Help Note
+                                                                                    </label>
+                                                                                    <input type="text"
+                                                                                        [(ngModel)]="currentField.Settings.helpnote"
+                                                                                        class="form-control" value=""
+                                                                                        placeholder="Help Note">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type == 'section' || currentField.type == 'subsection' && currentField.type != 'signature'">
+                                                                                    &nbsp;&nbsp;
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.ismultiple">
+                                                                                        Is Multiple
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.Settings.ismultiple == true">
+                                                                                    &nbsp;&nbsp;
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isshowupdatedby">
+                                                                                        Show Updated By
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    &nbsp;&nbsp;
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isactive">
+                                                                                        Is Active
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                    &nbsp;&nbsp;
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isrequired">
+                                                                                        Is Required
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                    &nbsp;&nbsp;
+                                                                                    <label class="checkbox-inline"
+                                                                                        style="display: none"
+                                                                                        *ngIf="currentField.Settings.isrequired==true">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isskip">
+                                                                                        Skip
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                    &nbsp;&nbsp;
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isreadonly">
+                                                                                        Is ReadOnly
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                    &nbsp;&nbsp;
+                                                                                    <label class="checkbox-inline"
+                                                                                        style="display: none">
+                                                                                        <input type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.iscopyvaluefrom">
+                                                                                        Copy Value from
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    [hidden]="!currentField.Settings.iscopyvaluefrom">
+                                                                                    <label>
+                                                                                        Copy Value from Field(s)
+                                                                                    </label>
+
+                                                                                    <select
+                                                                                        aria-label="copyvaluefromfield"
+                                                                                        [(ngModel)]="currentField.Settings.copyvaluefromfield"
+                                                                                        id="drpcopyvaluefromfield"
+                                                                                        name="drpcopyvaluefromfield"
+                                                                                        class="form-control">
+                                                                                        <option disabled value="">Please
+                                                                                            select a field</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of ngSectionControlsList"
+                                                                                            [ngValue]="obj.formcontrolid">
+                                                                                            {{obj.question}}
+                                                                                    </select>
+
+                                                                                    <span class="m-dropdownMask"></span>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type == 'dropdown'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isbindvaluefrom">
+                                                                                        Bind Value from
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    [hidden]="!currentField.Settings.isbindvaluefrom">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        (click)="AddBindcontrolfield()"
+                                                                                        class="btn btn-danger btn-sm m-btn--air m-btn--icon">
+                                                                                        <span>
+                                                                                            <i class="la la-gift"></i>
+                                                                                            <span>
+                                                                                                Add Bind
+                                                                                                Value Field
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div
+                                                                                    [hidden]="!currentField.Settings.isbindvaluefrom">
+                                                                                    <label>
+                                                                                        Bind Value from Field(s)
+                                                                                    </label>
+                                                                                    <div
+                                                                                        ng-repeat="option in currentField.Settings.bindcontrolfieldlist">
+                                                                                        <select
+                                                                                            aria-label="bindcontrolfield"
+                                                                                            style="width:100% !important"
+                                                                                            data-ng-model="option.bindcontrolfield"
+                                                                                            id="drpbindvaluefield_"
+                                                                                            name="drpbindvaluefield_"
+                                                                                            class="form-control m-select2"
+                                                                                            multiple="multiple">
+                                                                                            <option disabled value="">
+                                                                                                Please select a field
+                                                                                            </option>
+                                                                                            <option>
+                                                                                                Helo
+                                                                                            </option>
+                                                                                        </select>
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    *ngIf="currentField.Settings.isbindvaluefrom == true">
+                                                                                    <label>
+                                                                                        Bind between separator
+                                                                                    </label>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="bindbetweenseparator"
+                                                                                            class="form-control"
+                                                                                            ng-model="currentField.Settings.bindbetweenseparator">
+                                                                                            <option disabled value="">
+                                                                                                Please select a field
+                                                                                            </option>
+                                                                                            <option value=",">
+                                                                                                ,
+                                                                                            </option>
+                                                                                            <option value="-">
+                                                                                                -
+                                                                                            </option>
+                                                                                        </select>
+                                                                                        <span
+                                                                                            class="m-dropdownMask"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type == 'regex'">
+                                                                                    <label for="validationType">Regex
+                                                                                        Field</label>
+                                                                                    <select aria-label="regexidf"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="currentField.Settings.regexidf">
+                                                                                        <option value="">Regular
+                                                                                            Expression field</option>
+                                                                                        <option
+                                                                                            *ngFor="let list of regexfieldlist"
+                                                                                            [ngValue]="list.id">
+                                                                                            {{list.name}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'displayeditor' &&  currentField.type != 'section' && currentField.type != 'signature'">
+                                                                                    <label for="validationType">Text
+                                                                                        Case</label>
+                                                                                    <select aria-label="textcaseidf"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="currentField.Settings.textcaseidf">
+                                                                                        <option disabled value="0">
+                                                                                            Select Text Case</option>
+                                                                                        <option
+                                                                                            *ngFor="let list of textcasetypelist"
+                                                                                            [ngValue]="list.id">
+                                                                                            {{list.name}}
+                                                                                    </select>
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'displayeditor' &&  currentField.type != 'section' && currentField.type != 'signature'">
+                                                                                    <label
+                                                                                        for="validationType">Validation
+                                                                                        Type</label>
+                                                                                    <select
+                                                                                        aria-label="validationtypeidf"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="currentField.Settings.validationtypeidf">
+                                                                                        <option value="0">Select
+                                                                                            Validation</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of validationtypelist"
+                                                                                            [ngValue]="obj.id">
+                                                                                            {{obj.name}}
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.Settings.validationtypeidf == 1 ||currentField.Settings.validationtypeidf == 2">
+                                                                                    <label
+                                                                                        for="validationvalue1">Validation
+                                                                                        Source Value</label>
+                                                                                    <input type="text"
+                                                                                        [(ngModel)]="currentField.Settings.validationvalue1"
+                                                                                        class="form-control"
+                                                                                        placeholder="validationvalue1">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.Settings.validationtypeidf == 1 ||currentField.Settings.validationtypeidf == 2">
+                                                                                    <label
+                                                                                        for="validationvalue2">Validation
+                                                                                        Target Value</label>
+                                                                                    <input type="text"
+                                                                                        [(ngModel)]="currentField.Settings.validationvalue2"
+                                                                                        class="form-control" value=""
+                                                                                        placeholder="validationvalue2">
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    style="display: none">
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-8">
+                                                                                            <div
+                                                                                                class="custom-file custom-file-width-icon">
+                                                                                                <input type="file"
+                                                                                                    id="file_" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-4">
+                                                                                            <img alt="imageprocess"
+                                                                                                src="" width="70"
+                                                                                                height="70" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="(currentField.type == 'dropdown'|| currentField.type == 'autocomplete') && currentField.Settings.isbindvaluefrom == false">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.ismaster">
+                                                                                        Is Predefined Option
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.Settings.ismaster == true && (currentField.Settings.isbindvaluefrom == false || currentField.Settings.isbindvaluefrom == null)">
+                                                                                    <label>
+                                                                                        Select Predefined Option
+                                                                                    </label>
+                                                                                    <select aria-label="mastertableidf"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="currentField.Settings.mastertableidf">
+                                                                                        <option disabled value="0">
+                                                                                            Select Predefined Option
+                                                                                        </option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of mastertablelist"
+                                                                                            [ngValue]="obj.id">
+                                                                                            {{obj.name}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type == 'dropdown'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.iscascade">
+                                                                                        Cascade
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    [hidden]="!currentField.Settings.iscascade">
+                                                                                    <label for="validationType">
+                                                                                        Cascade from field
+                                                                                    </label>
+                                                                                    <select aria-label="cascadeidf"
+                                                                                        [(ngModel)]="currentField.Settings.cascadeidf"
+                                                                                        id="drpcascadeidf"
+                                                                                        name="drpcascadeidf"
+                                                                                        class="form-control">
+                                                                                        <option value="">Please select a
+                                                                                            Cascade Field</option>
+                                                                                        <optgroup
+                                                                                            *ngFor="let obj of ngBindcontrollist | groupBy : 'sectionname'"
+                                                                                            label="{{obj.key}}">
+                                                                                            <option
+                                                                                                *ngFor="let objV of obj.value"
+                                                                                                [ngValue]="objV.formcontrolid">
+                                                                                                {{objV.question}}
+                                                                                            </option>
+                                                                                        </optgroup>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.Settings.iscascade">
+                                                                                    <label for="validationType">
+                                                                                        Cascade Field
+                                                                                    </label>
+                                                                                    <select aria-label="cascadefield1"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="currentField.Settings.cascadefield"
+                                                                                        id="drpcascadefield"
+                                                                                        name="drpcascadefield">
+                                                                                        <option disabled value="0">
+                                                                                            Please select a Cascade
+                                                                                            Field</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of mastertablelist | filter: 'id': currentField.Settings.mastertableidf"
+                                                                                            [ngValue]="obj.id">
+                                                                                            {{obj.name}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="(currentField.type == 'radio' || currentField.type == 'radioimage' || currentField.type == 'dropdown' || currentField.type == 'checkBoxZone'|| currentField.type == 'autocomplete') && currentField.Settings.ismaster == false && currentField.Settings.isbindvaluefrom == false">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        (click)="AddControlOption()"
+                                                                                        class="btn btn-danger btn-sm m-btn--air m-btn--icon">
+                                                                                        <span>
+                                                                                            <i class="la la-gift"></i>
+                                                                                            <span>
+                                                                                                Add Option
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div
+                                                                                    *ngIf="(currentField.type == 'radio'  || currentField.type == 'radioimage' || currentField.type == 'dropdown' || currentField.type == 'checkBoxZone'|| currentField.type == 'autocomplete') && currentField.Settings.ismaster == false && currentField.Settings.isbindvaluefrom == false">
+                                                                                    <div
+                                                                                        *ngFor="let option of currentField.Settings.controloptionlist;let index=index">
+
+                                                                                        <div class="form-group">
+                                                                                            <label> Option Text</label>
+                                                                                            <i class="la la-lg la-minus-square-o remove-ico pull-right"
+                                                                                                (click)="RemoveOption(index,option)"></i>
+                                                                                            <input type="text"
+                                                                                                name="name"
+                                                                                                [(ngModel)]="option.optiontext"
+                                                                                                class="form-control m-input"
+                                                                                                placeholder="Enter Option Text" />
+                                                                                            <input type="hidden"
+                                                                                                [(ngModel)]="option.controloptionid" />
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <label> Option Value</label>
+                                                                                            <input type="text"
+                                                                                                name="name"
+                                                                                                [(ngModel)]="option.optionvalue"
+                                                                                                class="form-control m-input"
+                                                                                                placeholder="Enter Option Value" />
+                                                                                            <input type="hidden"
+                                                                                                [(ngModel)]="option.optionvalue" />
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <label> Help Block </label>
+                                                                                            <input type="text"
+                                                                                                name="name"
+                                                                                                [(ngModel)]="option.helpblock"
+                                                                                                class="form-control m-input"
+                                                                                                placeholder="Enter Help Block" />
+                                                                                            <input type="hidden"
+                                                                                                [(ngModel)]="option.helpblock" />
+                                                                                        </div>
+
+                                                                                        <div class="form-group"
+                                                                                            *ngIf="currentField.type == 'radioimage'">
+                                                                                            <label>
+                                                                                                Display By
+                                                                                            </label>
+                                                                                            <select
+                                                                                                aria-label="displayby"
+                                                                                                class="form-control"
+                                                                                                [(ngModel)]="option.displayby">
+                                                                                                <option value="">Select
+                                                                                                    Display By</option>
+                                                                                                <option value="Image">
+                                                                                                    Image</option>
+                                                                                                <option
+                                                                                                    value="Progress">
+                                                                                                    Progress Bar
+                                                                                                </option>
+                                                                                                <option value="Value">
+                                                                                                    Value</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="form-group"
+                                                                                            id="optionprogress_"
+                                                                                            *ngIf="option.displayby=='Progress'">
+                                                                                            <div class="col-lg-12">
+                                                                                                <label>
+                                                                                                    Progress
+                                                                                                </label>
+                                                                                                <div class="row">
+                                                                                                    <div
+                                                                                                        class="col-lg-4">
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            name="name"
+                                                                                                            [(ngModel)]="option.progressvalue"
+                                                                                                            class="form-control m-input"
+                                                                                                            placeholder="Enter Progress Value"
+                                                                                                            onkeypress="return AcceptNumericOnly(event, false);"
+                                                                                                            maxlength="3" />
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            [(ngModel)]="option.progressvalue" />
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="col-lg-8">
+                                                                                                        <input
+                                                                                                            color-picker
+                                                                                                            id="progresscolor"
+                                                                                                            value="#ef203b"
+                                                                                                            name="progresscolor"
+                                                                                                            [(ngModel)]="option.progresscolor">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField && currentField.type == 'file'">
+                                                                                    <label for="validationType">
+                                                                                        Document Type
+                                                                                    </label>
+                                                                                    <select aria-label="documenttypeidf"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="currentField.Settings.documenttypeidf">
+                                                                                        <option disabled value="">
+                                                                                            Select Document </option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of loaddoc"
+                                                                                            [ngValue]="obj.id">
+                                                                                            {{obj.name}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type == 'file'">
+                                                                                    <div
+                                                                                        class="form-group m-form__group">
+                                                                                        <label> Select File Type</label>
+                                                                                        <select aria-label="filetypeidf"
+                                                                                            name="Settings.filetypeidf"
+                                                                                            [(ngModel)]="currentField.Settings.filetypeidf"
+                                                                                            class="form-control">
+                                                                                            <option value="">Select File
+                                                                                                Type</option>
+                                                                                            <option
+                                                                                                *ngFor="let obj of filetypelist"
+                                                                                                [ngValue]="obj.id">
+                                                                                                {{obj.name}}</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type == 'file'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isocr">
+                                                                                        Is OCR
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist'  && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'file' && currentField.type != 'signature'">
+                                                                                    <label for="validationType">OCR
+                                                                                        Document Mapping</label>
+                                                                                    <select aria-label="ocrdocidf"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="currentField.Settings.ocrdocidf">
+                                                                                        <option disabled value="0">
+                                                                                            Select Document</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of loaddoc"
+                                                                                            [ngValue]="obj.id">
+                                                                                            {{obj.name}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist'  && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input [checked]="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.ismultipleshow">
+                                                                                        Is Show Multiple Data
+                                                                                        table
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    style="display: none"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'file'">
+                                                                                    <label for="validationType">
+                                                                                        Field Depend On
+                                                                                    </label>
+
+                                                                                    <select
+                                                                                        aria-label="ocrFileuploadidf"
+                                                                                        [(ngModel)]="currentField.Settings.ocrFileuploadidf"
+                                                                                        id="drpocrFileuploadidf"
+                                                                                        name="drpocrFileuploadidf"
+                                                                                        class="form-control">
+                                                                                        <option disabled value="">
+                                                                                            Please select a File field
+                                                                                        </option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of ngFileuploadfileds"
+                                                                                            [ngValue]="obj.formcontrolid">
+                                                                                            {{obj.question}}
+                                                                                        </option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection'">
+                                                                                    <label for="validationType">
+                                                                                        Bind Control
+                                                                                    </label>
+
+                                                                                    <select
+                                                                                        aria-label="formpredefinedcontrol"
+                                                                                        [(ngModel)]="currentField.Settings.formpredefinedcontrol"
+                                                                                        id="drpformpredefinedcontrol"
+                                                                                        name="drpformpredefinedcontrol"
+                                                                                        class="form-control">
+                                                                                        <option disabled value="">Please
+                                                                                            select a Bind Control
+                                                                                        </option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of ngformpredefinedcontrollist"
+                                                                                            [ngValue]="obj.id">
+                                                                                            {{obj.displayname}}
+                                                                                        </option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist' && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'file' && currentField.type != 'signature'">
+                                                                                    <label for="validationType">
+                                                                                        Address Field
+                                                                                    </label>
+
+                                                                                    <select aria-label="addressfield"
+                                                                                        [(ngModel)]="currentField.Settings.addressfield"
+                                                                                        id="drpaddressfield"
+                                                                                        name="drpaddressfield"
+                                                                                        class="form-control">
+                                                                                        <option value="">Please select a
+                                                                                            Address field</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of AllControlsNew"
+                                                                                            [ngValue]="obj.formcontrolid">
+                                                                                            {{obj.questionname}}
+                                                                                    </select>
+
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist'  && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'file' && currentField.type != 'signature'">
+                                                                                    <label for="validationType">
+                                                                                        Google Address Field
+                                                                                    </label>
+                                                                                    <select
+                                                                                        aria-label="googleaddressfield"
+                                                                                        [(ngModel)]="currentField.Settings.googleaddressfield"
+                                                                                        id="drpgoogleaddressfield"
+                                                                                        name="drpgoogleaddressfield"
+                                                                                        class="form-control">
+                                                                                        <option disabled value="0">
+                                                                                            Please select a Address
+                                                                                            field</option>
+                                                                                        <option
+                                                                                            *ngFor="let obj of GoogleAddressField"
+                                                                                            [ngValue]="obj.id">
+                                                                                            {{obj.name}}
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    style="display: none"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist'  && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.ismultipleshow">
+                                                                                        Is Show Multiple
+                                                                                        Data table
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    style="display: none"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist'  && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isshowstagecontent">
+                                                                                        Is Show Field
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    style="display: none"
+                                                                                    *ngIf="currentField.type != 'section' && currentField.type != 'documentchecklist'  && currentField.type != 'visa' && currentField.type != 'skillauthority' && currentField.type != 'subsection' && currentField.type != 'signature'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isshowmaindata">
+                                                                                        Is Show Main Grid
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    style="display: none"
+                                                                                    *ngIf="currentField.type != 'section'">
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input checked="checked"
+                                                                                            type="checkbox"
+                                                                                            [(ngModel)]="currentField.Settings.isformhidecontrol">
+                                                                                        Is Form
+                                                                                        Control Hide
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8 r--main-form">
+                                                            <div class="tab-content border">
+                                                                <div role="tabpanel" class="tab-pane active text-left"
+                                                                    id="formBuilderContent">
+                                                                    <div class="mb-2" *ngIf="sectionname">
+                                                                        <i class="fa fa-pencil fa-lg"></i>
+                                                                        <b>{{sectionname}}</b>
+                                                                    </div>
+                                                                    <div cdkDropList #formfieldsList="cdkDropList"
+                                                                        class="container-fluid" id="dropZone"
+                                                                        [cdkDropListData]="formFields"
+                                                                        [cdkDropListConnectedTo]="[dragElementList]"
+                                                                        (cdkDropListDropped)="drop($event)">
+                                                                        <div class="row sortable-formbuilder"
+                                                                            style="overflow-y: scroll; min-height: 200px;max-height: 500px;"
+                                                                            id="sortable-formbuilder-ul">
+
+                                                                            <div class="col-md-12 bg-secondary2"
+                                                                                *ngFor="let field of formFields;let index = index"
+                                                                                cdkDrag [ngSwitch]="field.type"
+                                                                                [ngClass]="sortable-field"
+                                                                                (click)="activeField(field)">
+
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'section'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'coursepreference'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'documentchecklist'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active">
+                                                                                    </i>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'signature'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'subsection'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'fund'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'fundcalc'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'visa'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'skillauthority'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'text'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        value="{{field.Settings.label}}"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                        value="{{field.Value}}"
+                                                                                        placeholder="{{field.Settings.placeholder}}">
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'stext'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                        value="{{field.Value}}"
+                                                                                        placeholder="{{field.Settings.placeholder}}">
+
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'formula'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)"
+                                                                                        (click)="OpenPopupformula(field.Settings,index)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                        value="{{field.Value}}"
+                                                                                        placeholder="{{field.Settings.placeholder}}">
+
+                                                                                    <input type="text"
+                                                                                        style="display:none"
+                                                                                        class="form-control"
+                                                                                        value="{{field.Settings.formulareturntype}}" />
+                                                                                    <input type="text"
+                                                                                        style="display:none"
+                                                                                        class="form-control"
+                                                                                        value="{{field.Settings.decimalplaces}}" />
+                                                                                    <input type="text"
+                                                                                        style="display:none"
+                                                                                        class="form-control"
+                                                                                        value="{{field.Settings.formulaexp}}" />
+                                                                                </div>
+
+                                                                                <div class="form-group"
+                                                                                    *ngSwitchCase="'regex'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                        value="{{field.Value}}"
+                                                                                        placeholder="{{field.Settings.placeholder}}">
+
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'date'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <input
+                                                                                        class="form-control DateTrigger"
+                                                                                        id="ControlvalueDate_{{index}}"
+                                                                                        name="ControlvalueDate_{{index}}"
+                                                                                        type="text"
+                                                                                        [textContent]="datepicker1(index,'ControlvalueDate_')" />
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'dropdown'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <select
+                                                                                        aria-label="controloptionlist"
+                                                                                        class="form-control">
+                                                                                        <option
+                                                                                            *ngFor="let ngOption of field.Settings.controloptionlist">
+                                                                                            {{ngOption.optiontext}}
+                                                                                        </option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'radio'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <div class="radio-inline"
+                                                                                        *ngFor="let ngOption of field.Settings.controloptionlist">
+                                                                                        <label>
+                                                                                            <input disabled
+                                                                                                class="myradiovali"
+                                                                                                id="{{field.Name}}"
+                                                                                                type="radio" value=""
+                                                                                                name="{{field.Name}}" />
+                                                                                            <span>{{ngOption.optiontext}}</span>
+
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'radioimage'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <div class="radio-inline"
+                                                                                        *ngFor="let ngOption of field.Settings.controloptionlist">
+                                                                                        <label>
+                                                                                            <input disabled
+                                                                                                class="myradiovali"
+                                                                                                id="{{field.Name}}"
+                                                                                                type="radio" value=""
+                                                                                                name="{{field.Name}}" />
+                                                                                            <span>{{ngOption.optiontext}}</span>
+
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'checkBoxZone'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <div class="checkbox-inline"
+                                                                                        *ngFor="let ngOption of field.Settings.controloptionlist">
+                                                                                        <label>
+                                                                                            <input disabled
+                                                                                                class="myradiovali"
+                                                                                                id="{{field.Name}}"
+                                                                                                type="checkbox" value=""
+                                                                                                name="{{field.Name}}"
+                                                                                                [(ngModel)]="field.Name" />
+                                                                                            <span>{{ngOption.optiontext}}</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'file'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+
+                                                                                    <div
+                                                                                        class="custom-file custom-file-width-icon">
+                                                                                        <input type="file"
+                                                                                            class="custom-file-input"
+                                                                                            disabled>
+                                                                                        <label class="custom-file-label"
+                                                                                            style="margin-left:16px !important"
+                                                                                            for="inputGroupFile02">{{field.Name}}</label>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'textarea'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        value="{{field.Settings.label}}"
+                                                                                        (change)="ChangeFieldSetting(field.Settings.label,'Question')" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <textarea class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_')  + field.id}}"
+                                                                                        rows="4"></textarea>
+
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'texteditor'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <div class="container lighter">
+                                                                                        <div name="demo-editor"
+                                                                                            id="demo-editor_{{index}}"
+                                                                                            [attr.required]="field.Settings.Validationidf == 1 ?true:false"
+                                                                                            [textContent]="bindsummernote(index,'demo-editor_')">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'number'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <input type="number"
+                                                                                        class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                        value="{{field.Value}}"
+                                                                                        placeholder="{{field.Settings.placeholder}}" />
+                                                                                </div>
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'decimal'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <input type="number"
+                                                                                        class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                        value="{{field.Value}}"
+                                                                                        placeholder="{{field.Settings.placeholder}}" />
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'email'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <input type="email"
+                                                                                        class="form-control"
+                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                        value="{{field.Value}}"
+                                                                                        placeholder="{{field.Settings.placeholder}}">
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'time'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <div
+                                                                                        class="input-group bootstrap-timepicker timepicker">
+                                                                                        <input
+                                                                                            id='ControlvalueTime_{{index}}'
+                                                                                            type="text"
+                                                                                            class="form-control input-small"
+                                                                                            [textContent]="timepicker1(index,'ControlvalueTime_')">
+                                                                                        <span class="input-group-addon">
+                                                                                            <i class="fa fa-clock-o"
+                                                                                                style="font-size:36px"></i>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'datetime'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <div>
+                                                                                        <select
+                                                                                            aria-label="removeElement1">
+                                                                                            <option value="">
+                                                                                                Day
+                                                                                            </option>
+                                                                                        </select>
+                                                                                        <select
+                                                                                            aria-label="removeElement2">
+                                                                                            <option value="">
+                                                                                                Month
+                                                                                            </option>
+                                                                                        </select>
+                                                                                        <select
+                                                                                            aria-label="removeElement3">
+                                                                                            <option value="">
+                                                                                                Year
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'phonenumber'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <div>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <th>
+                                                                                                    Country Code
+                                                                                                </th>
+                                                                                                <th>
+                                                                                                    Area Code
+                                                                                                </th>
+                                                                                                <th>
+                                                                                                    Phone Number
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <input type="number"
+                                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                                        value="{{field.Value}}"
+                                                                                                        placeholder="Country Code">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input type="number"
+                                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                                        value="{{field.Value}}"
+                                                                                                        placeholder="Area Code">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input type="number"
+                                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                                        value="{{field.Value}}"
+                                                                                                        placeholder="Phone Number">
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'mobilenumber'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Settings.label"
+                                                                                        (change)="changeField(field.Settings.label)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        (click)="removeElement(index)"
+                                                                                        *ngIf="field.Active"></i>
+                                                                                    <div>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <th>
+                                                                                                    Country Code
+                                                                                                </th>
+                                                                                                <th>
+                                                                                                    Phone Number
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <input type="number"
+                                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                                        value="{{field.Value}}"
+                                                                                                        placeholder="Country Code">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input type="number"
+                                                                                                        id="{{field.Name.replace(' ','_') + field.id}}"
+                                                                                                        value="{{field.Value}}"
+                                                                                                        placeholder="Phone Number">
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'displayeditor'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+
+                                                                                    <div class="container lighter">
+                                                                                        <div name="display-editor"
+                                                                                            id="displayeditor_{{index}}"
+                                                                                            [attr.required]="field.Settings.Validationidf == 1 ?true:false"
+                                                                                            [textContent]="bindsummernote(index,'displayeditor_')">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                </div>
+                                                                                <div class="form-group bg-secondary2"
+                                                                                    *ngSwitchCase="'autocomplete'"
+                                                                                    [ngClass]="field.Active ? 'active-field' : '' ">
+                                                                                    <span
+                                                                                        *ngIf="field.Settings.isrequired==true"
+                                                                                        class="orange-txt">*</span>
+                                                                                    <input type="text"
+                                                                                        class="input-as-label"
+                                                                                        [(ngModel)]="field.Name"
+                                                                                        (change)="changeField(field.Name)" />
+                                                                                    <i class="la la-lg la-minus-square-o remove-ico"
+                                                                                        *ngIf="field.Active"
+                                                                                        (click)="removeElement(index)"></i>
+                                                                                    <select
+                                                                                        aria-label="controloptionlist2"
+                                                                                        class="form-control">
+                                                                                        <option
+                                                                                            *ngFor="let ngOption of field.Settings.controloptionlist">
+                                                                                            {{ngOption.optiontext}}
+                                                                                        </option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                                <div *ngSwitchDefault>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="drop-to-add col-md-12"
+                                                                                element-drop>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br />
+                                                            <div class="form-group col-auto">
+                                                                <button role="button" aria-label="SaveElementbtn"
+                                                                    type="submit"
+                                                                    class="btn btn-success btn-w80 pull-right  margin5px"
+                                                                    (click)="SaveElement()"><i
+                                                                        class="fa fa-lg fa-save mr-2"></i>Save</button>
+                                                                <button role="button" aria-label="CancelElementbtn"
+                                                                    class="btn btn-outline-danger pull-right btn-w80"
+                                                                    (click)="CancelElement()"><i
+                                                                        class="fa fa-lg fa-times mr-2"></i>Cancel</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

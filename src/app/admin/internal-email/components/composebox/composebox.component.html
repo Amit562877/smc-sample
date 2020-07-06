@@ -1,0 +1,99 @@
+<form autocomplete="off">
+    <div class="row inbox" *ngIf="email">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body message">
+                    <div class="form-group">
+                        <label for="to" class="col-sm-1 control-label text">To: </label><span
+                            *ngFor="let email of tolist;trackBy: trackByIndex; index as tindex; last as last">
+                            <span class="badge badge-secondary m-1 p-2" style="font-size: small;">{{email}}
+                                <span class="close" (click)="removeEmailTo(tindex)">&times;</span></span>
+                        </span>
+                        <div class="col-sm-11">
+                            <input type="text" [(ngModel)]="email.to" name="to" class="form-control select2-offscreen"
+                                id="to" placeholder="Type email" tabindex="-1" (keyup)="getuseremail(email.to)">
+                            <div id="hint" *ngIf="emaillist.length>0 && email.to" class="card mt-1 hint-wrap">
+                                <ul id="list" class="m-2 ml-3" class="search-results search-resultsoption">
+                                    <li class="input-group bg-white mt-1" *ngFor="let data of emaillist">
+                                        <a aria-label="getCourseByHint_link" (click)="addToList(data.email)"
+                                            class="nav-link" style="color: black" value="data.email">
+                                            <div class="input-group-append">
+                                                <span style="text-align: left">{{data.email}}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cc" class="col-sm-1 control-label text">CC:</label><span
+                            *ngFor="let email of cclist;trackBy: trackByIndex; index as tindex; last as last">
+                            <span class="badge badge-secondary m-1 p-2" style="font-size: small;">{{email}}
+                                <span class="close" (click)="removeEmailCC(tindex)">&times;</span></span>
+                        </span>
+                        <div class="col-sm-11">
+                            <input type="text" [(ngModel)]="email.cc" name="cc" class="form-control  select2-offscreen"
+                                id="cc" placeholder="Type email" tabindex="-1" (keyup)="getuseremail(email.cc)">
+                            <div id="hint" *ngIf="emaillist.length>0 && email.cc" class="card mt-1 hint-wrap">
+                                <ul id="list" class="m-2 ml-3" class="search-results search-resultsoption">
+                                    <li class="input-group bg-white mt-1" *ngFor="let data of emaillist">
+                                        <a aria-label="getCourseByHint_link" (click)="addCCList(data.email)"
+                                            class="nav-link" style="color: black" value="data.email">
+                                            <div class="input-group-append">
+                                                <span style="text-align: left">{{data.email}}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bcc" class="col-sm-1 control-label text">Subject:</label>
+                        <div class="col-sm-11">
+                            <input type="text" [(ngModel)]="email.subject" name="subject"
+                                class="form-control select2-offscreen" id="bcc" placeholder="Type email" tabindex="-1">
+                        </div>
+                    </div>
+                    <div class="col-sm-11 col-sm-offset-1">
+                        <div class="Mailsummernote" style="display: none;"></div>
+                    </div>
+                    <div class="col-sm-11 col-sm-offset-1 mt-2">
+                        <label class="btn btn-outline-primary mx-2 my-1" id="clickHere">
+                            <i class="fas fa-file-alt mr-2"></i>Attachment
+                            <input type="file" name="file" name="file" id="file" multiple="" class="d-none"
+                                [(ngModel)]="email.file" (change)="fileSlectionChanged($event)">
+                        </label>
+                        <span *ngFor="let file of email.src;trackBy: trackByIndex; index as tindex; last as last">
+                            <span class="badge badge-secondary ml-1 p-2" style="font-size: medium;">{{file.name}} <span
+                                    class="close" (click)="removeImage(tindex)">&times;</span></span>
+                        </span>
+                        <div *ngIf="oldfile.length>0">
+                            <hr>
+                            Previous uploads<br>
+                            <span *ngFor="let file of oldfile;trackBy: trackByIndex; index as tindex; last as last">
+                                <span class="badge badge-secondary ml-1 p-2" style="font-size: medium;">{{file}} <span
+                                        class="close" (click)="removeoldImage(tindex)">&times;</span></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-11 col-sm-offset-1 mt-3">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-primary m-1" (click)="sendMail(1)"><i
+                                    class="fas fa-paper-plane"></i>
+                                Send</button>
+                            <button type="submit" class="btn btn-outline-secondary m-1" (click)="sendMail(2)"><i
+                                    class="fas fa-external-link-alt"></i>
+                                Draft</button>
+                            <button type="submit" class="btn btn-outline-danger m-1" (click)="cancelMail()"
+                                data-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i>
+                                Discard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</form>

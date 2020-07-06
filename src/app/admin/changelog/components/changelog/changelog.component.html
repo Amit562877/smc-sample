@@ -1,0 +1,343 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Change Logs</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Log Type</label>
+                            <select aria-label="logtype" class="form-control border-secondary shadow"
+                              [(ngModel)]="ChangeLogFiltermodel.logtype" (change)="getAllLogData()">
+                              <option value="0">Choose...</option>
+                              <option *ngFor="let type of logtype" [ngValue]="type.id">
+                                {{type.logtype}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Log Status</label>
+                            <select aria-label="logstatus" class="form-control border-secondary shadow"
+                              [(ngModel)]="ChangeLogFiltermodel.status" (change)="getAllLogData()">
+                              <option *ngFor="let status of logstatus" [ngValue]="status.id">
+                                {{status.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">University</label>
+                            <select aria-label="universityid" class="form-control border-secondary shadow"
+                              [(ngModel)]="ChangeLogFiltermodel.universityid" (change)="getAllLogData()">
+                              <option value="">Choose...</option>
+                              <option *ngFor="let univ of universitylist" [ngValue]="univ.universityid">
+                                {{univ.universityid}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Response Generated</label>
+                            <select aria-label="isresponsegenerated" class="form-control border-secondary shadow"
+                              [(ngModel)]="ChangeLogFiltermodel.isresponsegenerated" (change)="getAllLogData()">
+                              <option value="-1">Choose...</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">Date Range</label>
+                            <div appDaterangepicker [useme]="'daterangepicker'" class="border-secondary shadow"
+                              [startDate]="ChangeLogFiltermodel.startdate" [endDate]="ChangeLogFiltermodel.enddate"
+                              (sectionChange)="dateChange($event)" id="daterangepicker"
+                              style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                              <i class="fa fa-calendar"></i>&nbsp;
+                              <span></span>&nbsp;<i class="fa fa-caret-down"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <tr>
+                              <th>
+                                Log date
+                              </th>
+                              <th>
+                                Log type
+                              </th>
+
+                              <th>
+                                UniversityId
+                              </th>
+                              <th>
+                                Request Status
+                              </th>
+                              <th
+                                *ngIf="ChangeLogFiltermodel.status != 4 && (permissions.canApprove || permissions.canReject)">
+                                Action
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="logdata.length>0">
+                              <tr *ngFor="let log of logdata  | paginate: {itemsPerPage: ChangeLogFiltermodel.pagesize,
+                                currentPage: ChangeLogFiltermodel.pageindex,
+                                totalItems: logcount};let index = index">
+
+                                <!-- <td><input type=" checkbox" id="log.id" name="log">
+                                </td> -->
+                                <td>
+                                  {{log.createdon | date}}
+                                </td>
+                                <td *ngIf="log.logtype!='error log'">{{log.logtype}}</td>
+                                <td *ngIf="log.logtype=='error log'">{{log.logtype}}
+                                  <span><a><i aria-hidden="true" class="fa fa-question-circle" (click)="showerror(log.logdata)" data-toggle="modal"
+                                        data-target="" ></i></a></span>
+                                </td>
+
+                                <!-- <td>{{log.logdata | errorReason}}</td> -->
+                                <td>{{log.universityid}}</td>
+                                <td>
+                                  {{(log.responsegenerated)?'Response Generated':(log.changerequested)?'Change Requested':'Not Action'}}
+                                </td>
+                                <!-- <td>{{log.logdata}}</td> -->
+                                <td *ngIf="ChangeLogFiltermodel.status != 4">
+                                  <button role="button" aria-label="Approve change"
+                                    class="btn ml-1 btn-sm btn-outline-primary rounded-circle" data-toggle="tooltip"
+                                    title="" data-original-title="Approve change" (click)="changeLogStatus(log.id,2)"
+                                    *ngIf="log.logtype!='new url in list' && log.logtype!='change files data log' && log.logstatus!=2 && permissions.canApprove"><i
+                                      class="fa fa-check-circle" aria-hidden="true"></i></button>
+
+                                  <button role="button" aria-label="Reject change"
+                                    class="btn ml-1 btn-sm btn-outline-danger rounded-circle" data-toggle="tooltip"
+                                    title="" data-original-title="Reject change" (click)="changeLogStatus(log.id,3)"
+                                    *ngIf="log.logtype!='new url in list' && log.logtype!='change files data log' && log.logstatus!=3 && permissions.canReject"><i
+                                      class="fa fa-times-circle" aria-hidden="true"></i></button>
+
+                                  <a class="btn ml-1 btn-sm btn-outline-success rounded-circle"
+                                    href="{{log.logdata | href}}" target="_blank" data-toggle="tooltip" title=""
+                                    data-original-title="Visit url" aria-label="visiturl"
+                                    *ngIf="log.logtype=='missing url in list' || log.logtype=='404 url log' || log.logtype=='change files data log' || log.logtype=='new url in list'"><i
+                                      class="fa fa-link" aria-hidden="true"></i></a>
+
+                                  <button role="button" aria-label="revise response"
+                                    class="btn ml-1 btn-sm btn-outline-warning rounded-circle" data-toggle="modal"
+                                    data-target="#jsonmodel"
+                                    *ngIf="log.logtype=='new url in list' || log.responsegenerated && ChangeLogFiltermodel.status != 2  && log.logtype!='error log'"
+                                    (click)="getAllLogResponse(log,1)"><i class="fa fa-code" aria-hidden="true"
+                                      data-toggle="tooltip" title="" data-original-title="Check response"></i></button>
+
+                                  <button role="button" aria-label="revise response_1"
+                                    class="btn ml-1 btn-sm btn-outline-warning rounded-circle" data-toggle="modal"
+                                    data-target="#jsonmodel" *ngIf="ChangeLogFiltermodel.status == 2"
+                                    (click)="getAllLogResponse(log,4)"><i class="fa fa-code" aria-hidden="true"
+                                      data-toggle="tooltip" title="" data-original-title="revise response"></i></button>
+
+                                  <a class="btn ml-1 btn-sm btn-outline-secondary rounded-circle"
+                                    *ngIf="log.logtype=='change files data log' && ChangeLogFiltermodel.status != 2"
+                                    target="_blank"
+                                    [routerLink]="['/user/workspace/mchangelog/change-log-response',log.id,2]"
+                                    aria-label="verifychanges"><i class="fa fa-bug" aria-hidden="true"
+                                      data-toggle="tooltip" title="" data-original-title="Verify changes"></i></a>
+                                </td>
+                                <!-- modal code for showing error reason -->
+                                <div class="modal fade" id="myModal" role="dialog">
+                                  <div class="modal-dialog">
+
+
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5>Error Reason</h5>
+                                        <button role="button" aria-label="closebtn2" type="button" class="close"
+                                          data-dismiss="modal">&times;</button>
+
+                                      </div>
+                                      <div class="modal-body">
+
+                                        <div class="row mt-1">
+                                          <div class="col-12 col-auto col-md py-md-2 py-0">
+                                            <div class="form-group text-left">
+
+                                              <h6> {{ this.displayerror }}</h6>
+                                             
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <div class="row mt-1">
+                                          <div class="col-md-12">
+
+                                            <button role="button" aria-label="clearall" type="button"
+                                              class="btn btn-outline-danger" data-dismiss="modal">
+                                              <i class="fa fa-ban" aria-hidden="true"></i>
+                                              Cancel</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="logdata.length==0">
+                              <tr class="text-center text-color-red">
+                                <td colspan="6">
+                                  No Data Found
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="px-3">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <select aria-label="pagesize" style="width: 60px;"
+                              class="custom-select custom-select-sm mr-2" id="inputGroupSelect01"
+                              [(ngModel)]="ChangeLogFiltermodel.pagesize" (change)="gelLogsbyFilter()">
+                              <option value="10">10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            <p class="d-inline-block"
+                              *ngIf="(ChangeLogFiltermodel.pageindex*ChangeLogFiltermodel.pagesize)>logcount">
+                              Displaying
+                              {{(logcount==0)?0:((ChangeLogFiltermodel.pageindex-1)*ChangeLogFiltermodel.pagesize) + 1}}
+                              - {{logcount}} of
+                              {{logcount}}
+                              records</p>
+                            <p class="d-inline-block"
+                              *ngIf="(ChangeLogFiltermodel.pageindex*ChangeLogFiltermodel.pagesize)<logcount">
+                              Displaying
+                              {{((ChangeLogFiltermodel.pageindex-1)*ChangeLogFiltermodel.pagesize) + 1}} -
+                              {{(((ChangeLogFiltermodel.pageindex-1)*ChangeLogFiltermodel.pagesize) + ChangeLogFiltermodel.pagesize)}}
+                              of
+                              {{logcount}}
+                              records</p>
+                          </div>
+
+                          <div class="col-auto">
+                            <nav aria-label="Page navigation example">
+                              <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- JSON Modal -->
+<div class="modal fade modal-full" id="jsonmodel" role="dialog" style="width: 100%;height: 100%;" *ngIf="currentlog">
+  <div class="modal-dialog modal-lg" style="width: 100%;height: 100%;">
+    <div class="modal-content" style="width: 100%;height: 100%;">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">Log Response</h4>&nbsp;&nbsp;&nbsp;
+
+
+
+        <button role="button" aria-label="addboard" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" style="width: 100%;height: 100%;" *ngIf="logresponse!=undefined">
+        <div class="row" style="width: 100%;height: 100%;" *ngIf="ChangeLogFiltermodel.status != 2">
+
+          <div class="col-md-4" style="height: auto;width:100%;">
+            <label class="font-weight-500">Old Data</label>
+            <div class="scrollClass" [innerHtml]="newHtml"></div>
+          </div>
+          <div class="col-md-4" style="height: auto;width:100%;">
+            <label class="font-weight-500">New Data</label>
+            <div class="scrollClass" [innerHtml]="oldHtml"></div>
+          </div>
+          <div class="col-md-4" style="height: auto;width:100%;">
+            <label class="font-weight-500">Edit Data</label>
+            <textarea style="width: 100%;height: 100%" [ngModel]="coursedataresponse"
+              (ngModelChange)="coursedataresponse=$event"></textarea>
+          </div>
+        </div>
+        <div class="row" style="width: 100%;height: 100%;" *ngIf="ChangeLogFiltermodel.status == 2">
+
+          <div class="col-md-6" style="height: auto;width:100%;">
+            <label class="font-weight-500">Old Data</label>
+            <!-- <textarea style="width: 100%;height: 100%" [ngModel]="oldHtml"
+              (ngModelChange)="logresponse=$event"></textarea> -->
+            <div class="scrollClass" [innerHtml]="oldHtml"></div>
+          </div>
+          <div class="col-md-6" style="height: auto;width:100%;">
+            <label class="font-weight-500">New Data</label>
+            <!-- <textarea style="width: 100%;height: 100%" [ngModel]="newHtml"
+              (ngModelChange)="coursedataresponse=$event"></textarea> -->
+            <div class="scrollClass" [innerHtml]="newHtml"></div>
+          </div>
+          <!-- <div class="col-md-4" style="height: auto;width:100%;">
+            <label class="font-weight-500">Edit Data</label>
+            <textarea style="width: 100%;height: 100%" [ngModel]="coursedataresponse"
+              (ngModelChange)="coursedataresponse=$event"></textarea>
+          </div> -->
+        </div>
+      </div>
+      <div class="modal-footer" *ngIf="ChangeLogFiltermodel.status != 2">
+        <button role="button" aria-label="addboard" type="button" class="btn btn-default"
+          data-dismiss="modal">Close</button>
+        <button role="button" aria-label="addboard" class="btn btn-outline-primary rounded-circle"
+          *ngIf="currentlog.logstatus!=2 && permissions.canApprove" data-dismiss="modal"
+          (click)="changeLogStatus(currentlog.id,2)"><i class="fa fa-check-circle" aria-hidden="true"
+            data-toggle="tooltip" title="" data-original-title="Approve change"></i></button>
+
+        <button role="button" aria-label="addboard" class="btn btn-outline-danger rounded-circle"
+          *ngIf="currentlog.logstatus!=3 && permissions.canReject" data-dismiss="modal"
+          (click)="changeLogStatus(currentlog.id,3)"><i class="fa fa-times-circle" aria-hidden="true"
+            data-toggle="tooltip" title="" data-original-title="Reject change"></i></button>
+
+        <button role="button" aria-label="addboard" class="btn btn-outline-secondary rounded-circle"
+          data-dismiss="modal" *ngIf="!currentlog.responsegenerated" (click)="requestChange(currentlog)"><i
+            class="fa fa-recycle" aria-hidden="true" data-toggle="tooltip" title=""
+            data-original-title="Request change"></i></button>
+      </div>
+      <div class="modal-footer" *ngIf="ChangeLogFiltermodel.status == 2">
+        <button role="button" aria-label="addboard" type="button" class="btn btn-default"
+          data-dismiss="modal">Close</button>
+        <button role="button" aria-label="addboard" class="btn btn-outline-primary" data-dismiss="modal"
+          (click)="changeLogStatus(currentlog.id,4)"><i class="fa fa-check-circle" aria-hidden="true"
+            data-toggle="tooltip" title="" data-original-title="Revise change"></i> Revise Change</button>
+
+      </div>
+    </div>
+  </div>
+</div>

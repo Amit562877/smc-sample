@@ -1,0 +1,113 @@
+<!-- {{mail | json}} -->
+<div class="row">
+    <div class="col-md-6">
+        <button class="btn btn-sm btn-primary mr-1" (click)="fnopenReply('R')"><i class="fas fa-reply"></i>
+            Reply</button>
+        <button class="btn btn-sm btn-primary mr-1" (click)="fnopenReply('RR')"><i class="fas fa-reply-all"></i>
+            Reply All</button>
+        <button class="btn btn-sm btn-default mr-1" (click)="printMail('mailbody')"><i
+                class="fas fa-print"></i></button>
+        <button class="btn btn-sm btn-default" (click)="deleteMail(mail[0].euid)"><i
+                class="fas fa-trash-alt"></i></button>
+    </div>
+    <div class="col-md-6 text-right">
+        <span>{{mail[0].createdon | date:'medium'}}</span>
+    </div>
+</div>
+<div class="row mt-2 mb-2">
+    <div class="col-md-12 text-justify">
+        <span
+            style="font-size: medium;font-family: sans-serif;">{{(mail[0].subject!='undefined')?mail[0].subject:''}}</span>
+    </div>
+</div>
+<hr>
+
+<div id="mailbody" class="mb-5">
+    <div *ngFor="let reply of mail">
+        <hr>
+        <span *ngIf="reply.messagestatus==3">Reply</span>
+        <div class="row mt-2 mb-2">
+            <div class="col-md-9 text-justify">
+                <span> <strong>{{reply.from_user}}</strong> to [{{reply.to_user}}]
+                    <div class="dropdown dropdown-cust d-inline-block align-middle">
+                        <span class="btn btn-icon mr-2 has-dropdown-arrow" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><i class="fas fa-lg fa-sort-down"></i></span>
+                        <div class="dropdown-menu dropdown-menu-xl pt-0" x-placement="bottom-start"
+                            style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 33px, 0px);">
+                            <div class="px-2">
+                                <div class="form-row my-2">
+                                    <div class="col-12">
+                                        <strong>From</strong> : {{reply.from_user}}<br>
+                                        <strong>To</strong> : {{reply.to_user}}<br>
+                                        <strong>CC</strong> : {{reply.cc_users}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+
+            <div class="col-md-3 text-right">
+                <span>{{reply.createdon | date:'medium'}}</span>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-md-12 text-justify">
+                <div [innerHTML]="reply.messagebody"></div>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-md-12 text-justify">
+                <span *ngIf="reply.isattachment"><i class="fas fa-paperclip"></i> {{reply.ea.length}}
+                    attachment</span>
+            </div>
+            <div class="col-md-12 text-justify" *ngFor="let attachment of reply.ea">
+                <a href="{{apiurl+attachment.attachmentpath}}" target="_blank">{{attachment.filename}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="openReply || openReplyall" class="mt-2 mb-5">
+    <span>Reply to : [{{mail[0].from_user}}]</span>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="Mailsummernote" style="display: none;"></div>
+        </div>
+        <div class="col-sm-11 col-sm-offset-1 mt-2">
+
+            <label class="btn btn-outline-primary mx-2 my-1" id="clickHere">
+                <i class="fas fa-file-alt mr-2"></i>Attachment
+                <input type="file" name="file" id="file" multiple="" class="d-none" [(ngModel)]="email.file"
+                    (change)="fileSlectionChanged($event)">
+            </label>
+            <span *ngFor="let file of email.src;trackBy: trackByIndex; index as tindex; last as last">
+                <span class="badge badge-secondary ml-1 p-2" style="font-size: medium;">{{file.name}} <span
+                        class="close" (click)="removeImage(tindex)">&times;</span></span>
+            </span>
+        </div>
+        <div class="row mt-4 mb-2 ml-2">
+            <div class="col-md-12 text-justify">
+                <button class="btn btn-sm btn-primary mr-1" (click)="sendMail(3)"><i class="fas fa-share"></i>
+                    send</button>
+                <button class="btn btn-sm btn-danger mr-1" (click)="cancelMail()"><i class="fas fa-ban"></i>
+                    Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 mb-2" style="position: fixed;bottom: 0;">
+    <div class="col-md-12 text-justify">
+        <button class="btn btn-sm btn-primary mr-1" (click)="fnopenReply('R')"><i class="fas fa-reply"></i>
+            Reply</button>
+        <button class="btn btn-sm btn-primary mr-1" (click)="fnopenReply('RR')"><i class="fas fa-reply-all"></i>
+            Reply All</button>
+        <button class="btn btn-sm btn-default mr-1" (click)="fnopenForward()"><i class="fas fa-share"></i>
+            Forward</button>
+        <button class="btn btn-sm btn-default mr-1" (click)="printMail('mailbody')"><i
+                class="fas fa-print"></i></button>
+        <button class="btn btn-sm btn-default" (click)="deleteMail(mail.euid)"><i class="fas fa-trash-alt"></i></button>
+    </div>
+</div>

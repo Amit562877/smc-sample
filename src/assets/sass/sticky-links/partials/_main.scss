@@ -1,0 +1,108 @@
+/* Plugins */
+.#{$style-prefix}{
+    &plugins{position: fixed; z-index: $plugins-zindex; left: 0; top: 50%; @include transform(translateY(-50%));}
+    &plugins-list{list-style-type: none; margin: 0; padding: 0; border-radius: 0 $plugins-radius $plugins-radius 0; background: $theme-color; @include box-shadow(0 0 20px 3px rgba($black, .5));
+        .link{color: $theme-color; display: block; position: relative; text-decoration: none; cursor: pointer; @include transition(ease all .3s); padding-left: 4px;
+            .icon{position: relative; z-index: 2; font-size: $plugins-icons-width; width: $plugins-icons-box-size; height: $plugins-icons-box-size; background: $plugins-icon-bg; display: flex; align-items: center; justify-content: center;
+                img{max-width: $plugins-icons-width; max-height: $plugins-icons-width;}
+            }
+            .text{visibility: hidden; opacity: 0; color: transparent; position: absolute; left: 100%; top: 0; bottom: 0; display: flex; align-items: center; white-space: nowrap; font-size: $plugins-font-size; text-decoration: none; border-radius: 0 $plugins-radius $plugins-radius 0; padding: 0 12px; background: $theme-color; -webkit-transition: ease transform 0.3s, ease visibility 0.5s, ease opacity 0.5s; -moz-transition: ease transform 0.3s, ease visibility 0.5s, ease opacity 0.5s; transition: ease transform 0.3s, ease visibility 0.5s, ease opacity 0.5s; @include transform(translateX(-105%));}
+        }
+        > li{border-bottom: 2px solid darken($plugins-icon-bg, 10%);
+            &:first-child .icon{border-radius: 0 $plugins-radius 0 0;}
+            &:last-child{border-bottom: 0;
+                .icon{border-radius: 0 0 $plugins-radius 0;}
+            }
+            &:hover .link{@include transform(translateX(5px));
+                .icon{border-radius: 0;}
+                .text{visibility: visible; opacity: 1; color: color-from-bg($theme-color); @include transform(translateX(0));}
+            }
+        }
+        &.#{$style-prefix}plugins-list-sm{
+            .link{
+                .icon{font-size: $plugins-icons-width-sm; width: $plugins-icons-box-size-sm; height: $plugins-icons-box-size-sm;
+                    img{max-width: $plugins-icons-width-sm; max-height: $plugins-icons-width-sm;}
+                }
+                .text{font-size: $plugins-font-size-sm; padding: 0 10px; border-radius: 0 $plugins-radius-sm $plugins-radius-sm 0; }
+            }
+            > li{
+                &:first-child .icon{border-radius: 0 $plugins-radius-sm 0 0;}
+                &:last-child{
+                    .icon{border-radius: 0 0 $plugins-radius-sm 0;}
+                }
+            }
+        }
+    }
+}
+
+    // Alignment settings
+.theme-align-right{
+    .#{$style-prefix}{
+        &plugins{left: auto; right: 0;}
+        &plugins-list{border-radius: $plugins-radius 0 0 $plugins-radius;
+            .link{padding: 0 4px 0 0;
+                .text{left: auto; right: 100%; border-radius: $plugins-radius 0 0 $plugins-radius; @include transform(translateX(105%));}
+            }
+            > li{
+                &:first-child .icon{border-radius: $plugins-radius 0 0 0;}
+                &:last-child{
+                    .icon{border-radius: 0 0 0 $plugins-radius;}
+                }
+                &:hover .link{@include transform(translateX(-5px));
+                    .icon{border-radius: 0;}
+                }
+            }
+            &.#{$style-prefix}plugins-list-sm{
+                .link{
+                    .text{border-radius: $plugins-radius-sm 0 0 $plugins-radius-sm;}
+                }
+                > li{
+                    &:first-child .icon{border-radius: $plugins-radius-sm 0 0 0;}
+                    &:last-child{
+                        .icon{border-radius: 0 0 0 $plugins-radius-sm;}
+                    }
+                }
+            }
+        }
+        &theme-settings{right: auto; left: 0; border-radius: 0 0 4px 0; border-right: 1px solid $border-color; border-left: 4px solid $theme-color; @include transform(translate(-100%, -50%));
+            &.#{$style-prefix}open{@include transform(translate(0, -50%));}
+        }
+        &theme-settings-btn{right: auto; left: 100%; border-radius: 0 4px 4px 0;}
+    }
+}
+    // v Alignment settings
+.theme-v-align-top .#{$style-prefix}plugins{top: 10%; @include transform(translateY(0));}
+.theme-v-align-bottom .#{$style-prefix}plugins{top: auto; bottom: 10%; @include transform(translateY(0));}
+
+/* / Plugins */
+
+
+/* Modal */
+.#{$style-prefix}{
+    &modal{position: fixed; z-index: $modal-zindex; top: 0; right: 0; bottom: 0; left: 0; display: none; align-items: center; overflow: auto;
+        &.#{$style-prefix}modal-show{display: flex;}
+        &.#{$style-prefix}modal-fade-in{
+            &.#{$style-prefix}modal-left, &.#{$style-prefix}modal-right{
+                .#{$style-prefix}modal-dialog{@include transform(translateX(0));}
+            }
+            .#{$style-prefix}modal-overlay{visibility: visible; opacity: 1;}
+        }
+    }
+    &modal-dialog{position: relative; z-index: 2; margin: 0 auto; left: 0; right: 0; background: $white; display: flex; flex-direction: column; @include transition(ease all .4s);}
+    &modal-header{padding: 15px; border-bottom: 1px solid $border-color;}
+    &modal-body{flex: 1; overflow: auto; padding: 15px;}
+    &modal-footer{padding: 15px; border-top: 1px solid $border-color;}
+
+    &modal-close-btn{ position: absolute; left: -50px; top: 26px; background: transparent; border: 2px solid #fff; height: 35px; width: 35px; border-radius: 100px; font-size: 15px; padding: 0; display: flex; align-items: center; justify-content: center; opacity: 100; color: #fff; cursor: pointer; 
+        &:hover{background: #fff; color: $theme-color; }
+    }
+
+    &modal-left .#{$style-prefix}modal-dialog{margin-left: initial; @include transform(translateX(-100%));}
+    &modal-right .#{$style-prefix}modal-dialog{margin-right: initial; @include transform(translateX(100%));}
+    &modal-right, &modal-left{
+        .#{$style-prefix}modal-dialog{position: fixed; max-width: 90%; height: 100%;}
+    }
+
+    &modal-overlay{visibility: hidden; opacity: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; background: rgba($black, .5); @include transition(ease all .6s);}
+}
+/* / Modal */

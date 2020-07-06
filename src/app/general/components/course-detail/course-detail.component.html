@@ -1,0 +1,2240 @@
+<body class="bg-white">
+  <app-navigation-menu *ngIf="showmwnu"></app-navigation-menu>
+  <div id="myScrollspy" *ngIf="coursedata">
+    <div class="px-2">
+      <div class="row gutter-x-5 mt-2 mb-3">
+        <div class="col-md-12">
+          <div class="card shadow">
+            <div class="card-body p-2">
+              <div class="row align-items-center gutter-x-5">
+                <div class="col-12-auto text-center">
+                  <button type="button" class="btn btn-sm btn-rounded btn-primary" aria-label="backtoSearch"
+                    (click)="backtoSearch()">
+                    <i aria-hidden="true" class="fa fa-arrow-left"></i>
+                  </button>
+                  <!-- <app-sharelink></app-sharelink> -->
+                </div>
+                <div class="col-12 col-md-auto text-center">
+                  <a [routerLink]="['/program/univ-detail',coursedata.univ_id]">
+                    <!-- <img alt="logourl" class="img-fluid"
+                    style="max-height:70px; max-width: 300px;"
+                    [src]="environment.API_URL+'Document/images/'+universitydata.logourl"> -->
+                    <img data-toggle="modal" data-target="#course-details-Model" class="img-fluid count-img-redirect"
+                      style="max-height:70px;" alt="university logo" [defaultImage]="'./assets/default.gif'"
+                      [lazyLoad]="'./assets/univlogo.png'">
+                  </a>
+                </div>
+                <div class="col-12 col-md-auto">
+                  <h5 class="mb-0"> <a
+                      [routerLink]="['/program/univ-detail',coursedata.univ_id]">{{universitydata.name | uppercase}}</a>
+                  </h5>
+                </div>
+                <div class="col">
+                  <div class="bg-primary border-radius-30 px-3 py-2 my-2 my-md-0"><a aria-label="course_title"
+                      target="_blank" href="{{coursedata.course_url}}"
+                      class="font-size-12 font-weight-500 text-white">{{coursedata.course_title | uppercase}}</a></div>
+                </div>
+
+                <div class="col-12 col-md-auto p-md-0 mb-2 mb-md-0">
+                  <div class="align-items-center gutter-x-5 row">
+                    <div class="col">
+                      <p class="font-size-11 mb-0 text-muted">Cricos Code: &nbsp;
+                        <span *ngFor='let cricos of coursedata.course_campus_location'>
+                          <span *ngIf='cricos.name.toLowerCase() == universitycampus.toLowerCase()'>
+                            <b class="text-body">{{cricos.code}}</b>
+                          </span>
+                        </span>
+                      </p>
+                      <p *ngIf='coursedata.program_code.length > 0' class="font-size-11 mb-0 text-muted">Program Code:
+                        <b class="text-body">{{coursedata.program_code}}</b>
+                    </div>
+                    <!-- <div class="col-auto" >
+                      <button type="button" class="btn btn-primary px-2 px-md-3 btn-rounded" data-toggle="modal"
+                        data-target="#ThirdPartyForm">
+                        Inquiry Now
+                      </button>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="col-12 col-md-auto">
+                  <div class="d-flex justify-content-around">
+
+                    <a appClearValidation [form]="mainform" aria-label="getRelatedCourseData" class="btn btn-icon mr-2"
+                      data-toggle="collapse" (click)="openInquiryDiv()" style="color:#007bff"
+                      aria-controls="collapseExample">
+                      <span *ngIf="!loadService.sendmail"><i class="material-icons">
+                          email </i></span>
+                      <span *ngIf="loadService.sendmail"><i class="fa fa-lg fa-sync fa-refresh"></i></span>
+                    </a>
+
+
+                    <a aria-label="getRelatedCourseData" class="btn btn-icon mr-2" style="color:#007bff"
+                      (click)="downloadPdf(false,'','')" data-toggle="tooltip" title="" data-original-title="Download">
+                      <span *ngIf="!loadService.downloadPDF"> <i class="material-icons"> arrow_downward
+                        </i></span>
+                      <span *ngIf="loadService.downloadPDF"><i class="fa fa-lg fa-sync fa-refresh"></i></span>
+                    </a>
+                    <div class="input-group-inside shadow">
+                      <input aria-label="globalhints_1" type="text" [(ngModel)]="searchstring" placeholder="search.."
+                        (keyup)="globalhints($event)" class="form-control pr-4" (focus)="inputFocusFlag=false;"
+                        (focusout)="inputFocusFlag=true;">
+                      <div id="hint"
+                        *ngIf="!isbuttonclicke && searchhints.coursehint.length>0 || searchhints.universityhint.length>0"
+                        [ngClass]="searchstring.lenght>=2 ? '' : 'hidden'" class="card mt-1 hint-wrap"
+                        (focus)="divFocusFlag=false;" (focusout)="divFocusFlag=true;">
+                        <div class="m-2 ml-3">
+                          <div class="input-group bg-white mt-1" *ngFor="let data of searchhints.coursehint">
+                            <a aria-label="universitynameid" class="nav-link" style="color: black"
+                              (click)="getRelatedCourseData({universityid:data.universitynameid,courseid:data.coursenameid})"
+                              [routerLink]="['/program/course-detail',viewtype,data.universitynameid,data.campus,data.coursenameid]">
+                              <div class="input-group-append">
+                                <span style="text-align: left">
+                                  {{data.name}}</span>
+                              </div>
+                            </a>
+                          </div>
+                          <button role="button" aria-label="ismorepage" *ngIf="searchhints.ismorepage"
+                            class="btn btn-outline-primary btn-rounded btn-sm mt-2" (click)="getNextHint()">show
+                            more</button>
+                        </div>
+                      </div>
+                      <div class="input-group-inside-append">
+                        <button role="button" aria-label="getCourseByFilter" class="btn btn-trans"
+                          (click)="globalhints($event)" type="button">
+                          <i class="la la-search"></i>
+                        </button>
+                      </div>
+
+                    </div>
+                    <!-- <div class="input-group-inside shadow">
+                    <input type="text" class="form-control pr-4" placeholder="Search...">
+                    <div class="input-group-inside-append">
+                      <button class="btn btn-trans" type="button">
+                        <i class="la la-search"></i>
+                      </button>
+                    </div>
+                  </div> -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="px-2 collapse" id="collapseExample">
+      <form #mainform="ngForm" autocomplete="off" novalidate>
+        <div class="card shadow mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Please fill the details.
+            </h5>
+            <div class="row">
+
+              <div class="form-group col-md">
+                <input data-name="inquiryName" [required]="true" aria-label="inquiryName" type="text"
+                  class="form-control" [(ngModel)]="inquiryName" name="inquiryName" placeholder="Name*">
+              </div>
+              <div class="form-group col-md">
+                <input data-name="inquiryEmail" [required]="true" aria-label="inquiryEmail" type="email"
+                  class="form-control" [(ngModel)]="inquiryEmail" name="inquiryEmail" placeholder="Email Id*">
+              </div>
+              <div class="form-group col-md">
+                <input aria-label="inquiryPhone" type="tel" class="form-control" [(ngModel)]="inquiryPhone"
+                  name="inquiryPhone" placeholder="Phone Number">
+              </div>
+              <div class="form-group col-md-auto">
+                <button appValidation [form]="mainform" aria-label="Submit Inquiry" class="btn btn-primary"
+                  (click)="sendMailCourseDetail(mainform)">Send Mail</button>
+                <button appClearValidation [form]="mainform" [resetform]="true" aria-label="Cancel Inquiry"
+                  style="margin-left: 5px;" class="btn btn-outline-danger" (click)="openInquiryDiv()">Cancel</button>
+              </div>
+              <!-- <div class="form-group col-md-auto">
+              
+            </div> -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="px-2 bg-breadcrumb">
+      <div class="row gutter-x-5 flex-md-row sticky-sidebar-wrap">
+        <!-- mobile side -->
+        <div class="col-md-2 d-block d-md-none">
+          <div class="card mb-3">
+            <div class="card-body px-1 px-md-2 py-1">
+              <div class="media border-bottom py-2">
+                <img class="img-fluid mr-2" style="width: 20px;" src="assets/images/s-m-c-time-ico.png" alt="time">
+                <div class="media-body">
+                  <div class="h6 mb-1">
+                    Duration
+                  </div>
+                  <span *ngIf="coursedata.course_duration_display.length>0">
+                    <span *ngFor='let durationDisplay of coursedata.course_duration_display'>
+                      <p class="text-muted"> {{durationDisplay.duration}} {{durationDisplay.unit}}
+                        {{durationDisplay.display}}</p>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="media border-bottom py-2">
+                <img class="img-fluid mr-2" style="width: 18px;" src="assets/images/s-m-c-aud-ico.png" alt="Aud">
+                <div class="media-body">
+                  <div class="row no-gutters">
+                    <div class="col">
+                      <div class="h6 mb-1">
+                        Tuition Fee
+                      </div>
+                      <ng-container *ngFor="let feeData of coursedata.course_tuition_fee.fees">
+                        <span *ngIf="feeData.name.toLowerCase()==universitycampus.toLowerCase()">
+                          <p class="text-muted" *ngIf="feeData.value.international_student.amount == 0">Unknown</p>
+                          <p class="text-muted" *ngIf="feeData.value.international_student.amount != 0">
+                            {{feeData.value.currency}}
+                            {{feeData.value.international_student.amount}}/{{feeData.value.international_student.duration}} - {{feeData.value.international_student.unit | uppercase}}
+                          </p>
+
+                        </span>
+                      </ng-container>
+                    </div>
+                    <div class="col-auto">
+                      <select aria-label="currencyconvert" class="form-control form-control-sm font-weight-600 px-1"
+                        data-width="100%" #mySelect [(ngModel)]="setDefaultCurrency" data-style="btn-outline-secondary"
+                        title="All rates shown are for indicative purposes only.
+
+                      Please note that foreign exchange rates regularly rise and fall. Our rates are based on https://exchangeratesapi.io/. It shows the market rate of your chosen currency pair for information purposes and is not our offered rate or an indication of price. These results should, therefore, be used only as a guide."
+                        style="width:56px;" *ngIf="currencyList && currencyList.length>0" (change)="changeCurrency()">
+                        <option *ngFor="let curr of currencyList" value="{{curr.exchangerate}}:{{curr.shortname}}">
+                          {{curr.shortname}} ({{curr.fullname}})
+                        </option>
+
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="media border-bottom py-2">
+                <i class="la la-map-marker align-self-center mr-2 la-2x text-primary"></i>
+                <div class="media-body">
+                  <div class="h6 mb-1">
+                    Location
+                  </div>
+                  <span *ngIf='universitycampus && universitycampus.length>0'>
+                    <p class="text-muted">{{universitycampus}}</p>
+                  </span>
+                </div>
+              </div>
+              <div class="media border-bottom py-2">
+                <i class="la la-calendar align-self-center mr-2 la-2x text-secondary"></i>
+                <div class="media-body">
+                  <div class="h6 mb-1">
+                    Intake Date
+                  </div>
+                  <span *ngIf="coursedata.course_intake.intake.length>0">
+                    <span *ngFor='let intakeDate1 of coursedata.course_intake.intake'>
+                      <span *ngIf="intakeDate1.name.toLowerCase() == universitycampus.toLowerCase()">
+                        <span *ngFor="let intake of intakeDate1.value">
+                          <ng-container *ngIf="intake.actualdate == 'anytime'">
+                            <p class="text-muted">anytime</p>
+                          </ng-container>
+                          <ng-container *ngIf="intake.actualdate != 'anytime'">
+                            <p class="text-muted">{{intake.actualdate}}</p>
+                          </ng-container>
+
+                        </span>
+
+                      </span>
+                    </span>
+                  </span>
+                  <!-- <span *ngIf="coursedata.course_intake.more_details">
+                    <p class="mb-0">Visit the programme website for more information related to Intakes
+                      <a aria-label="more_details" target="_blank"
+                        href="{{coursedata.course_intake.more_details}}">Click</a>
+                    </p>
+                  </span> -->
+                </div>
+              </div>
+              <div class="media border-bottom py-2" *ngIf="!favoriteHide">
+                <a aria-label="AddtoFavourite_1" class="btn btn-icon mr-2 text-danger" title=""
+                  (click)="AddtoFavourite(cid)" data-toggle="modal" data-target="#myModalfavorite"><i
+                    class="material-icons" *ngIf="check">
+                    favorite_border
+                  </i><i class="material-icons" *ngIf="!check">
+                    favorite
+                  </i>
+
+                </a>
+                <div class="media-body">
+                  <div class="h6 mb-1">
+                    Favorite
+                    <span class="h5">{{this.favcnt[0].cnt | shortNumber}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="media py-2 align-items-center">
+                <i class="la la-eye align-self-center mr-2 la-2x text-color-light-green"></i>
+                <div class="media-body">
+                  <div class="h6 mb-1">
+                    No of Visitor <span class="h5">{{this.visitcnt[0].visitcounts | shortNumber}}</span>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- mobile side -->
+        <div class="col-md-2">
+          <div class="sticky-sidebar" style="position: relative; z-index: 999;">
+            <div class="d-none d-md-block sticky-sidebar-inner">
+              <div class="card mb-3">
+                <div class="card-body px-1 px-md-2 py-1">
+                  <div class="media border-bottom py-2">
+                    <img class="img-fluid mr-2" style="width: 20px;" src="assets/images/s-m-c-time-ico.png" alt="time">
+                    <div class="media-body">
+                      <div class="h6 mb-1">
+                        Duration
+                      </div>
+                      <span *ngIf="coursedata.course_duration_display.length>0">
+                        <span *ngFor='let durationDisplay of coursedata.course_duration_display'>
+                          <p class="text-muted"> {{durationDisplay.duration}} {{durationDisplay.unit}}
+                            {{durationDisplay.display}}</p>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="media border-bottom py-2">
+                    <img class="img-fluid mr-2" style="width: 18px;" src="assets/images/s-m-c-aud-ico.png" alt="Aud">
+                    <div class="media-body">
+                      <div class="row no-gutters">
+                        <div class="col">
+                          <div class="h6 mb-1">
+                            Tuition Fee
+                          </div>
+                          <ng-container *ngFor="let feeData of coursedata.course_tuition_fee.fees">
+                            <span *ngIf="feeData.name.toLowerCase()==universitycampus.toLowerCase()">
+                              <p class="text-muted" *ngIf="feeData.value.international_student.amount == 0">Unknown</p>
+                              <p class="text-muted" *ngIf="feeData.value.international_student.amount != 0">
+                                {{feeData.value.currency}}
+                                {{feeData.value.international_student.amount}}/{{feeData.value.international_student.duration}} - {{feeData.value.international_student.unit | uppercase}}
+                              </p>
+
+                            </span>
+                          </ng-container>
+                        </div>
+                        <div class="col-auto">
+                          <select aria-label="currencyconvert" class="form-control form-control-sm font-weight-600 px-1"
+                            data-width="100%" #mySelect [(ngModel)]="setDefaultCurrency"
+                            data-style="btn-outline-secondary"
+                            title="All rates shown are for indicative purposes only.
+
+                          Please note that foreign exchange rates regularly rise and fall. Our rates are based on https://exchangeratesapi.io/. It shows the market rate of your chosen currency pair for information purposes and is not our offered rate or an indication of price. These results should, therefore, be used only as a guide."
+                            style="width:56px;" *ngIf="currencyList && currencyList.length>0"
+                            (change)="changeCurrency()">
+                            <option *ngFor="let curr of currencyList" value="{{curr.exchangerate}}:{{curr.shortname}}">
+                              {{curr.shortname}} ({{curr.fullname}})
+                            </option>
+
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="media border-bottom py-2">
+                    <i class="la la-map-marker align-self-center mr-2 la-2x text-primary"></i>
+                    <div class="media-body">
+                      <div class="h6 mb-1">
+                        Location
+                      </div>
+                      <span *ngIf='universitycampus && universitycampus.length>0'>
+                        <p class="text-muted">{{universitycampus}}</p>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="media border-bottom py-2">
+                    <i class="la la-calendar align-self-center mr-2 la-2x text-secondary"></i>
+                    <div class="media-body">
+                      <div class="h6 mb-1">
+                        Intake Date
+                      </div>
+                      <span *ngIf="coursedata.course_intake.intake.length>0">
+                        <span *ngFor='let intakeDate1 of coursedata.course_intake.intake'>
+                          <span *ngIf="intakeDate1.name.toLowerCase() == universitycampus.toLowerCase()">
+                            <span *ngFor="let intake of intakeDate1.value">
+                              <ng-container *ngIf="intake.actualdate == 'anytime'">
+                                <p class="text-muted">anytime</p>
+                              </ng-container>
+                              <ng-container *ngIf="intake.actualdate != 'anytime'">
+                                <p class="text-muted">{{intake.actualdate}}</p>
+                              </ng-container>
+
+                            </span>
+
+                          </span>
+                        </span>
+                      </span>
+                      <!-- <span *ngIf="coursedata.course_intake.more_details">
+                        <p class="mb-0">Visit the programme website for more information related to Intakes
+                          <a aria-label="more_details" target="_blank"
+                            href="{{coursedata.course_intake.more_details}}">Click</a>
+                        </p>
+                      </span> -->
+                    </div>
+                  </div>
+                  <div class="media border-bottom py-2" *ngIf="!favoriteHide">
+                    <a aria-label="AddtoFavourite_1" class="btn btn-icon mr-2 text-danger" title=""
+                      (click)="AddtoFavourite(cid)" data-toggle="modal" data-target="#myModalfavorite"><i
+                        class="material-icons" *ngIf="check">
+                        favorite_border
+                      </i><i class="material-icons" *ngIf="!check">
+                        favorite
+                      </i>
+
+                    </a>
+
+                    <div class="media-body">
+                      <div class="h6 mb-1">
+                        Favorite
+                        <span class="h5">{{this.favcnt[0].cnt | shortNumber}}</span>
+                      </div>
+
+
+                    </div>
+                  </div>
+                  <div class="media border-bottom py-2 mb-2 align-items-center">
+                    <i class="la la-eye align-self-center mr-2 la-2x text-color-light-green"></i>
+                    <div class="media-body">
+                      <div class="h6 mb-1">
+                        No of Visitor <span class="h5">{{this.visitcnt[0].visitcounts | shortNumber}}</span>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="media border-bottom py-2 mb-2 align-items-center"
+                    *ngIf="permissions.canEdit && permissions.canView">
+                    <div class="media-body">
+                      <div class="h6 mb-1">
+                        <button *ngIf="switchFlag == 'original'" type="button"
+                          class="btn  btn-outline-primary btn-sm mb-2 mr-2" (click)="switchView('C')">
+                          Switch to Counceller view
+                        </button>
+                        <button *ngIf="switchFlag == 'councellor'" type="button"
+                          class="btn  btn-outline-primary btn-sm mb-2 mr-2" (click)="switchView('O')">
+                          Switch to Original view
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="media py-2 mb-2 align-items-center" *ngIf="permissions.canEdit && permissions.canView">
+                    <div class="media-body">
+                      <div class="h6 mb-1">
+                        <button type="button" data-toggle="modal" data-target="#councellorview"
+                          class="btn  btn-outline-primary btn-sm mb-2 mr-2" (click)="getCouncellorDetails()">
+                          Edit to Counceller view
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- <ul class="nav nav-pills justify-content-center mt-3 mb-2" id="pills-tab" role="tablist">
+              <li class="nav-item mx-1">
+                <a class="active btn mb-2 btn-sm" style="background-color: #3B5897; color: #fff;" id="pills-home-tab"
+                  data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                  <i class="fab fa-facebook-f pr-1"></i>Facebook</a>
+              </li>
+
+              <li class="nav-item mx-1">
+                <a class="btn mb-2 btn-sm" style="background-color: #CD1F1F; color: #fff;" id="pills-contact-tab"
+                  data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
+                  aria-selected="false">
+                  <i class="fab fa-youtube pr-1"></i>Youtube
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="card shadow">
+                  <div class="card-body px-2">
+                    <iframe src="https://embedsocial.com/api/pro_hashtag/014112507f29df20813c4cc5abb534da8c154610"
+                      id="embedIFrame_014112507f29df20813c4cc5abb534da8c154610" class="embedsocial-hashtag-iframe"
+                      style="width: 100%; height: 400px; border: 0px; overflow: scroll;"></iframe>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="card shadow">
+                  <div class="card-body px-2">
+                    <iframe src="https://embedsocial.com/api/pro_hashtag/978ee2f7b197d23cca72522c4786d323e29a98cb"
+                      id="embedIFrame_978ee2f7b197d23cca72522c4786d323e29a98cb" class="embedsocial-hashtag-iframe"
+                      style="width: 100%;height: 400px;border: 0px;overflow: scroll;"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="accordion-search-my-courses" id="accordion-service-wrap" scrollSpy
+            [spiedTags]="['DIV:card mb-4 shadow']" (sectionChange)="onSectionChange($event)">
+            <div class="card mb-4 shadow" id="about-university-tab">
+              <div class="card-body p-2 p-md-3">
+
+                <div class="lead font-weight-normal text-muted" *ngFor="let rankings of universityrankingdata">
+                  <i class="la la-university pr-1"></i>University rank
+                  <span class="text-body">#{{rankings.name}} (</span>
+                  <span *ngFor="let rank of rankings.ranking; let ind=index">{{(ind!=0)?', ':''}}{{rank.levelname}} :
+                    {{rank.value}} </span>)
+                </div>
+
+                <div class="border-bottom h4 mt-2 pb-1">About Course</div>
+                <p class="text-justify" *ngIf="coursedata.course_overview">
+                  {{coursedata.course_overview}}
+                </p>
+
+                <blockquote
+                  class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm"
+                  *ngIf="coursedata.course_url">
+                  <p class="mb-0">
+                    Visit the programme website for more information
+                    <a target="_blank" href="{{coursedata.course_url}}">Click</a>
+                  </p>
+                </blockquote>
+                <h5>Course Discipline </h5>
+                <hr>
+                <span *ngIf="coursedata.course_discipline.length>0">
+                  <ul>
+                    <li *ngFor="let discipline of coursedata.course_discipline">
+                      {{discipline}}
+                    </li>
+                  </ul>
+                </span>
+
+              </div>
+            </div>
+            <div class="card mb-4 shadow" id="v-pills-career-outcome">
+
+              <div id="collapse-services-3" class="collapse show" aria-labelledby="heading-services-3">
+                <div class="card-body p-2 p-md-3">
+                  <div class="border-bottom h4 mt-2 pb-1">Career Outcome
+                  </div>
+                  <span *ngIf="coursedata.course_career_outcome.length>0">
+                    <ul>
+                      <li *ngFor="let outcome of coursedata.course_career_outcome">
+                        {{outcome}}
+                      </li>
+                    </ul>
+                  </span>
+
+                  <blockquote *ngIf="coursedata.course_url"
+                    class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm">
+                    <p class="mb-0">Visit the programme website for more information
+                      <a target="_blank" href="{{coursedata.course_url}}">Click</a></p>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-4 shadow" id="v-pills-course-outline">
+              <div id="collapse-services-5" class="collapse show" aria-labelledby="heading-services-5"
+                *ngIf="coursedata.course_outline.majors.length>0 || coursedata.course_outline.majors.length>0">
+                <div class="card-body p-2 p-md-3">
+                  <div class="h4">Course Outline</div>
+                  <hr>
+
+                  <div class="row align-items-center">
+                    <div class="col-auto border-right">
+                      <nav>
+                        <div class="d-block nav nav-pills" id="nav-tab" role="tablist">
+                          <a class="nav-item bg-client border btn-lg nav-link mb-2 py-1 active border-radius-100 text-uppercase"
+                            id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+                            aria-selected="true">Major
+                          </a>
+                          <a class="nav-item bg-client border btn-lg nav-link mb-2 py-1 border-radius-100 text-uppercase"
+                            id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                            aria-controls="nav-profile" aria-selected="false">Minor</a>
+                        </div>
+                      </nav>
+                    </div>
+                    <div class="col-md">
+                      <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                          aria-labelledby="nav-home-tab">
+                          <div class="p-2 d-inline-block mb-1 bg-white" style="
+                          width: 100%;
+                          overflow: auto;
+                          height: 162px;
+                      ">
+                            <ul *ngIf="coursedata.course_outline.majors && coursedata.course_outline.majors.length>0">
+                              <li *ngFor="let majors of coursedata.course_outline.majors">
+                                {{majors}}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                          <div class="p-2 d-inline-block mb-1 bg-white" style="
+                        width: 100%;
+                        overflow: auto;
+                        height: 162px;
+                    ">
+                            <ul *ngIf="coursedata.course_outline.minors && coursedata.course_outline.minors.length>0">
+                              <li *ngFor="let minors of coursedata.course_outline.minors">
+                                {{minors}}
+                              </li>
+                            </ul>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="coursedata.course_outline.more_details">
+                    <hr>
+
+                    <blockquote
+                      class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm">
+                      <p class="mb-0">To know more about course outline visit
+                        <a href="{{coursedata.course_outline.more_details}}" target="_blank">Click</a></p>
+                    </blockquote>
+                  </div>
+
+                </div>
+              </div>
+              <div id="collapse-services-5" class="collapse show" aria-labelledby="heading-services-5"
+                *ngIf="coursedata.course_outline.majors.length == 0 && coursedata.course_outline.minors.length == 0 ">
+                <div class="card-body p-2 p-md-3">
+                  <div class="h4">Course Outline</div>
+                  <hr>
+                  <!-- <p class="text-justify">
+                    Not Available
+                  </p> -->
+                  <blockquote *ngIf="coursedata.course_outline.more_details"
+                    class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm">
+                    <p class="mb-0">Visit the programme website for more information
+                      <a href="{{coursedata.course_outline.more_details}}" target="_blank">Click</a></p>
+                  </blockquote>
+                </div>
+
+              </div>
+            </div>
+            <div class="card mb-4 shadow" id="v-pills-key-facts">
+              <div id="collapse-services-4" class="collapse show" aria-labelledby="heading-services-4">
+                <div class="card-body p-2 p-md-3">
+                  <div class="h4"> Key facts</div>
+                  <hr>
+                  <span *ngIf="coursedata.course_intake.intake.length>0">
+                    <span *ngFor="let intakeDates of coursedata.course_intake.intake">
+                      <h5>Campus: {{intakeDates.name}}</h5>
+                      <div class="row mt-3">
+                        <div class="col-md-auto mb-3" *ngFor="let intakeValue of intakeDates.value">
+                          <div class="border px-4 py-1 rounded">
+                            <div class="row gutter-x-5 align-items-center py-2">
+                              <div class="col-auto">
+                                <img class="img-fluid" src="assets/images/s-m-c-calendar-ico.png" alt="calendar">
+                              </div>
+                              <div class="col">
+                                <p class="lead font-weight-normal mb-1">Starting in
+                                  <ng-container *ngIf="intakeValue.actualdate == 'anytime'">
+                                    <b> {{intakeValue.actualdate}}</b>
+                                  </ng-container>
+                                  <ng-container *ngIf="intakeValue.actualdate != 'anytime'">
+                                    <b> {{intakeValue.actualdate}}</b>
+                                    <!-- <b>(</b><b>{{intakeValue.filterdate}}</b><b>)</b> -->
+                                  </ng-container>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                  </span>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <div class="col-md-auto">
+                      <div class="font-weight-600 h5">Intakes</div>
+                      <blockquote *ngIf="coursedata.course_intake.more_details"
+                        class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm">
+                        <p class="mb-0">
+                          Visit university intake page.
+                          <a aria-label="course_url_6" href="{{coursedata.course_intake.more_details}}"
+                            target="_blank">Click</a>
+                        </p>
+                      </blockquote>
+                    </div>
+                    <div class="col-md-auto border-left">
+                      <div class="font-weight-600 h5">Duration</div>
+                      <span *ngIf="coursedata.course_duration_display.length>0">
+                        <ng-container *ngFor="let durationDisplay of coursedata.course_duration_display">
+                          <div class="row gutter-x-5 align-items-center py-2">
+                            <div class="col-auto">
+                              <img class="img-fluid mr-2" style="width: 20px;" src="assets/images/s-m-c-time-ico.png"
+                                alt="time">
+                            </div>
+                            <div class="col">
+                              <p class="font-size-11 font-weight-500 text-dark">{{durationDisplay.duration}}
+                                {{durationDisplay.unit}} {{durationDisplay.display}}
+                              </p>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </span>
+                    </div>
+                    <div class="col-md border-left">
+                      <div class="font-weight-600 h5">Delivery Languages</div>
+                      <div class="row gutter-x-5 align-items-center py-2">
+                        <div class="col-auto">
+                          <img class="img-fluid" style="width: 22px;" src="assets/images/s-m-c-language-ico.png"
+                            alt="language">
+                        </div>
+                        <div class="col">
+                          <p class="font-size-11 font-weight-500 text-dark"> English </p>
+                        </div>
+                        <div class="col-12 mt-2">
+                          <a type="button" class="btn  btn-outline-primary btn-sm mb-2 mr-2"
+                            href="https://takeielts.britishcouncil.org/" target="_blank">
+                            Schedule IELTS
+                          </a>
+                          <a type="button" class="btn btn-outline-primary btn-sm mb-2 mr-2"
+                            href="https://pearsonpte.com/book-now/" target="_blank">
+                            Schedule PTE
+                            <sup>®</sup>
+                          </a>
+                          <a type="button" class="btn btn-outline-primary btn-sm mb-2 mr-2"
+                            href="https://padlock.link/take-toefl2" target="_blank">
+                            Schedule TOEFL
+                            <sup>®</sup>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-auto border-left">
+                      <div class="font-weight-600 h5">Delivery mode</div>
+                      <div class="row gutter-x-5 align-items-center py-2">
+                        <div class="col-auto">
+                          <i class="la la-2x la-map-marker text-black-50"></i>
+                        </div>
+                        <div class="col">
+                          <p class="font-size-11 font-weight-500 text-dark"> {{coursedata.course_study_mode}} </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-4 shadow" id="v-pills-admission-requirements">
+              <div id="collapse-services-5" class="collapse show" aria-labelledby="heading-services-5">
+                <div class="card-body p-2 p-md-3">
+                  <div class="h4">Admission Requirements</div>
+                  <hr>
+                  <div class="h4">English Language Requirements</div>
+                  <p *ngIf="coursedata.course_admission_requirement.english.length>0">You only need to take one of these
+                    language tests: </p>
+                  <ng-container ngif="coursedata.course_admission_requirement.english.length>0">
+                    <div class="row align-items-center">
+                      <div class="col-auto border-right">
+                        <nav>
+                          <div class="d-block nav nav-pills" id="nav-tab" role="tablist">
+                            <a aria-label="englishProgress"
+                              class="nav-item bg-client border btn-lg nav-link mb-2 py-1 border-radius-100"
+                              *ngFor="let englishProgress of coursedata.course_admission_requirement.english; let OuterIndex = index"
+                              [ngClass]="OuterIndex == 0 ? 'nav-item border btn-lg nav-link mb-2 py-1 active' : 'nav-item border btn-lg nav-link mb-2 py-1'"
+                              id="nav-home-tab-{{OuterIndex}}" data-toggle="tab" href="#nav-home-{{OuterIndex}}"
+                              role="tab" [attr.aria-controls]="nav-home-OuterIndex" aria-selected="true"
+                              aria-hidden="true">
+                              {{englishProgress.name | uppercase}}
+                            </a>
+                          </div>
+                        </nav>
+                      </div>
+                      <div class="col-md" *ngIf="coursedata.course_admission_requirement.english.length>0">
+                        <div class="tab-content" id="nav-tabContent">
+                          <div class="tab-pane fade show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                            *ngFor="let englishProgress of coursedata.course_admission_requirement.english;let InnerIndex = index"
+                            [ngClass]="InnerIndex == 0 ? 'tab-pane fade p-3 show active' : 'tab-pane fade p-3 show'"
+                            id="nav-home-{{InnerIndex}}" role="tabpanel"
+                            [attr.aria-labelledby]="nav-home-tab-InnerIndex" aria-hidden="true">
+                            <div class="ScoreBar" data-min="englishProgress.min" data-max="englishProgress.max"
+                              data-format="0">
+                              <div class="Background">
+                                <div class="Incrementation Min">{{englishProgress.min}}</div>
+                                <div class="Incrementation Max">{{englishProgress.max}}</div>
+                              </div>
+                              <div class="ScoreBackground BarIndex0" style="width: 40%;">
+                                <div class="Score js-Score" data-value="englishProgress.require">
+                                  {{englishProgress.require}} </div>
+                              </div>
+                            </div>
+                            <div *ngFor="let englishreq of coursedata.course_admission_requirement.english">
+                              <p *ngIf="englishreq.name == englishProgress.name && englishreq.description!=''">
+                                {{englishreq.description}}
+                              </p>
+                            </div>
+
+                            <blockquote *ngIf="coursedata.course_admission_requirement.english_requirements_url"
+                              class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm">
+                              <p class="mb-0">
+                                Visit the programme website for more information on english
+                                requirements
+                                <a target="_blank"
+                                  href="{{coursedata.course_admission_requirement.english_requirements_url}}">Click</a>
+                              </p>
+                            </blockquote>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <hr>
+                  <div class="h4">Academic Requirements</div>
+                  <span ngif="coursedata.course_admission_requirement.academic.length>0">
+                    <ul>
+                      <li *ngFor="let academic of coursedata.course_admission_requirement.academic">
+                        {{academic}}
+                      </li>
+                    </ul>
+                  </span>
+                  <blockquote *ngIf="coursedata.course_ur"
+                    class="bg-client blockquote border-danger border-radius-30 d-inline-block px-3 py-2 shadow-sm">
+                    <p class="mb-0">Visit the programme website for more information
+                      <a aria-label="course_url_7" href="{{coursedata.course_url}}" target="_blank">Click</a></p>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-4 shadow" id="v-pills-fees-and-funding">
+              <div id="collapse-services-6" class="collapse show" aria-labelledby="heading-services-6">
+                <div class="card-body p-2 p-md-3">
+
+                  <div class="row">
+                    <div class="col-md-auto">
+                      <div class="h4">
+                        Tuition Fee
+                      </div>
+                    </div>
+                    <div class="col-md-auto">
+                      <p>international <a href="javascript:void();" data-toggle="tooltip" title=""
+                          data-original-title="These fees are for the indicative purpose, and should not be considered as final fees."><i
+                            class="fa fa-info-circle"></i></a></p>
+                    </div>
+                  </div>
+                  <hr>
+
+                  <span class="mt-2" *ngFor="let feeData of coursedata.course_tuition_fee.fees;let i=index">
+                    <h5>Campus: {{feeData.name}}</h5>
+                    <div class="row mt-2">
+                      <div class="col-md-auto">
+                        <div class="border px-4 py-1 rounded">
+                          <div class="row gutter-x-5 align-items-center py-2">
+                            <div class="col-auto">
+                              <img class="img-fluid" src="assets/images/s-m-c-aud-ico.png" alt="Aud">
+                            </div>
+                            <div class="col">
+                              <div class="text-muted mb-0 h6 font-size-13 font-weight-400 text-uppercase usd-text-hover"
+                                *ngIf="feeData.value.international_student.amount != 0 || feeData.value.international_student.amount != '0.00'">
+                                <span class="font-weight-600">
+                                  {{feeData.value.international_student.amount}}
+                                  {{feeData.value.currency}}/{{feeData.value.international_student.unit}}</span>
+                              </div>
+                              <div class="text-muted mb-0 h6 font-size-13 font-weight-400  usd-text-hover"
+                                *ngIf="feeData.value.international_student.amount == 0 || feeData.value.international_student.amount == '0.00'">
+
+                                <span class="font-weight-600">Unknown</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card mb-4 shadow" id="v-pills-fund-calculator">
+
+            <div id="collapse-services-8" class="collapse show" aria-labelledby="heading-services-8">
+              <div class="card-body">
+                <h4> Fund Calculator</h4>
+                <div class="card shadow mt-3">
+                  <div class="card-header p-2 py-md-2">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <h5 class="font-size-11 m-0">Main Applicant</h5>
+                      </div>
+                      <div class="col-auto my-2 my-md-0">
+                        <h5 class="font-size-11 m-0"> Country of Citizenship:</h5>
+                      </div>
+                      <div class="col-12 col-md py-2 py-md-0">
+                        <select id="inputState" class="form-control">
+                          <option selected="">Select Country</option>
+                          <option>AFGHANISTAN</option>
+                          <option>ALBANIA</option>
+                          <option>ALGERIA</option>
+                          <option>AMERICAN SAMOA </option>
+                          <option>ANDORRA</option>
+                        </select>
+                      </div>
+                      <div class="col-auto">
+                        <div class="text-right w-100">
+                          <button class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button" title="Send Mail"
+                            data-toggle="tooltip" data-original-title="Send Mail">
+                            <i class="far fa-envelope"></i>
+                          </button>
+                          <button class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button" title="PDF"
+                            data-toggle="tooltip" data-original-title="PDF">
+                            <i class="far fa-file-pdf"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body p-2 p-md-3">
+
+
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label font-weight-500" for="customCheck1">Add
+                          Spouse</label>
+                      </div>
+                    </div>
+                    <p class="border-bottom mb-2 pb-1"><b>Add other Dependent</b></p>
+                    <div class="form-row align-items-center bg-hover">
+                      <div class="col">
+                        <div class="form-row align-items-center">
+                          <div class="col-12 col-md-4 my-1">
+                            <div class="form-group mb-0">
+                              <select id="inputState" class="form-control">
+                                <option selected="">Relationship</option>
+                                <option> Child </option>
+                                <option> Parent </option>
+                                <option> Spouse/De Facto Partner </option>
+                                <option> Step Child </option>
+                                <option> Grand Parent </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-4 my-1">
+                            <div class="form-group mb-0">
+                              <div class="input-group">
+                                <input id="Dateonly" type="text" placeholder="Date of Birth"
+                                  class="form-control datepicker">
+                                <div class="input-group-append">
+                                  <label for="Dateonly" class="btn btn-outline-secondary mb-0">
+                                    <i class="far fa-calendar-alt"></i>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <button class="btn btn-icon btn-icon-sm btn-danger-air" data-toggle="tooltip" title=""
+                          data-original-title="Delete">
+                          <i class="material-icons"> delete_forever </i>
+                        </button>
+                        <button class="btn btn-icon btn-icon-sm btn-primary-air" data-toggle="tooltip" title=""
+                          data-original-title="Add new">
+                          <i class="material-icons"> add </i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body pb-4">
+                <div class="card shadow">
+                  <div class="card-header p-2 py-md-2">
+
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <h5 class="font-size-11 m-0">Summary of Finance requirement</h5>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="card-body p-2 p-md-3">
+
+
+                    <div class="table-responsive">
+                      <table class="table table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Applicant</th>
+                            <th class="text-right">Tution Fees</th>
+                            <th class="text-right">Living Cost</th>
+                            <th class="text-right">Travel Cost</th>
+                            <th class="text-right"> Total Cost </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Main Applicant</td>
+                            <td class="text-right">2.00</td>
+                            <td class="text-right">34490</td>
+                            <td class="text-right">7500</td>
+                            <td class="text-right">35250.00</td>
+                          </tr>
+                          <tr>
+                            <td>Spouse</td>
+                            <td class="text-right">3.00</td>
+                            <td class="text-right">27390</td>
+                            <td class="text-right">5000</td>
+                            <td class="text-right">3239.00</td>
+                          </tr>
+                          <tr>
+                            <td> Child </td>
+                            <td class="text-right">2.00</td>
+                            <td class="text-right">23330</td>
+                            <td class="text-right">5000</td>
+                            <td class="text-right">23830.00</td>
+                          </tr>
+                          <tr>
+                            <td> Brother </td>
+                            <td class="text-right">2.00</td>
+                            <td class="text-right">27390</td>
+                            <td class="text-right">5000</td>
+                            <td class="text-right">32390.00</td>
+                          </tr>
+                          <tr>
+                            <td rowspan="4"></td>
+                            <td colspan="3" class="text-right font-weight-500 text-dark">
+                              Subtotal</td>
+                            <td class="font-weight-500 text-color-blue text-right">
+                              32390.00
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-right font-weight-500 text-dark">
+                              Grace Amount <a class="text-danger" data-toggle="tooltip" data-placement="top"
+                                data-original-title="Lorem ipsum dolor sit amet consectetur adipisicing elit.">
+                                <i class="fas fa-question-circle"></i>
+                              </a></td>
+                            <td class="font-weight-500 text-color-blue text-right">
+                              32390.00
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-right font-weight-500 text-dark">
+                              Total Amount $</td>
+                            <td class="font-weight-500 text-color-blue text-right">
+                              32390.00
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-right font-weight-500 text-dark">
+                              Total Amount ₹</td>
+                            <td class="font-weight-500 text-color-blue text-right">
+                              32390.00
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="font-italic font-weight-400"><b class="text-danger">Disclaimer:</b>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
+                      expedita
+                      repellat optio, nihil quaerat accusamus porro cumque dignissimos itaque
+                      nobis eaque maxime voluptatem quas ea. Temporibus officia saepe magnam.
+                      Vero.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4 shadow" id="v-pills-visa-checklist">
+            <div id="collapse-services-7" class="collapse show" aria-labelledby="heading-services-7">
+              <div class="card-body p-2 p-md-3">
+                <h4> Visa Checklist</h4>
+                <div class="card-body p-md-2 p-0">
+                  <div class="card border-0">
+                    <div class="card-header p-2 py-md-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="font-size-11 m-0">Service Documents</h5>
+                        </div>
+                        <div class="col-auto my-2 my-md-0">
+                          <h5 class="font-size-11 m-0">Documents Type:</h5>
+                        </div>
+                        <div class="col-12 col-md py-2 py-md-0">
+                          <select id="inputState" class="form-control">
+                            <option selected="">Select Service Type</option>
+                            <option>Student Visa - Subclass 500</option>
+                            <option>Canada Student Visa</option>
+                            <option>UK Student Visa</option>
+                            <option>Visitor Visa Subclass 600 - Business Stream
+                            </option>
+                            <option>Kenya Student</option>
+                          </select>
+                        </div>
+                        <div class="col-auto">
+                          <div class="text-right w-100">
+                            <button class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button"
+                              title="Send Mail" data-toggle="tooltip" data-original-title="Send Mail">
+                              <i class="far fa-envelope"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm ml-2 print-btn" type="button" title="PDF"
+                              data-toggle="tooltip" data-original-title="PDF">
+                              <i class="far fa-file-pdf"></i>
+                            </button>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body p-0">
+                      <p class="badge-secondary font-weight-500 mb-0 px-3 py-1"> For Main
+                        Applicant </p>
+                      <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th>
+                                Document Name
+                              </th>
+                              <th>
+                                Specification
+                              </th>
+                              <th>
+                                category
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Passport</td>
+                              <td class="text-danger"> Required </td>
+                              <td>Certified</td>
+                            </tr>
+                            <tr>
+                              <td>Marriage Certificate / Deed Poll Certificate</td>
+                              <td class="text-success"> Recommended </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Educational Certificate (Degree, Diploma or
+                                Certificate)
+                              </td>
+                              <td class="text-danger"> Required </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Certificate of Health Cover</td>
+                              <td class="text-danger"> Required </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Curriculum Vitae or Resume</td>
+                              <td class="text-success"> Recommended </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>National Identity Document</td>
+                              <td class="text-danger"> Required </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Academic Transcripts (Degree, Diploma or
+                                Certificate)
+                              </td>
+                              <td class="text-danger"> Required </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Evidence of English Ability</td>
+                              <td class="text-danger"> Required </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Student Guardianship Arrangement [Form 157N]</td>
+                              <td class="text-success"> Recommended </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Evidence of internship</td>
+                              <td class="text-success"> Recommended </td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Confirmation of Enrolment / Letter of Offer</td>
+                              <td class="text-danger"> Required </td>
+                              <td>Certified</td>
+                            </tr>
+                            <tr>
+                              <td>Research (thesis/project)</td>
+                              <td class="text-success"> Recommended </td>
+                              <td>Original</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p class="badge-secondary font-weight-500 mb-0 px-3 py-1">For Secondary
+                        Applicant
+                      </p>
+                      <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th>
+                                Document Name
+                              </th>
+                              <th>
+                                Specification
+                              </th>
+                              <th>
+                                category
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Passport</td>
+                              <td class="text-danger">Required</td>
+                              <td>Certified</td>
+                            </tr>
+                            <tr>
+                              <td>Marriage Certificate / Deed Poll Certificate</td>
+                              <td class="text-success">Recommended</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Educational Certificate (Degree, Diploma or
+                                Certificate)
+                              </td>
+                              <td class="text-danger">Required</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Certificate of Health Cover</td>
+                              <td class="text-danger">Required</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Curriculum Vitae or Resume</td>
+                              <td class="text-success">Recommended</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>National Identity Document</td>
+                              <td class="text-danger">Required</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Academic Transcripts (Degree, Diploma or
+                                Certificate)
+                              </td>
+                              <td class="text-danger">Required</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Evidence of internship</td>
+                              <td class="text-success">Recommended</td>
+                              <td>Original</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p class="badge-secondary font-weight-500 mb-0 px-3 py-1">For Child</p>
+                      <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th>
+                                Document Name
+                              </th>
+                              <th>
+                                Specification
+                              </th>
+                              <th>
+                                category
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Passport</td>
+                              <td class="text-danger">Required</td>
+                              <td>Certified</td>
+                            </tr>
+                            <tr>
+                              <td>Certificate of Health Cover</td>
+                              <td class="text-danger">Required</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>National Identity Document</td>
+                              <td class="text-danger">Required</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Parental Consent Form [Form 1229]</td>
+                              <td class="text-success">Recommended</td>
+                              <td>Original</td>
+                            </tr>
+                            <tr>
+                              <td>Evidence of school enrolment for dependants</td>
+                              <td class="text-danger">Required</td>
+                              <td>Original</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+            <div class="card mb-4 shadow" id="university-courses-tab">
+              <div class="card-body p-2 p-md-3">
+               <div class="h4">Other/Related courses</div>
+                <div class="row gutter-x-5" *ngIf="topcourses">
+                  <div class="col-md-4 mb-3" *ngFor="let course of topcourses">
+                    <app-course-cards-related [switchFlag]="switchFlag" [setDefaultCurrency]="setDefaultCurrency"
+                      [coursedetail]=course (getRelated)="getRelatedCourseData($event)">
+                    </app-course-cards-related>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card mb-4 shadow" id="virtual-tour-tab">
+            <div class="card-body p-2 p-md-3">
+              <iframe title="myFrame" style="height:500px;" class="border-0 m-0 p-0 w-100" alt="Virtual Tour"
+                frameborder="0" [src]="sviewurl | safe"></iframe>
+
+            </div>
+          </div> -->
+            <!-- <div style="padding: 75px;" class="d-none d-md-block">
+
+          </div> -->
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="sticky-sidebar" style="position: relative; z-index: 999;">
+            <div class="d-none d-md-block sticky-sidebar-inner">
+              <div class="card mb-3">
+                <div class="card-body px-1 px-md-2 py-2">
+                  <div class="nav nav-pills flex-column" style="cursor: pointer;">
+                    <a class="nav-link border-bottom" (click)="scrollTo('about-university-tab')"
+                      [ngClass]="(currentSection==='about-university-tab')?'active text-light':''">
+                      <div class="row align-items-center gutter-x-5">
+                        <div class="col-auto">
+                          <!-- <img class="img-fluid mr-2" style="width: 20px;" src="assets/images/s-m-c-university.png" alt="time"> -->
+                          <svg fill="#F4B400" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 511.07 511.02"
+                            style="enable-background:new 0 0 511.07 511.02;width: 25px !important;"
+                            xml:space="preserve">
+                            <path class="st0" d="M258.5,0c45.27,24.41,90.54,48.83,135.82,73.23c36.4,19.61,72.81,39.18,109.21,58.79
+c7.39,3.98,9.56,10.48,5.58,16.36c-2.65,3.91-6.52,4.65-10.9,4.64c-30.76-0.05-61.51-0.01-92.27-0.01c-130.5,0-261-0.05-391.51,0.08
+C8,153.09,3.12,151.49,0,145.72c0-2.33,0-4.66,0-6.99c3.41-2.73,6.5-6.03,10.27-8.09c29.71-16.21,59.56-32.17,89.36-48.23
+C150.59,54.95,201.55,27.47,252.51,0C254.5,0,256.5,0,258.5,0z M457.27,131.53c-2.3-1.35-3.41-2.05-4.56-2.67
+c-63.92-34.4-127.87-68.75-191.72-103.29c-3.98-2.15-6.88-2.21-10.84-0.07C186.44,59.95,122.64,94.23,58.87,128.57
+c-1.38,0.74-2.69,1.59-5.01,2.96C188.67,131.53,322.29,131.53,457.27,131.53z" />
+                            <path class="st0" d="M421.17,172.27c0,86.49,0,172.58,0,259.09c-25.15,0-50.13,0-75.42,0c0-86.38,0-172.57,0-259.09
+C370.85,172.27,395.71,172.27,421.17,172.27z M367.26,193.64c0,72.44,0,144.33,0,216.39c11.07,0,21.77,0,32.53,0
+c0-72.32,0-144.33,0-216.39C388.8,193.64,378.2,193.64,367.26,193.64z" />
+                            <path class="st0" d="M90,172.26c25.24,0,50.09,0,75.24,0c0,86.38,0,172.43,0,259c-24.93,0-49.89,0-75.24,0
+C90,345.1,90,258.92,90,172.26z M143.71,410.04c0-72.4,0-144.28,0-216.28c-11.07,0-21.77,0-32.63,0c0,72.22,0,144.1,0,216.28
+C122.03,410.04,132.74,410.04,143.71,410.04z" />
+                            <path class="st0" d="M217.94,172.21c25.18,0,50.05,0,75.22,0c0,86.5,0,172.72,0,259.26c-25.06,0-49.94,0-75.22,0
+C217.94,345.15,217.94,258.93,217.94,172.21z M271.88,410.01c0-72.35,0-144.24,0-216.3c-11.08,0-21.8,0-32.82,0
+c0,72.19,0,144.08,0,216.3C250.01,410.01,260.74,410.01,271.88,410.01z" />
+                            <path class="st0" d="M255.48,489.78c79.5,0,158.99,0,238.49,0c1.5,0,3-0.05,4.49,0.07c5.86,0.47,9.84,4.74,9.84,10.49
+c0,5.65-4.07,10.08-9.82,10.61c-1.16,0.11-2.33,0.05-3.49,0.05c-159.66,0-319.32,0-478.98,0c-7.58,0-11.89-2.71-13.06-8.17
+c-1.56-7.22,3.2-12.97,11.05-13.02c18.46-0.1,36.92-0.06,55.38-0.06c62.03,0,124.07,0,186.1,0
+C255.48,489.77,255.48,489.77,255.48,489.78z" />
+                            <path class="st0" d="M255.53,467.86c-64.19,0-128.38,0-192.57,0c-9.62,0-14.86-3.91-14.71-10.95c0.15-6.89,5.17-10.5,14.63-10.5
+c128.88,0,257.76-0.01,386.64,0c9.49,0,15.06,6.12,12.66,13.86c-1.58,5.1-5.65,7.61-12.58,7.61c-26.77,0.02-53.55,0.01-80.32,0.01
+c-37.92,0-75.83,0-113.75,0C255.53,467.87,255.53,467.87,255.53,467.86z" />
+                          </svg>
+                        </div>
+                        <div class="col">
+                          About Course
+                        </div>
+                      </div>
+                    </a>
+                    <a class="nav-link border-bottom rounded-0" (click)="scrollTo('v-pills-career-outcome')"
+                      [ngClass]="(currentSection==='v-pills-career-outcome')?'active text-light':''">
+                      <div class="row align-items-center  gutter-x-5">
+                        <div class="col-auto">
+                          <svg fill="#BE5EDD" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 426.99 396.26"
+                            style="enable-background:new 0 0 426.99 396.26;width: 25px !important;"
+                            xml:space="preserve">
+                            <g>
+                              <path class="st0"
+                                d="M76.56,117.47c-16.17-17.25-22.63-37.34-19.09-60.28c2.65-17.16,11.17-31.16,24.6-42.08
+                                                 c25.46-20.71,63.34-20.05,87.72,1.42c14.98,13.19,23.2,29.71,23.92,49.74c0.71,19.79-6.38,36.68-20.22,51.42
+                                                 c9.37,5.18,18.17,10.14,27.06,14.95c10.85,5.88,21.48,12,29.56,21.69c7.14,8.55,12.46,17.99,15.24,28.82
+                                                 c0.28,1.1,0.82,2.14,1.88,4.82c6.09-8.95,12.29-16.57,16.78-25.09c4.76-9.04,8.62-18.72,11.53-28.52
+                                                 c4.1-13.83,11.48-23.82,25.96-27.42c19.84-4.94,40.2,10.62,40.48,31.08c0.31,23.01-4.92,44.78-15.25,65.34
+                                                 c-0.87,1.73-1.73,3.46-2.94,5.89c2.7,0.16,4.62,0.36,6.55,0.36c16.14,0.04,32.28-0.13,48.41,0.1c17.85,0.25,29.71,10.65,31.6,28.1
+                                                 c0.54,4.95-0.97,10.11-1.6,15.77c0.3,0.2,1.2,0.88,2.16,1.45c18.76,10.98,21.63,34.34,6.01,49.48c-1.66,1.61-2.72,2.69-1.56,5.4
+                                                 c7.33,17.14,2.4,31.7-13.66,41.22c-0.55,0.33-1.06,0.74-0.25,1.28c0,6.85,1.11,13.93-0.23,20.5c-2.86,14.02-15.06,23.11-30.37,23.2
+                                                 c-37.1,0.21-74.2,0.16-111.3,0.02c-10.87-0.04-20.94-3.19-29.98-9.44c-5.04-3.48-10.22-6.75-15.75-10.38
+                                                 c-4.55,11.24-13.52,13.14-23.87,12.9c-11.97-0.28-23.96-0.32-35.93-0.01c-13.44,0.35-23.31-5.58-22.6-22.76
+                                                 c0.57-13.79,0.12-27.62,0.12-41.43c0-6.68-0.01-6.68-6.89-6.68c-16.64,0-33.27-0.04-49.91,0.02c-7.48,0.02-14.46-1.38-20.78-5.74
+                                                 c-1.14-0.79-3.83-0.59-5.09,0.24c-10.51,6.96-21.47,7.99-32.54,2.07C5.23,309,0.08,299.24,0.1,286.66
+                                                 c0.04-27.95-0.3-55.91,0.1-83.86c0.39-27.55,12.61-48.89,36.13-63.24c11.05-6.74,22.75-12.42,34.14-18.59
+                                                 C72.34,119.96,74.17,118.85,76.56,117.47z M212.86,216.41c4.63-2.19,8.83-3.83,12.63-6.14c1.5-0.91,2.95-3.31,2.96-5.04
+                                                 c0.13-20.17-7.49-36.62-24.57-47.86c-7.62-5.01-15.82-9.13-23.8-13.59c-8.85-4.94-17.75-9.79-26.62-14.71
+                                                 c-9.93-5.51-10.43-13.09-1.31-19.59c0.54-0.39,1.1-0.74,1.63-1.14c15.94-12.02,22.56-28.19,19.69-47.67
+                                                 c-4.14-28.07-32.11-46.29-59.95-39.75c-27.4,6.43-43.66,35.25-35.24,62.27c3.63,11.64,10.89,20.29,20.79,27.14
+                                                 c7.7,5.32,7.16,13.2-0.9,17.94c-1.57,0.92-3.22,1.73-4.82,2.61c-16.34,8.91-32.96,17.34-48.92,26.88
+                                                 c-13.49,8.07-21.93,20.6-23.78,36.29c-1.38,11.66-0.97,23.55-1.06,35.35c-0.14,19.3-0.1,38.6,0.01,57.9
+                                                 c0.04,6.84,4.78,11.68,11.02,11.75c6.25,0.07,10.96-4.68,11.33-11.48c0.11-1.99,0.03-3.99,0.03-5.99c0-24.29-0.03-48.59,0.03-72.88
+                                                 c0.02-7.02,4.42-11.15,10.9-10.54c5.28,0.5,8.54,4.57,8.55,10.94c0.04,25.29,0.02,50.58,0.02,75.87c0,10.65,3.06,13.77,13.6,13.78
+                                                 c16.64,0.02,33.27-0.17,49.91,0.11c4.98,0.09,6.61-1.28,6.55-6.41c-0.26-22.13-0.2-44.26-0.08-66.39
+                                                 c0.07-13.78,6.46-20.14,20.19-20.26c13.47-0.11,26.95,0.19,40.42-0.11C200.85,205.48,208.24,207.45,212.86,216.41z M314.51,376.1
+                                                 c0,0.13,0,0.27,0,0.4c10.15,0,20.29,0.03,30.44-0.01c9.14-0.03,18.31,0.19,27.43-0.31c6.83-0.38,10.6-5.19,10.23-11.65
+                                                 c-0.34-5.94-4.84-10.03-11.38-10.13c-6.32-0.09-12.64,0.01-18.96-0.04c-7.27-0.05-11.84-3.99-11.74-10.02
+                                                 c0.1-5.93,4.34-9.48,11.56-9.51c10.81-0.06,21.62-0.02,32.44-0.04c1.5,0,3.01,0.06,4.48-0.15c6.16-0.9,10.6-5.98,10.21-11.56
+                                                 c-0.41-5.87-5-10.38-11.3-10.48c-11.14-0.19-22.29,0.01-33.43-0.14c-5.74-0.07-9.93-4.36-9.93-9.7c0-5.32,4.2-9.44,9.96-9.72
+                                                 c1.49-0.07,2.99-0.03,4.49-0.03c12.31-0.01,24.62,0.1,36.93-0.06c6.57-0.09,11.29-4.8,11.42-10.82c0.12-5.76-4.24-10.51-10.5-11.28
+                                                 c-1.81-0.22-3.65-0.12-5.48-0.13c-15.14-0.02-30.27,0.05-45.41-0.1c-5.19-0.05-8.97-3.73-9.44-8.5c-0.49-4.94,2.3-9.08,7.32-10.45
+                                                 c1.73-0.47,3.6-0.51,5.41-0.52c10.31-0.05,20.63,0.08,30.94-0.07c5.99-0.09,10.44-4.55,10.8-10.31c0.35-5.62-3.72-10.5-9.69-11.34
+                                                 c-2.46-0.35-4.97-0.35-7.46-0.36c-22.29-0.03-44.58,0.1-66.87-0.1c-9.76-0.09-13.74-7.78-8.68-16.12c1.46-2.42,3.02-4.78,4.54-7.16
+                                                 c12.51-19.67,19.15-41.14,19.64-64.45c0.18-8.51-4.53-14.48-11.79-15.42c-7.45-0.96-13.04,3.43-15.56,11.64
+                                                 c-2.33,7.6-4.68,15.24-7.75,22.56c-9.55,22.76-25.57,41.13-41.69,59.28c-4.04,4.55-10.07,7.46-15.47,10.65
+                                                 c-3.83,2.27-8.07,3.93-12.26,5.49c-3,1.12-3.83,2.91-3.82,5.99c0.1,35.77,0.09,71.54,0.01,107.31c-0.01,2.96,0.75,4.9,3.36,6.55
+                                                 c8.01,5.05,15.64,10.76,23.87,15.41c4.63,2.62,10.12,4.98,15.29,5.14C275.92,376.46,295.22,376.1,314.51,376.1z M151.47,225.43
+                                                 c-0.15,1.9-0.35,3.19-0.35,4.47c-0.02,44.87,0.04,89.74-0.11,134.61c-0.01,4.16,1.58,5.06,5.23,5.01
+                                                 c10.8-0.14,21.61-0.27,32.4,0.03c4.83,0.14,6.15-1.45,6.13-6.23c-0.17-44.04-0.09-88.08-0.09-132.12c0-0.83,0.3-1.88-0.09-2.45
+                                                 c-0.87-1.24-2.07-3.17-3.16-3.19C178.31,225.35,165.19,225.43,151.47,225.43z" />
+                              <path class="st0" d="M321.15,70.19c0,3.15,0.18,6.31-0.04,9.45c-0.35,4.86-3.84,8.25-8.62,8.76c-4.39,0.47-9.4-2.08-9.81-6.55
+                                                 c-0.74-7.99-0.77-16.15,0.05-24.13c0.48-4.64,5.61-6.96,10.41-6.28c4.37,0.62,7.64,4.16,8.01,8.79c0.13,1.65,0.09,3.32,0.1,4.97
+                                                 c0.01,1.66,0,3.32,0,4.98C321.22,70.19,321.18,70.19,321.15,70.19z" />
+                              <path class="st0" d="M270.78,94.59c-1.91,2.35-3.59,6.21-6.38,7.37c-2.82,1.17-7.62,0.83-10.01-0.94
+                                                 c-5.27-3.9-9.78-8.92-14.18-13.86c-3.4-3.83-2.92-9.06,0.43-12.65c3.23-3.46,8.59-4.58,12.13-1.53c5.5,4.74,10.48,10.1,15.47,15.4
+                                                 C269.39,89.6,269.63,91.67,270.78,94.59z" />
+                              <path class="st0" d="M386.09,80.29c-1.1,7.08-16.84,23.41-22.98,22.72c-3.01-0.34-7.04-2.4-8.27-4.85
+                                                 c-1.34-2.68-1.26-7.68,0.47-9.97c4.12-5.5,9.4-10.19,14.54-14.85c2.94-2.67,6.98-3.01,10.13-0.62
+                                                 C382.48,74.62,384.08,77.72,386.09,80.29z" />
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="col">
+                          Career Outcome
+                        </div>
+                      </div>
+                    </a>
+                    <a class="nav-link border-bottom rounded-0" (click)="scrollTo('v-pills-course-outline')"
+                      [ngClass]="(currentSection==='v-pills-course-outline')?'active text-light':''">
+                      <div class="row align-items-center  gutter-x-5">
+                        <div class="col-auto">
+                          <svg fill="#E13137" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 449.75 263.43"
+                            style="enable-background:new 0 0 449.75 263.43;width: 25px !important;"
+                            xml:space="preserve">
+
+                            <g>
+                              <g>
+                                <path class="st0" d="M402.65,107.71c-18.24,7.02-36.08,13.87-53.9,20.74c-33.69,12.98-67.33,26.09-101.08,38.92
+c-17,6.46-34.33,6.55-51.3,0.06c-62-23.72-123.92-47.67-185.84-71.62C5.82,93.99-0.15,92.38,0,86c0.14-6.02,5.88-7.53,10.47-9.31
+C72.86,52.56,135.21,28.35,197.71,4.54c15.91-6.06,32.56-6.06,48.48,0c62.35,23.74,124.55,47.9,186.79,71.93
+c2.32,0.89,4.63,1.93,6.71,3.27c6.05,3.92,6.15,9.14-0.05,12.91c-3.8,2.31-8.16,3.69-12.27,5.48c-1.67,0.73-3.34,1.43-5.08,2.17
+c0,29.64,0,59.13,0,89.09c1.41,0.64,3.03,1.34,4.62,2.09c6.69,3.16,11.4,8.1,13.19,15.38c3.18,12.93,6.37,25.85,9.24,38.85
+c2.12,9.6-4.06,17.39-13.92,17.53c-15.16,0.22-30.34,0.22-45.5,0c-9.7-0.15-15.89-7.62-13.9-17.11
+c2.84-13.51,6.14-26.93,9.61-40.3c1.93-7.44,7.32-12.01,14.26-15.06c1.4-0.61,3.12-2.61,3.13-3.98
+c0.17-25.84,0.1-51.68,0.07-77.51C403.09,108.97,402.92,108.66,402.65,107.71z M38.69,86.15c1.68,0.75,2.28,1.05,2.89,1.29
+c54.18,20.89,108.32,41.89,162.57,62.58c12.25,4.67,24.9,4.2,37.16-0.5c49.09-18.84,98.13-37.78,147.19-56.7
+c5.26-2.03,10.5-4.14,16.41-6.48c-1.39-0.72-1.94-1.08-2.54-1.31c-54.33-20.96-108.6-42.07-163.04-62.75
+c-11.66-4.43-24-4.14-35.75,0.34C160.68,38.99,117.85,55.57,75,72.09C63.24,76.62,51.49,81.19,38.69,86.15z M429.66,244.03
+c-2.7-11.06-5.06-21.73-8.01-32.24c-1.2-4.28-5.8-4.62-9.24-4.13c-3.07,0.43-7.79,2.11-8.49,4.3
+c-3.33,10.35-5.53,21.07-8.24,32.07C407.25,244.03,418.11,244.03,429.66,244.03z" />
+                              </g>
+                              <g>
+                                <path class="st0" d="M214.08,246.21c-22.26-0.2-51.78-2.77-79.88-13.37c-9.35-3.53-18.25-8.85-26.49-14.59
+c-8.18-5.7-11.93-14.41-11.64-24.73c0.27-9.66,0.01-19.33,0.08-29c0.04-6.67,2.19-8.44,9.93-8.44c6.84,0,9,1.9,9.04,8.23
+c0.06,9.5,0.27,19.01-0.08,28.5c-0.21,5.69,2.2,9.53,6.52,12.63c9.92,7.12,21.24,11.09,32.93,13.86
+c47.91,11.35,95.74,11.3,143.17-2.47c8.35-2.42,16.18-6.86,23.94-10.97c5.17-2.73,7.6-7.4,7.32-13.7
+c-0.41-9.32-0.16-18.66-0.08-28c0.05-6.32,2.11-8.06,9.17-8.08c7.39-0.02,9.72,1.8,9.78,8.1c0.11,10.5,0.1,21,0.02,31.5
+c-0.07,8.89-4.02,16.03-10.5,21.84c-11.35,10.18-25.21,15.34-39.55,19.38C275.45,243.2,250.46,246.14,214.08,246.21z" />
+                              </g>
+                            </g>
+                          </svg>
+
+                        </div>
+                        <div class="col">
+                          Course Outline
+                        </div>
+                      </div>
+                    </a>
+                    <a class="nav-link border-bottom rounded-0" (click)="scrollTo('v-pills-key-facts')"
+                      [ngClass]="(currentSection==='v-pills-key-facts')?'active text-light':''">
+                      <div class="row align-items-center gutter-x-5">
+                        <div class="col-auto">
+                          <svg fill="#EB8C95" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 27.5 27.5"
+                            style="enable-background:new 0 0 27.5 27.5;width: 25px !important;" xml:space="preserve">
+
+                            <g id="Page-1">
+                              <g id="icon-24-key">
+                                <path id="key" class="st0" d="M15.78,16.72l-4.53,4.53h-3v3h-3v3h-5v-5l10.53-10.53c-0.34-0.92-0.53-1.92-0.53-2.97
+                                                     c0-4.69,3.81-8.5,8.5-8.5s8.5,3.81,8.5,8.5s-3.81,8.5-8.5,8.5C17.71,17.25,16.71,17.06,15.78,16.72L15.78,16.72L15.78,16.72z
+                                                      M11.25,12.75l-10,10v3.5h3v-3h3v-3h3.5l4-4C13.26,15.46,12.04,14.24,11.25,12.75L11.25,12.75L11.25,12.75z M26.25,8.75
+                                                     c0-4.14-3.36-7.5-7.5-7.5s-7.5,3.36-7.5,7.5s3.36,7.5,7.5,7.5S26.25,12.89,26.25,8.75L26.25,8.75L26.25,8.75z M22.83,7.67
+                                                     c0-1.66-1.34-3-3-3s-3,1.34-3,3s1.34,3,3,3S22.83,9.32,22.83,7.67L22.83,7.67L22.83,7.67z M21.83,7.67c0-1.1-0.9-2-2-2s-2,0.9-2,2
+                                                     s0.9,2,2,2S21.83,8.77,21.83,7.67L21.83,7.67L21.83,7.67z" />
+                              </g>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="col">
+                          Key facts
+                        </div>
+                      </div>
+                    </a>
+                    <a class="nav-link border-bottom rounded-0" (click)="scrollTo('v-pills-admission-requirements')"
+                      [ngClass]="(currentSection==='v-pills-admission-requirements')?'active text-light':''">
+                      <div class="row align-items-center gutter-x-5">
+                        <div class="col-auto">
+                          <svg fill="#989898" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 270.64 264.27"
+                            style="enable-background:new 0 0 270.64 264.27;width: 25px !important;"
+                            xml:space="preserve">
+                            <g>
+                              <path class="st0" d="M270.52,54.81c-59.8,0-119.16,0-178.89,0c0-5.18,0-10.21,0-15.51c59.64,0,119.12,0,178.89,0
+                                      C270.52,44.5,270.52,49.65,270.52,54.81z" />
+                              <path class="st0" d="M91.41,150.41c0-5.15,0-9.95,0-15.14c59.71,0,119.3,0,179.23,0c0,4.91,0,9.83,0,15.14
+                                      C211.11,150.41,151.51,150.41,91.41,150.41z" />
+                              <path class="st0" d="M91.4,246.25c0-5.17,0-9.96,0-15.15c59.72,0,119.32,0,179.24,0c0,4.93,0,9.84,0,15.15
+                                      C211.1,246.25,151.49,246.25,91.4,246.25z" />
+                              <path class="st0"
+                                d="M33.36,209.1c14.65,0.02,27.55,12.82,27.57,27.36c0.03,14.85-12.74,27.69-27.65,27.81
+                                      c-14.48,0.11-27.35-12.69-27.53-27.4C5.57,222.1,18.52,209.08,33.36,209.1z M45.67,236.74c0.02-7.02-5.22-12.37-12.14-12.38
+                                      c-7.24-0.01-12.55,5.32-12.52,12.56c0.03,6.9,5.4,12.13,12.42,12.1C40.44,248.98,45.65,243.75,45.67,236.74z" />
+                              <path class="st0"
+                                d="M71.7,0c3.56,3.57,6.81,6.83,10.47,10.49c-18.5,18.89-36.92,37.7-55.8,56.98
+                                      C17.51,59.33,9.01,51.51,0.01,43.24c3.4-3.66,6.52-7,10.12-10.87c5.01,4.7,9.79,9.2,14.5,13.63C40.4,30.59,56,15.35,71.7,0z" />
+                              <path class="st0"
+                                d="M0,143.03c3.67-3.89,6.72-7.13,10.18-10.8c5.03,4.73,9.83,9.24,14.3,13.45c15.76-15.38,31.28-30.53,46.9-45.78
+                                      c3.58,3.66,6.87,7.03,10.5,10.74c-18.27,18.65-36.7,37.46-55.53,56.67C17.43,159.09,8.94,151.27,0,143.03z" />
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="col">
+                          Admission requirements
+                        </div>
+                      </div>
+                    </a>
+                    <a class="nav-link border-bottom rounded-0" (click)="scrollTo('v-pills-fees-and-funding')"
+                      [ngClass]="(currentSection==='v-pills-fees-and-funding')?'active text-light':''">
+                      <div class="row align-items-center gutter-x-5">
+                        <div class="col-auto">
+                          <svg version="1.1" fill="#A471F7" id="Isolation_Mode" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 366.87 494.73"
+                            style="enable-background:new 0 0 366.87 494.73;width: 25px !important;"
+                            xml:space="preserve">
+
+                            <g>
+                              <path class="st0" d="M248.83,105.02c1,1.34,1.74,2.39,2.54,3.39c3.82,4.86,6.04,10.2,5.76,16.56c-0.24,5.31-0.29,10.67,0.15,15.96
+                                             c0.13,1.57,1.92,3.98,3.37,4.34c37.54,9.27,57.63,35.39,67.22,70.68c12.4,45.63,24.81,91.3,35.3,137.39
+                                             c9.57,42.04,1.1,80.46-31.26,111.17c-17.61,16.71-39.48,25.98-63.34,27.78c-28.18,2.12-56.56,1.82-84.86,2.24
+                                             c-19.66,0.3-39.33,0.21-59,0.02c-24.73-0.24-48.79-3.86-70.73-16.21c-30.06-16.93-46.64-43.15-52.43-76.69
+                                             c-3.88-22.5,0.07-44.22,5.9-65.92c11.24-41.82,21.55-83.9,33.22-125.6c6.55-23.42,19.58-42.99,41.46-55.27
+                                             c6.18-3.47,13-5.9,19.73-8.23c3.47-1.2,4.94-2.85,4.52-6.4c-0.17-1.48-0.04-2.99-0.05-4.49c-0.05-10.43-1.48-21.19,7.41-29.41
+                                             c-6.73-3.96-13.05-7.3-18.96-11.26c-8.79-5.89-16.75-12.73-20.67-23.03c-3.09-8.12-1.96-15.98,1.84-23.6
+                                             c9.1-18.22,33.11-30.82,55.08-21.91c0.76,0.31,1.58,0.49,2.28,0.7c0.41-0.23,0.88-0.34,0.94-0.55c4.38-17.27,17.74-22.9,33.31-25.6
+                                             c11.67-2.02,23.2-1.19,34.51,2.19c11.91,3.56,20.15,10.76,21.95,22.86c7.98-0.8,15.57-2.71,22.95-2.07
+                                             c18.09,1.56,31.82,10.58,39.05,27.58c5.28,12.43,1.92,23.95-7.7,32.73c-7.54,6.87-16.51,12.18-24.89,18.13
+                                             C252.11,103.43,250.59,104.07,248.83,105.02z M182.9,479.18c0,0.01,0,0.03,0,0.04c21.33,0,42.68,0.45,63.99-0.18
+                                             c11.23-0.33,22.65-1.54,33.57-4.09c31.34-7.32,54.53-25,65.74-55.98c7.27-20.08,7.69-40.82,2.59-61.38
+                                             c-9.93-40.1-20.42-80.06-30.77-120.06c-2.29-8.83-4.64-17.67-7.53-26.31c-11.91-35.59-38.27-52.36-74.38-54.88
+                                             c-22.07-1.54-44.27-1.92-66.4-1.66c-17.09,0.2-34.29,1.28-51.21,3.58c-32.56,4.42-52.68,24.09-63.05,54.53
+                                             c-1.28,3.77-2.4,7.6-3.4,11.45c-9.91,38.06-19.64,76.16-29.71,114.17c-5.56,21.01-10.03,42.05-6.24,63.91
+                                             c4.46,25.71,16.9,46.27,39.4,60.23c18.65,11.57,39.32,16.1,60.9,16.54C138.56,479.53,160.73,479.18,182.9,479.18z M180.34,97.73
+                                             c0,0.01,0,0.01,0,0.02c9.83,0,19.71-0.68,29.47,0.15c15.79,1.35,29.49-3.94,42.41-11.86c5.6-3.43,10.78-7.77,15.5-12.36
+                                             c3.91-3.81,5.76-9,4.6-14.66c-2.62-12.76-19.31-23.59-32.18-21.18c-7.18,1.34-13.01,4.91-17.97,10.04
+                                             c-2.79,2.88-6.09,3.57-9.56,2.04c-3.51-1.54-4.38-4.77-3.98-8.37c0.24-2.14,0.68-4.27,0.82-6.42c0.67-10.44-3.3-16.24-13.47-18.34
+                                             c-11.02-2.28-22.16-2.41-33.14,0.51c-10.26,2.72-14.17,8.14-13.92,18.83c0.05,2.33,0.68,4.78,0.14,6.95
+                                             c-0.59,2.37-1.73,5.65-3.53,6.4c-2.33,0.97-5.77,0.41-8.32-0.56c-2.17-0.83-3.71-3.24-5.63-4.83c-11.58-9.51-25.42-8.59-35.66,2.37
+                                             c-1.36,1.46-2.6,3.03-3.8,4.63c-5.41,7.24-5.55,14.3-0.17,21.55c1.76,2.38,3.91,4.56,6.2,6.45c10.54,8.75,22.93,13.97,35.78,18.22
+                                             c1.37,0.46,2.96,0.38,4.45,0.38C152.36,97.74,166.35,97.73,180.34,97.73z M241.51,141.23c0.21-1.09,0.48-1.9,0.49-2.71
+                                             c0.07-4.65,0.23-9.31,0.09-13.96c-0.24-8.03-3.77-11.42-11.8-11.45c-9.32-0.04-18.64,0.01-27.96,0.01
+                                             c-23.13,0-46.27-0.03-69.4,0.01c-6.49,0.01-10.68,2.37-11.2,7.59c-0.68,6.83-0.17,13.78-0.17,20.89
+                                             C161.71,138.6,201.37,138.87,241.51,141.23z" />
+                              <path class="st0"
+                                d="M191.44,238.5c-0.09,1.54-0.26,3.16-0.26,4.77c-0.01,21.8,0.1,43.59-0.05,65.39
+                                             c-0.03,3.64,1.08,5.39,4.64,6.29c4.17,1.06,8.19,2.71,12.25,4.19c26.35,9.57,34.3,30.09,27.12,56.52
+                                             c-5.21,19.18-19.63,29.02-37.87,33.86c-4.76,1.26-6.65,3.07-6.2,7.99c0.42,4.62,0.16,9.31,0.07,13.97
+                                             c-0.11,5.71-2.64,8.46-7.54,8.42c-4.66-0.04-7.08-2.72-7.18-8.2c-0.09-4.82-0.18-9.66,0-14.47c0.13-3.36-0.96-4.55-4.51-4.72
+                                             c-14.26-0.71-28.09-3.32-40.54-10.84c-2.41-1.46-4.71-3.16-6.82-5.03c-3.55-3.16-3.94-7.35-1.29-10.63
+                                             c2.72-3.36,7.43-3.93,11.1-0.77c10.01,8.62,21.95,12.18,34.69,13.83c6.98,0.9,7.33,0.6,7.33-6.51c0.01-20.63-0.09-41.26,0.09-61.89
+                                             c0.03-3.99-1.1-5.94-5.13-6.99c-5.12-1.33-10.11-3.32-15.01-5.36c-29.5-12.26-33.93-39.95-25.13-63.39
+                                             c6.97-18.57,21.45-28.72,40.71-32.06c3.8-0.66,4.64-2.25,4.5-5.54c-0.13-2.99-0.13-6,0.08-8.98c0.3-4.32,2.82-6.6,7.13-6.76
+                                             c4.2-0.16,7.23,2.65,7.54,6.94c0.33,4.58-1.03,10.37,1.27,13.41c2.14,2.82,8.19,2.59,12.45,3.94c10.27,3.26,19.56,8.34,27.76,15.36
+                                             c5.05,4.32,6.22,9.17,3.02,12.79c-3.11,3.51-7.92,3.12-12.77-1.11c-7.91-6.9-16.81-11.88-27.09-14.27
+                                             c-0.81-0.19-1.61-0.41-2.43-0.49C192.89,238.09,192.4,238.3,191.44,238.5z M176.1,238.14c-22.9,1.5-33.75,17.06-33.73,36.69
+                                             c0.02,18.42,16.22,34.53,33.73,33.35C176.1,284.98,176.1,261.76,176.1,238.14z M191.47,396.87c18.1-2.38,31.29-18.73,31.07-37.7
+                                             c-0.19-15.75-14.81-29.42-31.07-28.72C191.47,352.47,191.47,374.5,191.47,396.87z" />
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="col">
+                          Tuition Fee
+                        </div>
+                      </div>
+                    </a>
+
+                    <a class="nav-link border-bottom rounded-0" (click)="scrollTo('university-courses-tab')"
+                      [ngClass]="(currentSection==='university-courses-tab')?'active text-light':''">
+                      <div class="row align-items-center gutter-x-5">
+                        <div class="col-auto">
+                          <svg fill="#E13137" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 449.75 263.43"
+                            style="enable-background:new 0 0 449.75 263.43;width: 25px !important;"
+                            xml:space="preserve">
+
+                            <g>
+                              <g>
+                                <path class="st0" d="M402.65,107.71c-18.24,7.02-36.08,13.87-53.9,20.74c-33.69,12.98-67.33,26.09-101.08,38.92
+c-17,6.46-34.33,6.55-51.3,0.06c-62-23.72-123.92-47.67-185.84-71.62C5.82,93.99-0.15,92.38,0,86c0.14-6.02,5.88-7.53,10.47-9.31
+C72.86,52.56,135.21,28.35,197.71,4.54c15.91-6.06,32.56-6.06,48.48,0c62.35,23.74,124.55,47.9,186.79,71.93
+c2.32,0.89,4.63,1.93,6.71,3.27c6.05,3.92,6.15,9.14-0.05,12.91c-3.8,2.31-8.16,3.69-12.27,5.48c-1.67,0.73-3.34,1.43-5.08,2.17
+c0,29.64,0,59.13,0,89.09c1.41,0.64,3.03,1.34,4.62,2.09c6.69,3.16,11.4,8.1,13.19,15.38c3.18,12.93,6.37,25.85,9.24,38.85
+c2.12,9.6-4.06,17.39-13.92,17.53c-15.16,0.22-30.34,0.22-45.5,0c-9.7-0.15-15.89-7.62-13.9-17.11
+c2.84-13.51,6.14-26.93,9.61-40.3c1.93-7.44,7.32-12.01,14.26-15.06c1.4-0.61,3.12-2.61,3.13-3.98
+c0.17-25.84,0.1-51.68,0.07-77.51C403.09,108.97,402.92,108.66,402.65,107.71z M38.69,86.15c1.68,0.75,2.28,1.05,2.89,1.29
+c54.18,20.89,108.32,41.89,162.57,62.58c12.25,4.67,24.9,4.2,37.16-0.5c49.09-18.84,98.13-37.78,147.19-56.7
+c5.26-2.03,10.5-4.14,16.41-6.48c-1.39-0.72-1.94-1.08-2.54-1.31c-54.33-20.96-108.6-42.07-163.04-62.75
+c-11.66-4.43-24-4.14-35.75,0.34C160.68,38.99,117.85,55.57,75,72.09C63.24,76.62,51.49,81.19,38.69,86.15z M429.66,244.03
+c-2.7-11.06-5.06-21.73-8.01-32.24c-1.2-4.28-5.8-4.62-9.24-4.13c-3.07,0.43-7.79,2.11-8.49,4.3
+c-3.33,10.35-5.53,21.07-8.24,32.07C407.25,244.03,418.11,244.03,429.66,244.03z" />
+                              </g>
+                              <g>
+                                <path class="st0" d="M214.08,246.21c-22.26-0.2-51.78-2.77-79.88-13.37c-9.35-3.53-18.25-8.85-26.49-14.59
+c-8.18-5.7-11.93-14.41-11.64-24.73c0.27-9.66,0.01-19.33,0.08-29c0.04-6.67,2.19-8.44,9.93-8.44c6.84,0,9,1.9,9.04,8.23
+c0.06,9.5,0.27,19.01-0.08,28.5c-0.21,5.69,2.2,9.53,6.52,12.63c9.92,7.12,21.24,11.09,32.93,13.86
+c47.91,11.35,95.74,11.3,143.17-2.47c8.35-2.42,16.18-6.86,23.94-10.97c5.17-2.73,7.6-7.4,7.32-13.7
+c-0.41-9.32-0.16-18.66-0.08-28c0.05-6.32,2.11-8.06,9.17-8.08c7.39-0.02,9.72,1.8,9.78,8.1c0.11,10.5,0.1,21,0.02,31.5
+c-0.07,8.89-4.02,16.03-10.5,21.84c-11.35,10.18-25.21,15.34-39.55,19.38C275.45,243.2,250.46,246.14,214.08,246.21z" />
+                              </g>
+                            </g>
+                          </svg>
+
+                        </div>
+                        <div class="col">
+                          Other Courses
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Virtual Tour Tab Start -->
+                    <!-- <a class="nav-link border-bottom rounded-0" (click)="scrollTo('virtual-tour-tab')"
+                    [ngClass]="(currentSection==='virtual-tour-tab')?'active text-light':''">
+                    <div class="row align-items-center gutter-x-5">
+                      <div class="col-auto">
+                        <svg fill="#007BFF" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 469.86 469.77"
+                          style="enable-background:new 0 0 469.86 469.77;width: 25px !important;" xml:space="preserve">
+                          <g>
+                            <g>
+                              <path class="st0" d="M124.4,316.31c-1.34-9.88-2.62-18.89-3.77-27.93c-3.52-27.7-3.85-55.52-2.22-83.34
+c1.95-33.5,7.31-66.46,17.66-98.46c8.98-27.76,20.9-54.03,40.4-76.21c11.99-13.64,26.03-24.31,44.13-28.58
+c21.38-5.05,40.21,0.9,57.17,13.81c18.91,14.38,31.45,33.75,41.63,54.79c2.63,5.43,0.2,11.47-4.92,14.08
+c-5.35,2.72-11.07,0.66-14.49-4.87c-6.63-10.74-12.76-21.89-20.34-31.94c-9.04-11.98-20.42-21.52-35.69-25
+c-11.66-2.65-22.45-0.21-32.59,5.78c-10.69,6.31-18.99,15.14-26.11,25.13c-17.27,24.24-27.3,51.66-34.31,80.26
+c-11.16,45.51-14.61,91.68-10.15,138.33c1.46,15.22,4.1,30.32,6.04,45.49c0.43,3.37,1.92,4.71,5.26,5.34
+c55.64,10.52,111.25,10.51,166.83-0.23c1.78-0.34,4.19-2.29,4.64-3.94c4.33-15.96,8.95-64.44,8.09-82.49
+c-1.05,0.95-1.93,1.53-2.54,2.32c-3.44,4.5-6.68,9.16-10.25,13.55c-3.73,4.57-10.29,5.28-14.81,1.91
+c-4.38-3.26-5.89-9.7-2.55-14.28c10.6-14.54,21.36-28.97,32.39-43.18c4.01-5.17,12.65-4.9,16.72,0.38
+c11.09,14.38,21.97,28.92,32.75,43.54c3.47,4.71,2.13,11.34-2.42,14.68c-4.6,3.37-11.1,2.6-14.79-2.04
+c-4.33-5.44-8.42-11.07-12.59-16.6c-2.36,26.49-4.7,52.7-7.08,79.36c2.08-0.62,4.57-1.28,7.01-2.09
+c24.96-8.18,49.12-18.1,69.48-35.18c6.43-5.39,12.37-11.79,17.1-18.71c11.17-16.34,10.86-33.39,0.49-50.17
+c-6.23-10.09-14.82-17.97-24.39-24.78c-22.99-16.35-48.94-26.03-75.94-33.19c-32.03-8.49-64.73-12.15-97.79-13
+c-1.76-0.04-3.52-0.01-5.57,0.91c4.38,2.54,8.79,5.04,13.15,7.61c6.17,3.64,8.1,10.26,4.6,15.64c-3.54,5.44-10.33,6.47-16.16,2.16
+c-13.53-10.01-26.99-20.1-40.4-30.27c-6.61-5.01-6.64-11.46,0.01-16.53c13.38-10.2,26.87-20.27,40.38-30.29
+c5.59-4.15,12.28-3.27,15.91,1.82c3.47,4.86,2.24,11.31-3.02,15.37c-4.84,3.73-9.75,7.38-15.61,11.79
+c2.79,0.19,4.37,0.36,5.95,0.39c41.34,0.58,81.98,5.83,121.46,18.47c27.79,8.89,54.05,20.87,76.25,40.34
+c13.65,11.97,24.37,25.99,28.62,44.1c5.5,23.43-1.97,43.37-17.07,60.96c-17.48,20.35-40.12,33.35-64.54,43.29
+c-13.51,5.5-27.57,9.69-41.5,14.11c-3.4,1.08-5.07,2.52-6.01,6.02c-8.27,30.72-19.63,60.09-38.8,85.88
+c-12.04,16.19-26.36,29.81-46.1,36c-24.96,7.83-46.62,0.46-65.73-15.98c-18.99-16.34-31.69-37.26-41.18-60.04
+c-6.18-14.84-10.96-30.29-15.98-45.59c-1.17-3.55-2.63-5.3-6.31-6.3c-30.54-8.27-59.77-19.58-85.46-38.58
+c-14.67-10.85-27.32-23.63-34.22-40.88c-10.92-27.29-3.73-51.27,14.81-72.57c13.82-15.87,31.42-26.64,50.45-35.14
+c5.82-2.6,11.88-0.14,14.35,5.25c2.51,5.47,0.21,10.93-5.44,14.28c-11,6.52-22.38,12.57-32.61,20.15
+c-11.67,8.64-20.67,19.83-23.96,34.6c-3.12,14.01,0.94,26.32,9.19,37.53c8.14,11.05,18.77,19.33,30.33,26.46
+C81.37,301.61,102.05,309.67,124.4,316.31z M154.23,345.34c-0.11,1-0.31,1.52-0.18,1.94c7.79,25.39,17.54,49.88,33.57,71.38
+c6.61,8.87,14.2,16.78,23.83,22.49c15.74,9.34,31.79,9.78,47.08-0.27c7.53-4.95,14.58-11.22,20.38-18.13
+c17.95-21.4,28.12-46.87,36.3-73.23c0.37-1.18,0.57-2.41,1-4.3C261.83,354.67,208.05,354.57,154.23,345.34z" />
+                            </g>
+                          </g>
+                        </svg>
+
+                      </div>
+                      <div class="col">
+                        Take the Virtual Tour
+                      </div>
+                    </div>
+                  </a> -->
+                    <!-- Virtual Tour Tab End -->
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white mb-3 media px-4 py-2 rounded pointer" style="border-top: 5px solid #92b7ef;">
+                <a aria-label="AddtoFavourite" class="d-inline-block text-left w-100" (click)="openReportIssueModal()">
+                  <i>
+                    Report An Issue
+                  </i>
+                </a>
+              </div>
+
+              <div class="bg-white mb-3 media px-4 py-2 rounded pointer" style="border-top: 5px solid #92b7ef;">
+                <a aria-label="AddtoFavourite" class="d-inline-block text-left w-100" (click)="openFeedbackModal()">
+                  Feedback/Suggestions
+                </a>
+              </div>
+              <!-- <div class="mb-2 media">
+                <img class="mr-2" src="https://images1.content-hci.com/hca-cont/india/img/grating/google_rating.png"
+                  alt="powered by Google" style="width: 40px; height: 40px;">
+                <div class="media-body">
+                  <div class="font-size-11 font-weight-400" style="color: #000;">Google Rating
+                  </div>
+                  <span style="color: #e7711b;" class="align-middle font-size-13 font-weight-700">4.8</span>
+                  <span class="align-middle">
+                    <i style="color:#e7711b;" class="la la-star"></i>
+                    <i style="color:#e7711b;" class="la la-star"></i>
+                    <i style="color:#e7711b;" class="la la-star"></i>
+                    <i style="color:#e7711b;" class="la la-star"></i>
+                    <i class="la la-star text-color-light-green"></i>
+                  </span>
+                  <div style="color: #959595;"> (Based on 500+ reviews)</div>
+                </div>
+              </div> -->
+              <div class="text-center font-size-8 mb-3">Rated highest in student satisfaction amongst
+                overseas education consultants in India.</div>
+            </div>
+          </div>
+        </div>
+        <!-- mobile side -->
+        <div class="col-md-2 d-block d-md-none">
+          <!-- <div class="bg-white mb-2 media px-3 py-2 rounded" style="border-top: 5px solid #4FCE6A;">
+            <img class="align-self-center mr-3"
+              src="https://images1.content-hci.com/hca-cont/india/img/grating/google_rating.png" alt="powered by Google"
+              width="36" height="36">
+            <div class="media-body">
+              <div class="font-size-11 font-weight-400" style="color: #000;">Google Rating
+              </div>
+              <span style="color: #e7711b;" class="align-middle font-size-13 font-weight-700">4.8</span>
+              <span style="color: #e7711b;" class="align-middle"><i class="la la-star"></i><i class="la la-star"></i><i
+                  class="la la-star"></i><i class="la la-star"></i><i class="la la-star"></i>
+              </span>
+              <div style="color: #959595;"> (Based on 500+ reviews)</div>
+            </div>
+          </div> -->
+          <div class="text-center font-size-8 mb-3">Rated highest in student satisfaction amongst
+            overseas education consultants in India.</div>
+        </div>
+        <!-- mobile side -->
+      </div>
+    </div>
+  </div>
+</body>
+
+<div onclick="topFunction()" id="back-to-top" class="btn btn-outline-primary"><i class="la la-arrow-up"></i>
+</div>
+
+
+<div class="modal fade" id="modalServicedocumentEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light py-2">
+        <h5 class="modal-title">Service Documents</h5>
+        <button role="button" aria-label="closebtn" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="la la-close"></i>
+        </button>
+      </div>
+      <form #documentemailForm="ngForm" novalidate>
+        <div class="modal-body">
+
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"><span class="text-color-light-red">*</span> Full
+              Name </label>
+            <div class="col-sm-10">
+              <input aria-label="txtname_1" type="text" class="form-control" id="txtname" name="txtname"
+                [required]="true" [(ngModel)]="txtname"
+                [ngClass]="(docemailSubmitted && documentemailForm.controls.txtname.invalid)?'invalid':''"
+                placeholder="Full Name...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"><span class="text-color-light-red">*</span>
+              Email</label>
+            <div class="col-sm-10">
+              <input aria-label="txtemail_1" type="text" class="form-control" id="txtemail" name="txtemail"
+                [(ngModel)]="txtemail" [required]="true"
+                [ngClass]="(docemailSubmitted && documentemailForm.controls.txtemail.invalid)?'invalid':''"
+                placeholder="Email...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"><span class="text-color-light-red">*</span>
+              Phone</label>
+            <div class="col-sm-10">
+              <input aria-label="txtphone_1" type="text" class="form-control" id="txtphone" name="txtphone"
+                [(ngModel)]="txtphone" [required]="true"
+                [ngClass]="(docemailSubmitted && documentemailForm.controls.txtphone.invalid)?'invalid':''"
+                placeholder="Phone...">
+            </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button role="button" aria-label="senddocemail" type="button" class="btn btn-primary"
+            (click)="sendMailVisaCheckList(documentemailForm)">Save</button>
+          <button role="button" aria-label="closebtn1" type="button" class="btn btn-outline-secondary"
+            data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--Report and issue modal start-->
+<div class="modal fade" id="myModal" role="dialog" *ngIf="coursedata">
+  <div class="modal-dialog" style='background-color:#f3ecdf;'>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button role="button" aria-label="closebtn2" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" style='background-color:#f3ecdf;'>
+        <hr style="border-top: 20px solid #004d73;">
+        <form #mainform1="ngForm" autocomplete="off" novalidate>
+          <div class="row mt-1">
+            <div class="col-12 col-auto col-md py-md-2 py-0">
+
+              <h6>Course:{{coursedata.course_title}}</h6>
+            </div>
+            <div class="col-12" style="display:block;margin-left: auto;margin-right: auto;">
+              <textarea aria-label="description" class="form-control rounded-0"
+                placeholder="Suggestion and Advice for Correcting The Error" rows="3" data-name="description"
+                data-prefix="description" data-type="text" [(ngModel)]="description" name="description"
+                [required]=true></textarea>
+            </div>
+            <div style="text-align: center;">
+              <h6>Thanks For Your Support! We Will Check And Correct The Error ASAP</h6>
+            </div>
+          </div>
+
+          <hr>
+
+
+          <div class="col-md-12">
+            <div class="form-group row">
+              <!--[(ngModel)]="fileupload"-->
+              <label for="upload" class="col-sm-3 col-form-label">Upload Image</label>
+              <input type="file" class="" name="Upload" (change)="setPhoto($event)" [required]=true data-name="Upload"
+                data-prefix="Upload" data-type="select" aria-label="Upload">
+              <span style="color: red; text-align: center;">*Only JPG,JPEG And PNG Files Accepted</span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <button appValidation [validparent]="'form-group'" [form]="mainform1" role="button" aria-label="addissue"
+              type="button" class="btn btn-outline-primary" (click)="addissue(mainform1)">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              Save</button>&nbsp;
+            <button role="button" aria-label="clearall" type="button" class="btn btn-outline-danger"
+              data-dismiss="modal" (click)="clearall()">
+              <i class="fa fa-ban" aria-hidden="true"></i>
+              Cancel</button>
+          </div>
+          <div>
+            <span style="color: red;">*All the fields are mendatory</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--Report and issue modal end-->
+<!-- Login Model start -->
+<app-login-model (success)="successLogin()"></app-login-model>
+
+<div class="modal fade" id="progress" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body"
+        style="height: 100%;width: 100%;padding:100px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <h3 *ngIf="prepare">Preparing your document please wait..... <i class="fas fa-sync fa-refresh"></i>
+        </h3>
+        <span *ngIf="download">
+          <h3>Downloading in progress </h3>
+          <!-- <div class="progress">
+            <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{downloadpr}}" attr.aria-valuemin="0"
+              attr.aria-valuemax="100" [ngStyle]="{width: downloadpr+'%'}">
+              <span>{{downloadpr}}% Complete</span>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <!-- <strong>File size:</strong> {{(totalsize/1048576) | number : '1.2-2'}} in MB -->
+              <strong>File size:</strong> Unknown
+            </div>
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>Total download:</strong> {{(downloadedsize/1048576) | number : '1.2-2'}} in MB
+            </div>
+            <div class="col-md-12" style="font-size: medium;padding: 5px;">
+              <strong>Network speed:</strong> {{speed}}
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Inquiry Form start -->
+<div class="modal fade ModalThirdParty" data-modal-width="100vw" data-modal-offset-upto="992" id="ThirdPartyForm"
+  tabindex="-1" role="dialog" aria-hidden="true">
+  <form #mainform="ngForm" autocomplete="off" novalidate>
+    <div class="modal-dialog" role="document" style="max-width: 1000px;">
+      <div class="modal-content">
+        <button type="button" class="close close-point" data-dismiss="modal" aria-label="Close" appClearValidation
+          [form]="mainform" [resetform]="true">
+          <i class="la la-close"></i>
+        </button>
+        <div class="modal-body p-3 p-md-5">
+          <div class="px-2 text-center">
+            <h5 class="modal-title text-center h1 text-primary-light">Inquiry Form</h5>
+            <div *ngIf="coursedata && coursedata.course_title"
+              class="d-inline-block arrow-right py-2 px-2  px-md-5 border border-dark mt-3 font-weight-bold position-relative">
+              You have requested inquiry for {{coursedata.course_title}}</div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-lg-6 d-none d-lg-block">
+              <img src="assets/images/img-notification-modal.jpg" class="img-fluid" alt="download Visa Fees in Email">
+            </div>
+            <div class="col-lg-6 align-self-center">
+              <div class="form-group">
+                <input data-name="Leadname" name="Leadname" type="text" class="modal-custom-form-control"
+                  placeholder="Name*" [required]=true [(ngModel)]="leadInquiryPayload.name">
+                <!-- <span class="error">Name is Required.</span> -->
+              </div>
+              <div class="form-group">
+                <input data-name="Leademail" name="Leademail" type="email" class="modal-custom-form-control"
+                  placeholder="Email*" [required]=true [(ngModel)]="leadInquiryPayload.email">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadnumber" name="Leadnumber" type="tel" maxlength="10" placeholder="Phone Number"
+                  class="modal-custom-form-control" [(ngModel)]="leadInquiryPayload.phoneno">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadcomments" name="Leadcomments" type="text" placeholder="Comments"
+                  class="modal-custom-form-control" [(ngModel)]="leadInquiryPayload.comments">
+              </div>
+              <div class="form-group text-center mt-4">
+                <button appValidation [validparent]="'form-group'" [form]="mainform" type="button"
+                  class="btn btn-primary-light btn-lg font-weight-bold px-5 text-uppercase text-white"
+                  (click)="submitLeadInquiry(mainform)">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Inquiry Form end -->
+
+<!-- Feedback Form start -->
+<div class="modal fade ModalThirdParty" data-modal-width="100vw" data-modal-offset-upto="992" id="feedbackForm"
+  tabindex="-1" role="dialog" aria-hidden="true">
+  <form #feedbackform="ngForm" autocomplete="off" novalidate>
+    <div class="modal-dialog" role="document" style="max-width: 1000px;">
+      <div class="modal-content">
+        <button type="button" class="close close-point" data-dismiss="modal" aria-label="Close" appClearValidation
+          [form]="feedbackform" [resetform]="true">
+          <i class="la la-close"></i>
+        </button>
+        <div class="modal-body p-3 p-md-5">
+          <div class="px-2 text-center">
+            <h5 class="modal-title text-center h1 text-primary-light">Feedback Form</h5>
+            <!-- <div *ngIf="coursedata && coursedata.course_title"
+              class="d-inline-block arrow-right py-2 px-2  px-md-5 border border-dark mt-3 font-weight-bold position-relative">
+              You have requested inquiry for {{coursedata.course_title}}</div> -->
+          </div>
+          <div class="row mt-4">
+            <div class="col-lg-6 d-none d-lg-block">
+              <img src="assets/images/feedback-img.jpg" class="img-fluid" alt="download Visa Fees in Email">
+            </div>
+            <div class="col-lg-6 align-self-center">
+              <div class="form-group">
+                <input data-name="Leadname" name="Leadname" type="text" class="modal-custom-form-control"
+                  placeholder="Name*" [required]=true [(ngModel)]="feedbackPayload.name">
+                <!-- <span class="error">Name is Required.</span> -->
+              </div>
+              <div class="form-group">
+                <input data-name="Leademail" name="Leademail" type="email" class="modal-custom-form-control"
+                  placeholder="Email*" [required]=true [(ngModel)]="feedbackPayload.email">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadnumber" name="Leadnumber" type="tel" maxlength="10" placeholder="Phone Number"
+                  class="modal-custom-form-control" [(ngModel)]="feedbackPayload.phoneno">
+              </div>
+              <div class="form-group">
+                <input data-name="Leadcomments" name="Leadcomments" type="text" placeholder="Feedback"
+                  class="modal-custom-form-control" [(ngModel)]="feedbackPayload.feedback">
+              </div>
+              <div class="form-group text-center mt-4">
+                <button appValidation [validparent]="'form-group'" [form]="feedbackform" type="button"
+                  class="btn btn-primary-light btn-lg font-weight-bold px-5 text-uppercase text-white"
+                  (click)="sendFeedback(feedbackform)">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Feedback Form end -->
+
+<!-- Councellor View start -->
+<div class="modal fade modal-full" id="councellorview" role="dialog"
+  *ngIf="editCouncellorFees && permissions.canEdit && permissions.canView">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">Edit Details</h4>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="close" data-dismiss="modal" role="button" aria-label="close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form #headform="ngForm" novalidate autocomplete="off">
+          <div class="card-body">
+            <div class="row mt-2"
+              *ngFor="let fees of editCouncellorFees.fees;trackBy: trackByIndex; index as index; last as last">
+
+              <div class="col-md-12 divbrd">
+                <strong>Fees</strong>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="flocation" aria-label="flocation">Location</label>
+                      <input type="text" class="form-control" name="location_{{index}}" [(ngModel)]="fees.name"
+                        aria-label="flocation">
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-2">
+                      <div class="form-group text-left">
+                        <label for="fduration" aria-label="fduration">Currency</label>
+                        <input type="text" class="form-control" [(ngModel)]="fees.value.currency" aria-label="fduration"
+                          name="currency_{{index}}">
+                      </div>
+                    </div> -->
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="amount" aria-label="amount">Amount</label>
+                      <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.amount"
+                        aria-label="amount" name="feesamount_{{index}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="funit" aria-label="funit">Unit</label>
+                      <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.unit"
+                        name="feesunit_{{index}}" aria-label="funit">
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-2">
+                      <div class="form-group text-left">
+                        <label for="fdurations" aria-label="fdurations">Duration</label>
+                        <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.duration"
+                          aria-label="fduration" name="duration_{{index}}">
+                      </div>
+                    </div> -->
+                  <!-- <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="desc" aria-label="desc">Description</label>
+                      <input type="text" class="form-control" [(ngModel)]="fees.value.international_student.description"
+                        name="feesdesc_{{index}}" aria-label="desc">
+                    </div>
+                  </div> -->
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- councellor intakes -->
+            <div class="divbrd p-2 mt-2">
+              <strong>Course Intakes</strong>
+              <div class="row"
+                *ngFor="let intake of  editCouncellorIntakes.intake;trackBy: trackByIndex; index as kindex; last as last">
+                <div class="col-md-11">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="form-group text-left">
+                        <label for="ilocation" aria-label="ilocation">Location</label>
+                        <input type="text" class="form-control" [(ngModel)]="intake.name" aria-label="ilocation"
+                          name="ilocation_{{kindex}}">
+                      </div>
+                    </div>
+                    <div class="col-md-10 divbrd mt-2">
+                      <strong>Intakes</strong>
+                      <div class="row"
+                        *ngFor="let value of intake.value;trackBy: trackByIndex; index as iindex; last as last">
+                        <div class="col-md-6">
+                          <div class="form-group text-left">
+                            <label for="actualdate" aria-label="actualdate">Actual Date</label>
+                            <input type="text" class="form-control" [(ngModel)]="value.actualdate"
+                              aria-label="actualdate" name="actualdatee_{{iindex}}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group text-left">
+                            <label for="month" aria-label="month">Month</label>
+                            <select class="form-control" [(ngModel)]="value.month" aria-label="month"
+                              name="month_{{iindex}}">
+                              <option value="">Choose</option>
+                              <option value="January">January</option>
+                              <option value="February">February</option>
+                              <option value="March">March</option>
+                              <option value="April">April</option>
+                              <option value="May">May</option>
+                              <option value="June">June</option>
+                              <option value="July">July</option>
+                              <option value="August">August</option>
+                              <option value="September">September</option>
+                              <option value="October">October</option>
+                              <option value="November">November</option>
+                              <option value="December">December</option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- councellor english requirement -->
+            <strong>English requirement</strong>
+            <div class="row mt-2"
+              *ngFor="let english of  editCouncellorEngreq.english;trackBy: trackByIndex; index as eindex; last as last">
+              <div class="col-md-12 divbrd">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group text-left">
+                      <label for="ename" aria-label="ename">Name</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.name" aria-label="edesc"
+                        name="engname_{{eindex}}">
+                      <!-- <select class="form-control" [(ngModel)]="english.name" aria-label="ename" name="engreqname">
+                        <option value="">Choose</option>
+                        <option value="ielts academic">IELTS Academic</option>
+                        <option value="pte academic">PTE Academic</option>
+                        <option value="toefl pbt">Toefl pbt</option>
+                        <option value="toefl ibt">Toefl ibt</option>
+                        <option value="cae">Cae</option>
+                        <option value="cpe">Cpe</option>
+                      </select> -->
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group text-left">
+                      <label for="edesc" aria-label="edesc">Description</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.description" aria-label="edesc"
+                        name="desc{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="emin" aria-label="emin">Min</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.min" aria-label="emin"
+                        name="min{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="emax" aria-label="emax">Max</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.max" aria-label="emax"
+                        name="emax{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="erequire" aria-label="erequire">Require</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.require" aria-label="erequire"
+                        name="erequire{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="eoverall" aria-label="eoverall">Overall</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.O" aria-label="eoverall"
+                        name="overall{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="ereading" aria-label="ereading">Reading</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.R" aria-label="ereading"
+                        name="ereading{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="ewriting" aria-label="ewriting">Writing</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.W" aria-label="ewriting"
+                        name="ewriting{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="espeaking" aria-label="espeaking">Speaking</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.S" aria-label="espeaking"
+                        name="espeaking{{eindex}}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-left">
+                      <label for="elistening" aria-label="elistening">Listening</label>
+                      <input type="text" class="form-control" [(ngModel)]="english.L" aria-label="flistening"
+                        name="elistening{{eindex}}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-outline-primary" appValidation [form]="headform"
+              [validparent]="'form-group'" (click)="saveCouncellorDetails()" role="button" aria-label="add">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              Save</button>&nbsp;
+            <!-- <button type="button" appClearValidation [form]="headform" class="btn btn-outline-danger"
+              data-dismiss="modal" role="button" aria-label="cancel">
+              <i class="fa fa-ban" aria-hidden="true"></i>
+              Cancel</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Councellor View end -->

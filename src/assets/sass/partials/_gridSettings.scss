@@ -1,0 +1,6 @@
+%box-shadow{@include box-shadow(0 0 0 0.2rem rgba($primary-color ,0.25));}
+.page-link{color: $primary-color;
+    &:hover{color: darken($color: $primary-color, $amount: 15%);}
+    &:focus{@extend %box-shadow;}
+}
+.form-control:focus{border-color: lighten($color: $primary-color, $amount: 20%); @extend %box-shadow;}

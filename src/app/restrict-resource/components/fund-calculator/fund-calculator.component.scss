@@ -1,0 +1,124 @@
+.main {
+  margin: 0px auto;
+  position: relative;
+  box-shadow: 0 0 6px #a4a4a4;
+  width: 795px;
+}
+.bg-custom {
+  background-color: #ebf7fe;
+}
+.bg-grey {
+  background-color: #cecfd1;
+}
+.bg-secondary-light {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.text-custom {
+  color: #2565a7;
+}
+table {
+  table-layout: fixed;
+}
+body,
+table,
+td,
+a {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-family: "Open Sans";
+  color: #2b2a29;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+table,
+td {
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+  vertical-align: top;
+}
+
+body {
+  margin: 15px 0;
+  padding: 0;
+  font-family: "Open Sans";
+  color: #2b2a29;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+tr,
+td {
+  font-size: 13px;
+}
+ol {
+  font-size: 9px;
+  margin-top: 0;
+  padding-left: 10px;
+}
+ol.lower-alpha {
+  list-style-type: lower-alpha;
+}
+.content-block {
+  page-break-inside: avoid;
+}
+#logo {
+  height: 80px;
+  padding-top: 20px;
+}
+.heading {
+  font-size: 15px;
+  color: #499340;
+  font-weight: bold;
+}
+.gradient {
+  background: #137fc3;
+  background: -moz-linear-gradient(left, #137fc3 0%, #244189 100%);
+  background: -webkit-linear-gradient(left, #137fc3 0%, #244189 100%);
+  background: linear-gradient(to right, #137fc3 0%, #244189 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#137fc3', endColorstr='#244189', GradientType=1);
+}
+@page {
+  size: A4;
+}
+
+@media print {
+  .table tbody th {
+    background-color: transparent !important;
+  }
+  body {
+    margin: 0;
+    -webkit-print-color-adjust: exact !important;
+  }
+  .main {
+    background-size: contain;
+    box-shadow: 0 0 0 #a4a4a4;
+    width: 100%;
+  }
+  .heading {
+    font-size: 15px;
+    color: #499340;
+    font-weight: bold;
+  }
+  .gradient {
+    background: #137fc3;
+    background: -moz-linear-gradient(left, #137fc3 0%, #244189 100%);
+    background: -webkit-linear-gradient(left, #137fc3 0%, #244189 100%);
+    background: linear-gradient(to right, #137fc3 0%, #244189 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#137fc3', endColorstr='#244189', GradientType=1);
+  }
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: #212529;
+  text-align: left;
+  background-color: #fff !important;
+  -webkit-print-color-adjust: exact !important;
+}
+table {
+  page-break-inside: avoid;
+}

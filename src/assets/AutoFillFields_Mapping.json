@@ -1,0 +1,197 @@
+[
+  {
+    "question": "Title",
+    "key": "leadtitle",
+    "type": "lead"
+  },
+  {
+    "question": "First name",
+    "key": "leadfirstname",
+    "type": "lead"
+  },
+  {
+    "question": "Applicant Name",
+    "key": "leadfirstname",
+    "type": "lead"
+  },
+  {
+    "question": "Last Name",
+    "key": "leadlastname",
+    "type": "lead"
+  },
+  {
+    "question": "Given name(s)",
+    "key": "leadfirstname",
+    "type": "lead"
+  },
+  {
+    "question": "Family name",
+    "key": "leadlastname",
+    "type": "lead"
+  },
+  {
+    "question": "Gender",
+    "key": "leadgender",
+    "type": "lead"
+  },
+  {
+    "question": "Date of birth",
+    "key": "leaddob",
+    "type": "lead"
+  },
+  {
+    "question": "Email",
+    "key": "leademail",
+    "type": "lead"
+  },
+  {
+    "question": "Email address",
+    "key": "leademail",
+    "type": "lead"
+  },
+  {
+    "question": "Address line 1",
+    "key": "leadaddline1",
+    "type": "lead"
+  },
+  {
+    "question": "Address line 2",
+    "key": "leadaddline2",
+    "type": "lead"
+  },
+  {
+    "question": "Country",
+    "key": "leadcountry",
+    "type": "lead"
+  },
+  {
+    "question": "State",
+    "key": "leadstate",
+    "type": "lead"
+  },
+  {
+    "question": "City",
+    "key": "leadcity",
+    "type": "lead"
+  },
+  {
+    "question": "Postcode",
+    "key": "leadpostcode",
+    "type": "lead"
+  },
+  {
+    "question": "Postcode",
+    "key": "leadpostcode",
+    "type": "lead"
+  },
+  {
+    "question": "Contact number(After Hours)/Mobile No",
+    "key": "leadcontactnumber",
+    "type": "lead"
+  },
+  {
+    "question": "What's your relationship status?",
+    "key": "leadmaritalstatus",
+    "type": "lead"
+  },
+  {
+    "question": "Yes-Passport number",
+    "key": "leadpassportno",
+    "type": "lead"
+  },
+  {
+    "question": "Title",
+    "key": "agenttitle",
+    "type": "user"
+  },
+  {
+    "question": "Agent Name",
+    "key": "agentfirstname",
+    "type": "user"
+  },
+  {
+    "question": "Last Name",
+    "key": "agentlastname",
+    "type": "user"
+  },
+  {
+    "question": "Date of birth",
+    "key": "agentdob",
+    "type": "user"
+  },
+  {
+    "question": "Email",
+    "key": "agentemail",
+    "type": "user"
+  },
+  {
+    "question": "Address line 1",
+    "key": "agentaddline1",
+    "type": "user"
+  },
+  {
+    "question": "Address line 2",
+    "key": "agentaddline2",
+    "type": "user"
+  },
+  {
+    "question": "Country",
+    "key": "agentcountry",
+    "type": "user"
+  },
+  {
+    "question": "State",
+    "key": "agentstate",
+    "type": "user"
+  },
+  {
+    "question": "City",
+    "key": "agentcity",
+    "type": "user"
+  },
+  {
+    "question": "Postcode",
+    "key": "agentpostcode",
+    "type": "user"
+  },
+  {
+    "question": "Telephone(Business hours)",
+    "key": "agenttelephone",
+    "type": "user"
+  },
+  {
+    "question": "Telephone(Business hours)",
+    "key": "sacontactnumber",
+    "type": "secondaryapplicant"
+  },
+  {
+    "question": "Visa expiry date",
+    "key": "visaexpirydate",
+    "type": "lead"
+  },
+  {
+    "question": "Date of birth:",
+    "key": "sadob",
+    "type": "secondaryapplicant"
+  },
+  {
+    "question": "Given names",
+    "key": "safirstname",
+    "type": "secondaryapplicant"
+  },
+  {
+    "question": "Family name",
+    "key": "salastname",
+    "type": "secondaryapplicant"
+  },
+  {
+    "question": "passport number",
+    "key": "sapassportno",
+    "type": "secondaryapplicant"
+  },
+  {
+    "question": "Relationship to you:",
+    "key": "sarelationship",
+    "type": "secondaryapplicant"
+  }
+]

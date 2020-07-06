@@ -1,0 +1,22 @@
+.avtardiv {
+  height: 390px;
+  width: 100%;
+  overflow: auto;
+}
+
+.avtardiv ul li {
+  width: 120px;
+  height: 120px;
+  float: left;
+  margin-right: 16px;
+  margin-bottom: 12px;
+}
+
+.avtardiv ul li img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.border_li {
+  border: 2px solid #007bff;
+}

@@ -1,0 +1,251 @@
+<header class="header">
+  <div class="container d-flex align-items-center">
+    <div class="row align-items-center flex-1">
+      <div class="col col-lg-auto text-center text-lg-left">
+        <a class="logo" href="javascript:void();">
+          <img class="img-fluid" src="{{agentinfo.agentLogoURL}}" alt="Aussizz it">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+<div id="rxtNavTravel" class="headerOnTravel"></div>
+<section class="my-5 pt-5">
+  <div class="container pt-lg-5" *ngIf="loginmodelp">
+    <div class="flex-lg-row-reverse row">
+      <div class="mx-auto col-5 col-sm-6 col-lg-5 p-lg-5 mb-3">
+        <svg viewBox="0 0 1214 1213.9">
+          <use xlink:href="#icon-fingar"></use>
+        </svg>
+      </div>
+      <div class="col-lg-7 align-self-center text-center text-lg-left">
+        <h1 class="color-secondary font-weight-normal mb-md-4 text-uppercase">
+          Need Access
+        </h1>
+        <p class="col-12 p-0">
+          You need Permission from owner to access this Form.
+        </p>
+        <div class="col-lg-12 input-group mb-3 p-0 rounded">
+          <div class="col-md-5 input-group-prepend p-0">
+            <span class="bg-white font-weight-600 input-group-text py-2 text-body w-100">Requested Email Address</span>
+          </div>
+          <input type="text" class="form-control py-4" [(ngModel)]="email" placeholder="XXXXX@domain.com">
+        </div>
+        <div class="col-lg-12 input-group mb-3 p-0 rounded">
+          <div class="col-md-5 input-group-prepend p-0">
+            <span class="bg-white font-weight-600 input-group-text py-2 text-body w-100" d="">Permission</span>
+          </div>
+          <select class="custom-select" [(ngModel)]="permission">
+            <option>Edit</option>
+            <option>View</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <button type="button" class="border-radius-2 btn btn-theam-secondary-1 mt-2 px-4"
+            (click)="addShareLinkUser()">REQUEST ACCESS </button>
+        </div>
+        <div class="d-flex mb-4">
+          Do you have Access Code?
+          <div class="ml-3">
+            <label class="custom-checkbox">
+              <input type="checkbox" [(ngModel)]="ihvaepasscode" id="allowaccesscode" aria-label="allowaccesscode">
+              <span class="border border-dark checkmark"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-lg-12 input-group mb-3 p-0 rounded">
+          <div class="col-md-5 input-group-prepend p-0">
+            <span class="bg-white font-weight-600 input-group-text py-2 text-body w-100">Enter Access Code</span>
+          </div>
+          <input type="text" class="form-control py-4" placeholder="XXXXX" [(ngModel)]="accesscode">
+        </div>
+        <div>
+          <button type="button" class="border-radius-2 btn btn-theam-secondary-1 mt-2 px-4"
+            (click)="checkPasscode()">SUBMIT </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container pt-lg-5" *ngIf="isrequested">
+    <div class="flex-lg-row-reverse row">
+      <div class="mx-auto col-5 col-sm-6 col-lg-5 p-lg-5 mb-3">
+        <svg viewBox="0 0 1214 1213.9">
+          <use xlink:href="#icon-fingar"></use>
+        </svg>
+      </div>
+      <div class="col-lg-7 align-self-center text-center text-lg-left">
+        <h2 class="color-primary font-weight-normal mb-md-4">
+          You have requested <br class="d-none d-lg-block">
+          to access the form.
+        </h2>
+        <p class="mb-2"> We will notify the document owner, who will take appropriate action. </p>
+        <p> Please wait till your request is acted upon. </p>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="container pt-lg-5" *ngIf="isexpires">
+    <div class="flex-lg-row-reverse row">
+      <div class="mx-auto col-5 col-sm-6 col-lg-5 p-lg-5 mb-3">
+        <svg viewBox="0 0 1214 1213.9">
+          <use xlink:href="#icon-fingar"></use>
+        </svg>
+      </div>
+      <div class="col-lg-7 align-self-center text-center text-lg-left">
+        <h2 class="color-primary font-weight-normal mb-md-4">
+          This link is
+          either deleted <br class="d-none d-lg-block">
+          or not active at the moment!
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
+<footer id="footer">
+  <div class="copyright py-4 ">
+    <div class="container">
+      <div class="row color-white">
+        <div class="col small text-center text-lg-left">
+          <span class="d-block d-sm-inline">Copyright ©
+            <script>document.write(new Date().getFullYear())</script> All Right Reserved.</span>
+          <a href="javascript:void();">Privacy Policy </a>|<a href="javascript:void();"> Terms &amp;
+            Conditions </a>|<a href="javascript:void();"> Switch-Policy</a>
+        </div>
+        <div class="col-lg-4 text-center text-lg-right">
+          <p class="small">Powered by <a href="javascript:void();">{{agentinfo.agentOrganization}}</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<span id="back_to_top" class="scrollup" title="Back to top">
+  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</span>
+
+<div class="modal fade" id="loginoptions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 500px !important;" role="document">
+    <div class="modal-content">
+      <div class="modal-body  text-center" style="padding: 50px;">
+        <span style="font-size: large;
+      font-weight: 600;
+      font-family: sans-serif;">How would you like us to identify you?</span>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="">
+              <div class="container1">
+                <header class="landing-header" style="padding-left: 80px;">
+                  <div class="landing-header__right">
+                    <img alt="logo" src="../../../assets/images/smc-logo.png" style="width: 150px;">
+                  </div>
+                </header>
+                <hr>
+                <div class="row">
+                  <div class="col-md-12">
+                    <form novalidate #mainform="ngForm">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group form-group-lg">
+                            <input aria-label="username" type="text" placeholder="Username" [(ngModel)]="username"
+                              name="username" data-name="username" [required]="true" data-prefix="Username"
+                              data-type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group form-group-lg">
+                            <input aria-label="password" type="password" placeholder="Password" [(ngModel)]="password"
+                              name="password" data-name="password" [required]="true" data-prefix="Password"
+                              data-type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 text-justify">
+                          <div class="form-group">
+                            <input aria-label="staysignin" type="checkbox" id="staysignin" name="staysignin"
+                              [(ngModel)]="staysignin">
+                            <label aria-label="staysignin_label" for="staysignin" class="ml-1" style="font-family: 'Graphik', Helvetica, Arial, sans-serif;
+                                font-size: 14px;">Remember me</label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <button role="button" aria-label="makeMeLogin" class="btn btn-block btn-danger" appValidation
+                            [form]="mainform" [validparent]="'form-group'" (click)="makeMeLogin(mainform)"
+                            [disabled]="submitted">Login <span *ngIf="submitted"><i
+                                class="fa fa-lg fa-sync fa-refresh"></i></span><span *ngIf="!submitted"><i
+                                class="fa fa-lg fa-sign-in-alt"></i></span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-justify">
+                    <div class="form-group">
+                      <span>Don't have account?</span>&nbsp;<a aria-label="signup" (click)="redirect('signup')"
+                        href="javascript:void(0)"><strong class="text-danger">SignUp</strong></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-justify">
+                    <div class="form-group">
+                      <span>Forgot your password?</span>&nbsp;<a aria-label="resetit" (click)="redirect('reset')"
+                        href="javascript:void(0)"><strong class="text-danger">Reset it</strong></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button (click)="forward('G')" class="btn btn-block btn-danger"><i class="fab fa-google-plus-g"></i>
+                      Google</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="accesscode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body  text-center" style="padding: 50px;">
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <div class="form-row gutter-y-5">
+            <div class="col-md-2">
+              <span>Access Code:</span>
+            </div>
+            <div class="col-md-10 text-justify">
+              <input type="text" class="form-control" [(ngModel)]="accesscode">
+            </div>
+          </div>
+        </div>
+        <div class="border-bottom border-light-2 pb-2 px-3 mb-1">
+          <div class="form-row gutter-y-5">
+            <div class="col">
+              <button class="btn btn-primary" (click)="checkPasscode()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

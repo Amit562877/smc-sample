@@ -1,0 +1,125 @@
+<div class="wrapper">
+  <div class="container1">
+    <header class="landing-header">
+      <div class="landing-header__right">
+        <img alt="univlogo" src="../../../assets/logo.png" style="width: 150px;">
+      </div>
+    </header>
+    <hr>
+    <form novalidate #mainform="ngForm">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group form-group-lg">
+            <label aria-label="getfirstname"><strong>First Name</strong></label>
+            <input aria-label="getfirstname_1" type="text" placeholder="First Name" [(ngModel)]="user.firstname"
+              name="firstname" data-name="firstname" [required]="true" data-prefix="First name" data-type="text"
+              class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group form-group-lg">
+            <label for="id" aria-label="getmiddlename"><strong>Middle Name</strong></label>
+            <input aria-label="getmiddlename_1" type="text" placeholder="Middle Name" [(ngModel)]="user.middlename"
+              name="middlename" data-name="middlename" [required]="true" data-prefix="Middle name" data-type="text"
+              class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group form-group-lg">
+            <label for="id" aria-label="getlastname"><strong>Last Name</strong></label>
+            <input aria-label="getlastname_1" type="text" placeholder="Last Name" [(ngModel)]="user.lastname"
+              name="lastname" data-name="lastname" [required]="true" data-prefix="Last name" data-type="text"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-group-lg">
+            <label for="id" aria-label="getcountryname"><strong>Country</strong></label>
+            <select aria-label="choosecountry" name="countryname" data-name="countryname" [(ngModel)]="user.countryid"
+              [required]="true" data-prefix="Country" data-type="select" class="form-control">
+              <option value="">Choose</option>
+              <option *ngFor="let country of countrylist" [value]="country.id">{{country.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-group-lg">
+            <label for="id" aria-label="gettypeofaccount"><strong>User type</strong></label>
+            <select aria-label="chooseuser" name="typeofaccount" data-name="typeofaccount"
+              [(ngModel)]="user.typeofaccount" [required]="true" data-prefix="User type" data-type="select"
+              class="form-control">
+              <option value="">Choose</option>
+              <option *ngFor="let usertype of usertypelist" [value]="usertype.id">{{usertype.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-group-lg">
+            <label for="id" aria-label="getphoneno"><strong>Phone Number</strong></label>
+            <input aria-label="getphoneno_1" type="text" placeholder="Phone Number" [(ngModel)]="user.phoneno"
+              name="phoneno" data-name="phoneno" [required]="true" data-prefix="Phone number" data-type="text"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-group-lg">
+            <label for="id" aria-label="getemailaddress"><strong>Email Address</strong></label>
+            <input aria-label="getemailaddress_1" type="email" placeholder="Email Address" [(ngModel)]="user.email"
+              name="email" data-name="email" [required]="true" data-prefix="Email address" data-type="text"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-group-lg">
+            <input  aria-label="getNextHint" type="password" placeholder="Password" [(ngModel)]="user.password" name="password"
+              data-name="password" [required]="true" data-prefix="Password" data-type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-group-lg">
+            <input  aria-label="getNextHint" type="password" placeholder="Confirm Password" [(ngModel)]="user.confirm" name="confirm"
+              data-name="confirm" [required]="true" data-prefix="Confirm password" data-type="text"
+              class="form-control">
+          </div>
+        </div>
+      </div> -->
+    </form>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <button role="button" aria-label="makeSignUp" class="btn btn-block btn-danger" (click)="makeSignUp(mainform)"
+            [disabled]="submitted" appValidation [form]="mainform" [validparent]="'form-group'">Create
+            your account <span *ngIf="submitted"><i class="fa fa-lg fa-sync fa-refresh"></i></span><span *ngIf="!submitted"><i
+                class="fa fa-lg fa-user-plus"></i></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <a aria-label="haveanaccount" [routerLink]="['/auth/login']"><strong class="text-danger">I have
+              account</strong></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card-body p-0" id="mailforpassword">
+  <h1>Welcome</h1>
+  <p>have a nice day</p>
+
+</div>

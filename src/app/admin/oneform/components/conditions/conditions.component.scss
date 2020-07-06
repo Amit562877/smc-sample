@@ -1,0 +1,842 @@
+.btndesign
+{
+    margin: 0 5px 0px 0px;
+    color: #FFF;
+}
+
+    li, ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .new-condition {
+        width: 90%;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card {
+        border-radius: .25rem;
+        margin: 0 0 1.875rem !important;
+        padding: .375rem 1.625rem !important;
+        border: 1px solid #ece9e6 !important;
+        position: relative;
+        background: transparent;
+        box-shadow: none !important;
+        min-height: 4.375rem;
+    }
+
+    .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: inherit;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:before {
+        left: -.0625rem;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:after, #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:before {
+        content: "";
+        width: .0625rem;
+        height: 92%;
+        background: #fcfcfc;
+        position: absolute;
+        top: 4%;
+        display: inline;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:after {
+        right: -.0625rem;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:after, #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:before {
+        content: "";
+        width: .0625rem;
+        height: 92%;
+        background: #fcfcfc;
+        position: absolute;
+        top: 4%;
+        display: inline;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .conditions .conditionsCard-content .ji-cw_Arrow {
+        font-family: joticon !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        position: absolute;
+        top: 50%;
+        right: 1%;
+        margin-top: -1.25rem;
+        opacity: .5;
+        font-size: 40px;
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    #app_wizards :after, #app_wizards :before, #tethers :after, #tethers :before {
+        box-sizing: border-box;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:after, #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card:before {
+        content: "";
+        width: .0625rem;
+        height: 92%;
+        background: #fcfcfc;
+        position: absolute;
+        top: 4%;
+        display: inline;
+    }
+
+    #app_wizards :after, #app_wizards :before, #tethers :after, #tethers :before {
+        box-sizing: border-box;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card .card-leftSide .ji {
+        color: #596066 !important;
+        font-size: 50px !important;
+        margin-left: -1rem !important;
+        line-height: 3.375rem !important;
+    }
+
+    #app_wizards .ji, #tethers .ji, .tethers .ji {
+        font-family: joticon !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #app_wizards, #app_wizards .btn, #app_wizards h1, #app_wizards h2, #tethers, #tethers .btn, #tethers h1, #tethers h2 {
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+    }
+
+    #app_wizards, #tethers {
+        font-size: 14px;
+        line-height: 1.618em;
+        position: relative;
+        margin-left: 100px;
+    }
+
+        #app_wizards *, #tethers * {
+            box-sizing: border-box;
+            transition: none;
+        }
+
+        #app_wizards *, #tethers *, .tethers * {
+            outline: 0;
+        }
+
+        #app_wizards, #app_wizards .btn, #app_wizards h1, #app_wizards h2, #tethers, #tethers .btn, #tethers h1, #tethers h2 {
+            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+        }
+
+    #app_wizards, #tethers {
+        font-size: 14px;
+        line-height: 1.618em;
+        position: relative;
+    }
+
+    .modules-V4 {
+        padding-left: 3.75rem;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace {
+        padding-right: 0 !important;
+        overflow-y: inherit !important;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .mainCard.moreSpace {
+        background-color: inherit;
+        box-shadow: inherit;
+        border: none;
+        max-height: 100% !important;
+        padding: 0 2.625rem .1875rem 0;
+    }
+
+    #app_wizards.platformV4 .maincard, #app_wizards.platformV4 .mainCard {
+        transition: inherit !important;
+        margin-top: 0 !important;
+    }
+
+    #app_wizards .mainCard.moreSpace, #tethers .mainCard.moreSpace {
+        padding: 32px 42px;
+    }
+
+    #app_wizards .mainCard, #tethers .mainCard {
+        box-shadow: 0 2px 4px rgba(86,70,50,.1);
+        background-color: #fff;
+        padding: 24px 20px 20px;
+        margin-top: 24px;
+        border: 1px solid #ece9e6;
+        transition: padding .15s ease;
+    }
+
+    #app_wizards *, #tethers * {
+        box-sizing: border-box;
+        transition: none;
+    }
+
+    #app_wizards *, #tethers *, .tethers * {
+        outline: 0;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .mainCard.moreSpace > .card {
+        border-radius: .25rem;
+        margin: 0 0 1.875rem !important;
+        padding: .375rem 1.625rem !important;
+        border: 1px solid #ece9e6 !important;
+        position: relative;
+        background: transparent;
+        box-shadow: none !important;
+        min-height: 4.375rem;
+    }
+
+    #app_wizards .card-leftSide, #tethers .card-leftSide {
+        float: left;
+        margin-right: 12px;
+    }
+
+    #app_wizards *, #tethers * {
+        box-sizing: border-box;
+        transition: none;
+    }
+
+    #app_wizards *, #tethers *, .tethers * {
+        outline: 0;
+    }
+
+    #app_wizards .card-content, #tethers .card-content {
+        display: table-cell;
+        vertical-align: top;
+        width: 650px;
+    }
+
+    #app_wizards *, #tethers * {
+        box-sizing: border-box;
+        transition: none;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .conditions .conditionsCard-content {
+        padding: .875rem 2.1875rem .875rem 0;
+        width: auto;
+    }
+
+    #app_wizards .conditionsCard-content {
+        width: 320px;
+        position: relative;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .conditionsCard, #app_wizards.platformV4.conditionsV4 .cssIcon, #app_wizards.platformV4.conditionsV4 .mediaBox.conditions {
+        border-radius: 4px;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .conditions {
+        border-radius: 4px;
+        padding: 1.875rem;
+        border: 1px solid #ece9e4 !important;
+        box-shadow: 0 0 4px 2px hsla(0,0%,82%,.3) !important;
+        padding: inherit;
+        border-left: 7px solid !important;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .bgGrey {
+        background-color: #fff;
+        box-shadow: 0 1px 6px #cacaca;
+    }
+
+    #app_wizards .blue.conditionsLeftBorder {
+        cursor: pointer;
+        border-left: 7px solid #3498db;
+        color: #3498db;
+    }
+
+    #app_wizards .mediaBox {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    #app_wizards :after, #app_wizards :before, #tethers :after, #tethers :before {
+        box-sizing: border-box;
+    }
+
+    #app_wizards .conditionsCard-info {
+        margin-top: 13px;
+        font-size: 18px;
+        text-transform: uppercase;
+        width: 100%;
+    }
+
+    #app_wizards .blue.ji, #app_wizards .blue .ji {
+        color: #3498db;
+    }
+
+    #app_wizards .ji, #tethers .ji, .tethers .ji {
+        font-family: joticon !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+
+
+    #app_wizards :after, #app_wizards :before, #tethers :after, #tethers :before {
+        box-sizing: border-box;
+    }
+
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .conditions .conditionsCard-content div:first-child {
+        margin: 0 !important;
+        color: #596066 !important;
+        font-size: 16px !important;
+        line-height: 20px;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .new-condition .conditions .conditionsCard-content .conditionsCard-desc {
+        color: #596066 !important;
+        font-size: 12px !important;
+        line-height: 16px;
+    }
+
+
+
+    #app_wizards :after, #app_wizards :before, #tethers :after, #tethers :before {
+        /* box-sizing: border-box; */
+    }
+
+    #app_wizards .green.conditionsLeftBorder {
+        cursor: pointer;
+        border-left: 7px solid #03c9a9;
+        color: #03c9a9;
+    }
+
+    .modules-V4 .modules-subsection.new-section {
+        position: fixed !important;
+        top: inherit !important;
+        left: inherit !important;
+        margin-left: -56px !important;
+        margin-top: -96px !important;
+    }
+
+    .new-section {
+        left: 0;
+        top: .25rem;
+        color: #3e4652;
+    }
+
+    .hide-on-builder {
+        display: block;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .conditionCardV4 {
+        border-radius: .25rem;
+        margin: 0 0 1.875rem !important;
+        padding: .375rem 1.625rem !important;
+        border: 1px solid #ece9e6 !important;
+        position: relative;
+        background: transparent;
+        box-shadow: none !important;
+        min-height: 4.375rem;
+    }
+
+    #app_wizards .conditions.action {
+        margin-bottom: 37px;
+    }
+
+    #app_wizards .conditionsCard-actions {
+        position: absolute;
+        top: 0;
+        right: -42px;
+        height: 100%;
+    }
+
+    #app_wizards .conditionsCard-conditionjoin {
+        position: absolute;
+        top: 65%;
+        left: 50%;
+        height: 100%;
+        /*width: 58%;*/
+    }
+
+        #app_wizards .conditionsCard-conditionjoin .icon-link {
+            cursor: pointer;
+        }
+
+
+    #app_wizards .u-verticalalign, #tethers .u-verticalalign, .tethers .u-verticalalign {
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    #app_wizards.platformV4.conditionsV4 .conditionsCard-actions .icon-link {
+        box-shadow: none;
+    }
+
+    #app_wizards .conditionsCard-actions .icon-link:last-child {
+        margin-bottom: 0;
+    }
+
+    #app_wizards .cssIcon.minus {
+        background-color: #b3b3b3;
+    }
+
+        #app_wizards .cssIcon.minus:after {
+            content: "";
+            position: absolute;
+            background: #fff;
+            border-radius: 5px;
+            width: 18px;
+            height: 4px;
+            left: 4px;
+            top: 11px;
+        }
+
+    #app_wizards .conditionsCard-actions .icon-link {
+        cursor: pointer;
+        display: block;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 4px rgba(86,70,50,.1);
+    }
+
+    #app_wizards .blue .cssIcon.plus {
+        background: #3498db;
+    }
+
+    #app_wizards .cssIcon {
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+    }
+
+        #app_wizards .cssIcon.plus:before {
+            -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+
+        #app_wizards .cssIcon.plus:after, #app_wizards .cssIcon.plus:before {
+            content: "";
+            position: absolute;
+            background: #fff;
+            border-radius: 5px;
+            width: 18px;
+            height: 4px;
+            left: 4px;
+            top: 11px;
+        }
+
+    #app_wizards.platformV4.conditionsV4 .bgGrey {
+        background-color: #fff;
+        box-shadow: 0 1px 6px #cacaca;
+    }
+
+    #app_wizards .blue .conditionsCard {
+        border-left: 7px solid #3498db;
+    }
+
+    #app_wizards .conditionsCard {
+        width: 100%;
+        padding: 20px 42px 20px 24px;
+    }
+
+        #app_wizards .conditionsCard li {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+    #app_wizards .line, #tethers .line, .tethers .line {
+        display: block;
+    }
+
+    #app_wizards .column, #tethers .column, .tethers .column {
+        float: left;
+        margin: 0;
+        padding: 0;
+    }
+
+    #app_wizards [class*="column one four"], #tethers [class*="column one four"], .tethers [class*="column one four"] {
+        width: 25%;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .conditions .conditionsCard li label {
+        font-size: 15px !important;
+    }
+
+    #app_wizards .line:after, #app_wizards .line:before, #tethers .line:after, #tethers .line:before, .tethers .line:after, .tethers .line:before {
+        content: " ";
+        display: table;
+    }
+
+    #app_wizards .line:after, #app_wizards .modal-actions:after, #app_wizards .modal-seperator:after, #tethers .line:after, #tethers .modal-actions:after, #tethers .modal-seperator:after, .tethers .line:after, .tethers .modal-actions:after, .tethers .modal-seperator:after {
+        clear: both;
+    }
+
+    #app_wizards :after, #app_wizards :before, #tethers :after, #tethers :before {
+        box-sizing: border-box;
+    }
+
+    #app_wizards .line.isDisable, #app_wizards .line.isDisabled, #tethers .line.isDisable, #tethers .line.isDisabled {
+        opacity: .3;
+    }
+
+    #app_wizards .conditionsCard li {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #app_wizards .u-unselectable, #tethers .u-unselectable, .tethers .u-unselectable {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: default;
+    }
+
+    #app_wizards .line, #tethers .line, .tethers .line {
+        display: block;
+    }
+
+    #app_wizards .u-hide, #tethers .u-hide, .tethers .u-hide {
+        display: none !important;
+    }
+
+    #app_wizards .line, #tethers .line, .tethers .line {
+        display: block;
+    }
+
+    #app_wizards .conditionsCard li:last-child {
+        margin-bottom: 0;
+    }
+
+    #app_wizards .line.isDisable, #app_wizards .line.isDisabled, #tethers .line.isDisable, #tethers .line.isDisabled {
+        opacity: .3;
+    }
+
+    .modules-V4 .modules-subsection.new-section {
+        /* margin-left: -5.525rem!important; */
+        margin-top: .25rem !important;
+        cursor: pointer !important;
+    }
+
+    .modules-back .ji {
+        font-size: 2.375rem;
+    }
+
+
+    #app_wizards.platformV4.conditionsV4 .line a.btn {
+        width: 100%;
+        background: transparent;
+        border: 1px dashed #596066;
+        box-shadow: none;
+        border-radius: 4px;
+        color: #596066;
+        min-height: 70px;
+    }
+
+        #app_wizards.platformV4.conditionsV4 .line a.btn span:first-child {
+            float: none !important;
+            font-size: 34px !important;
+            line-height: 44px;
+            font-weight: 800;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+        }
+
+    #app_wizards .listGroup-content .conditions {
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(86,70,50,.1);
+        border: 1px solid #ece9e6;
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    #app_wizards .mediaBox {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .mediaBox.conditions.isDraggable .itemBox-drag {
+        width: 1.625rem;
+    }
+
+    #app_wizards .blue .bgColor {
+        background-color: #3498db;
+    }
+
+    #app_wizards .isDraggable .itemBox-drag, #tethers .isDraggable .itemBox-drag {
+        width: 21px;
+        top: -1px;
+        bottom: -1px;
+        left: -1px;
+        position: absolute;
+        cursor: move;
+        background: #3086c7;
+        border-radius: 2px;
+        z-index: 11;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .mediaBox.conditions.isDraggable .itemBox-drag:before {
+        left: .4375rem;
+    }
+
+    #app_wizards .isDraggable .itemBox-drag:before, #tethers .isDraggable .itemBox-drag:before {
+        display: inline-block;
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 11px;
+        height: 2px;
+        left: 5px;
+        opacity: .5;
+        box-shadow: 0 6px 0 #fff, 0 10px 0 #fff, 0 14px 0 #fff;
+        transition: all .15s ease;
+    }
+
+    #app_wizards :after, #app_wizards :before, #tethers :after, #tethers :before {
+        box-sizing: border-box;
+    }
+
+    #app_wizards .itemBox-number, #tethers .itemBox-number {
+        color: hsla(0,0%,100%,.7);
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        font-size: 12px;
+    }
+
+
+    #app_wizards.platformV4.conditionsV4 .mediaBox.conditions.isDraggable .itemBox-drag:after {
+        font-family: joticon !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        position: absolute;
+        font-size: 26px;
+        top: 50% !important;
+        margin-top: -.8125rem;
+        color: #fff;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content {
+        z-index: 10;
+        display: block;
+    }
+
+    #app_wizards .mediaBox .mediaBox-content {
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain {
+        display: inline-block;
+        vertical-align: middle;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .mediaBox-contentmain {
+        padding: 1rem 3.375rem 1rem 2.625rem !important;
+    }
+
+        #app_wizards.platformV4.conditionsV4 .mediaBox-contentmain > .textColor {
+            display: none;
+        }
+
+    #app_wizards .blue .textColor {
+        color: #3498db;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content {
+        font-size: 14px;
+        margin-left: 21px;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos {
+        margin-bottom: 0;
+    }
+
+        #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos .info {
+            position: relative;
+            font-size: 14px;
+            display: block;
+            padding-left: 4px;
+            cursor: inherit;
+        }
+
+    #app_wizards.platformV4.conditionsV4 .mediaBox.conditions.isDraggable.blue .mediaBox-contentmain .content-infos .info:before, #app_wizards.platformV4.conditionsV4 .mediaBox.conditions.isDraggable.blue .mediaBox-contentmain .content-infos .info b {
+        color: #3498db;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .mediaBox-contentmain .content-infos:not(.all) .info:before {
+        font-family: joticon !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        content: "\E950";
+        font-size: 28px;
+        left: -1.75rem;
+        top: -.16rem;
+        background-color: inherit !important;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos .info:before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        position: absolute;
+        left: -17px;
+        top: 5px;
+    }
+
+    #app_wizards .blue .bgColor-before:before, #app_wizards .blue .textColor:before {
+        background-color: #3498db;
+    }
+
+    #app_wizards .text-truncate, #tethers .text-truncate, .tethers .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content b {
+        font-style: normal;
+        color: #000;
+        text-transform: uppercase;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos .info span {
+        margin: 0 4px;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos:last-child {
+        margin-bottom: 0;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos {
+        margin-bottom: 0;
+    }
+
+        #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos .info span:empty {
+            display: none;
+        }
+
+        #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos .info span {
+            margin: 0 4px;
+        }
+
+        #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contentmain .content-infos .info b:empty {
+            display: none;
+        }
+
+    #app_wizards .itemBox-actions, #tethers .itemBox-actions {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        display: none;
+        z-index: 2;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .itemBox-actions .right-controls {
+        float: left;
+        margin: 0 0 0 5px;
+        border-radius: 4px !important;
+    }
+
+    #app_wizards .blue .bgColor.bottom {
+        background: #5cace1;
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contenthover {
+        /*display: none;*/
+        opacity: .6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        /*padding-right: 72px;*/
+    }
+
+    #app_wizards .vertical-align, #tethers .vertical-align, .tethers .vertical-align {
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    #app_wizards .listGroup-content .conditions .mediaBox-content .mediaBox-contenthover li {
+        display: inline-block;
+        /*margin: 0 5px;
+        width: 105px;*/
+    }
+
+    #app_wizards [class*="column three four"], #tethers [class*="column three four"], .tethers [class*="column three four"] {
+        width: 75%;
+    }
+
+    .form-line.isSelected .editorNoText {
+        display: inline !important;
+    }
+
+    .form-line.isSelected .editor-container {
+        cursor: text;
+    }
+
+    #app_wizards.platformV4.conditionsV4 .bgGrey.error {
+        color: inherit;
+        background: #f9cfc9;
+        position: relative;
+    }
+

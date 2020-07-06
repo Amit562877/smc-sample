@@ -1,0 +1,247 @@
+<div>
+  <div class="row flex-nowrap">
+    <div class="col w-100">
+      <div class="w-100">
+        <div id="split-aside-resize" class="w-100">
+          <div class="row">
+            <div class="left-sidebar col-2 p-3 border-right">
+              <!-- <h4>Place hear anything which you want</h4> -->
+            </div>
+            <div class="main-content col-12 px-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-4" id="ShowProcessesId">
+                    <div class="card-header py-2">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="m-0">Manage University PDF Form Mapping</h5>
+                        </div>
+                        <div class="col-auto">
+                          <!-- <div class="card-ctrls border-left d-inline-flex align-items-center ml-2">
+                              <button role="button" aria-label="getNextHint" id="btnAddProcess" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#media">
+                                <i class="la la-plus"></i> Add new
+                              </button>
+                            </div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row mt-2">
+                        <div class="col-md-3">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">University Type</label>
+                            <select aria-label="getUniversityListByType" class="form-control border-secondary shadow"
+                              [(ngModel)]="universitytypeid" (change)="getUniversityListByType()">
+                              <option value="">-- Choose type --</option>
+                              <option *ngFor="let type of universitytypelist" [ngValue]="type.id">
+                                {{type.univtype}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group text-left">
+                            <label class="font-weight-500">University</label>
+                            <select aria-label="getAllPdf" class="form-control border-secondary shadow"
+                              [(ngModel)]="universityid" (change)="getAllPdf()">
+                              <option value="0">-- Choose University --</option>
+                              <option *ngFor="let univ of universityidlist" [ngValue]="univ.id">
+                                {{univ.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6 text-right" style="margin-top: 27px;">
+                          <button *ngIf="permissions.canAdd" role="button" aria-label="newPDF1"
+                            class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#media"
+                            (click)="newPDF()">
+                            <i class="fa fa-upload" aria-hidden="true" data-toggle="tooltip" title=""
+                              data-original-title="Upload PDF"></i></button>
+                        </div>
+                      </div>
+                      <div class="table-responsive" id="displayUniversityRecords">
+                        <table class="table table-striped">
+                          <thead class="text-uppercase">
+                            <th>University</th>
+                            <!-- <th>Studylevel</th> -->
+                            <th>Filename</th>
+                            <th>Createdon</th>
+                            <th *ngIf="permissions.canEdit || permissions.canDelete || permissions.canMap">Action</th>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="pdflist.length>0">
+                              <tr *ngFor="let pdf of pdflist  | paginate: {itemsPerPage: pagesize,
+                              currentPage: pageindex,
+                              totalItems: pdfcount};let index = index">
+                                <td>{{pdf.universityname}}</td>
+                                <!-- <td>{{pdf.studylevel}}</td> -->
+                                <td>{{pdf.filename}}</td>
+                                <td>{{pdf.createdon | date : 'short'}}</td>
+                                <td *ngIf="permissions.canEdit || permissions.canDelete || permissions.canMap">
+                                  <button role="button" aria-label="editPDF" *ngIf="permissions.canEdit"
+                                    class=" btn btn-sm btn-outline-primary rounded-circle" data-toggle="modal"
+                                    data-target="#media" style="margin-left: 3px;" (click)="editPDF(pdf)"><i
+                                      class="fa fa-lg fa-edit" aria-hidden="true" data-toggle="tooltip" title=""
+                                      data-original-title="Edit"></i></button>
+
+                                  <button role="button" aria-label="removeMatserPDF" *ngIf="permissions.canDelete"
+                                    class="btn btn-sm btn-outline-danger rounded-circle" data-toggle="tooltip" title=""
+                                    data-original-title="Remove" style="margin-left: 3px;"
+                                    (click)="removeMatserPDF(pdf)"><i class="fa fa-times-circle"
+                                      aria-hidden="true"></i></button>
+
+                                  <a class="btn btn-sm btn-outline-secondary rounded-circle" *ngIf="permissions.canMap"
+                                    [routerLink]="['/user/workspace/mapping/pdf-university-form-mapping',pdf.id  | encdec :'enc':false:true] "
+                                    data-toggle="tooltip" style="margin-left: 3px;" title=""
+                                    data-original-title="Map Questions"><i class="fa fa-lg fa-building"></i></a>
+                                </td>
+                              </tr>
+                            </ng-container>
+                            <ng-container *ngIf="pdflist.length==0">
+                              <tr>
+                                <td colspan="5" class="text-center text-danger">
+                                  No data found
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="px-3">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <select aria-label="pagesize1" style="width: 60px;"
+                              class="custom-select custom-select-sm mr-2" id="inputGroupSelect01" [(ngModel)]="pagesize"
+                              (change)="getPDFbyFilter()">
+                              <option value="10">10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            <p class="d-inline-block" *ngIf="(pageindex*pagesize)>pdfcount">Displaying
+                              {{(pdfcount==0)?0:((pageindex-1)*pagesize) + 1}} - {{pdfcount}} of
+                              {{pdfcount}}
+                              records</p>
+                            <p class="d-inline-block" *ngIf="(pageindex*pagesize)<pdfcount">Displaying
+                              {{((pageindex-1)*pagesize) + 1}} -
+                              {{(((pageindex-1)*pagesize) + pagesize)}} of
+                              {{pdfcount}}
+                              records</p>
+                          </div>
+
+                          <div class="col-auto">
+                            <nav aria-label="Page navigation example">
+                              <pagination-controls [autoHide]="true" (pageChange)="pageChanged($event)">
+                              </pagination-controls>
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="media" role="dialog" *ngIf="permissions.canEdit || permissions.canAdd">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-right">Upload PDF</h4>&nbsp;&nbsp;&nbsp;
+        <button role="button" aria-label="dissmissmodel" type="button" class="close"
+          data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form #headform="ngForm" novalidate enctype="multipart/form-data">
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">University Type</label>
+                <select aria-label="getUniversityListByTypeForModal" class="form-control border-secondary shadow"
+                  [disabled]="isupdate" [(ngModel)]="objectModel.universitytypeid"
+                  (change)="getUniversityListByTypeForModal()" name="mduniversitytypeid">
+                  <option value="">-- Choose type --</option>
+                  <option *ngFor="let type of universitytypelist" [ngValue]="type.id">
+                    {{type.univtype}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">University</label>
+                <select aria-label="isupdate1" class="form-control border-secondary shadow" [disabled]="isupdate"
+                  [(ngModel)]="objectModel.universityid" required data-name="mduniversityid" data-type="select"
+                  name="mduniversityid" data-prefix="University">
+                  <option value="">-- Choose University --</option>
+                  <option *ngFor="let univ of universityidlistmodal" [ngValue]="univ.id">
+                    {{univ.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Study Level</label>
+                <select aria-label="mdstudylevelid" class="form-control" [(ngModel)]="objectModel.studylevelid" required
+                  [disabled]="isupdate" data-name="mdstudylevelid" data-type="select" name="mdstudylevelid"
+                  data-prefix="Study level">
+                  <option value="">-- Choose Studylevel --</option>
+                  <option value="0">All</option>
+                  <option *ngFor="let level of studylevellist" [ngValue]="level.id">
+                    {{level.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">Study Level</label>
+                <select aria-label="mdstudylevelid" class="form-control selectpicker show-menu-arrow" multiple
+                  data-actions-box="true" [(ngModel)]="objectModel.studylevelid" required data-name="mdstudylevelid"
+                  data-type="select" name="mdstudylevelid" data-prefix="Study level" data-live-search="true" multiple
+                  data-selected-text-format="count>3">
+                  <option *ngFor="let level of studylevellist" [ngValue]="level.id">
+                    {{level.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div> -->
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <div class="form-group text-left">
+                <label class="font-weight-500">File</label>
+                <input type="file" class="form-control border-secondary shadow" [required]="!isupdate" accept=".pdf"
+                  [(ngModel)]="objectModel.file" data-name="mdfile" data-type="select" name="mdfile" data-prefix="File"
+                  (change)="fileSlectionChanged($event)">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <button role="button" aria-label="uploadFileData" type="button" class="btn btn-sm btn-outline-primary"
+              appValidation [form]="headform" [validparent]="'form-group'" (click)="uploadFileData(headform)">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              Save</button>&nbsp;
+            <button role="button" aria-label="dissmissmodel1" type="button" appClearValidation [form]="headform"
+              class="btn btn-sm btn-outline-danger" data-dismiss="modal">
+              <i class="fa fa-ban" aria-hidden="true"></i>
+              Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
